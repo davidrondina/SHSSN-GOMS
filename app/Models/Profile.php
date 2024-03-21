@@ -19,6 +19,11 @@ class Profile extends Model
         'phone_no',
     ];
 
+    public function getFullName()
+    {
+        return $this->first_name . ' ' . $this->surname;
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
