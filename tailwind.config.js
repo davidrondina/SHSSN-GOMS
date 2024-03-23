@@ -24,9 +24,9 @@ export default {
 
                     "primary": "#36579C",
 
-                    "secondary": "#F0C13E",
+                    "secondary": "#5557FB",
 
-                    "accent": "#F7412F",
+                    "accent": "#F0C13E",
 
                     "neutral": "#333333",
 
@@ -44,5 +44,5 @@ export default {
         ],
     },
 
-    plugins: [forms, require('daisyui')],
+    plugins: [forms, require('daisyui'), require('@tailwindcss/typography'),],
 };
