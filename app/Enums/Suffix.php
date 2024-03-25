@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum Suffix
+enum Suffix: string
 {
     case JUNIOR = 'Jr.';
     case SECOND = 'II';

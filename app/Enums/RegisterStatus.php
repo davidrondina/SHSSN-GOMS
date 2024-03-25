@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum RegisterStatus
+enum RegisterStatus: string
 {
     case VERIFIED = 'Verified';
     case UNVERIFIED = 'Unverified';

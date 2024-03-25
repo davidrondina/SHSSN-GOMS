@@ -27,7 +27,7 @@ return new class extends Migration {
             $table->string('guardian_email')->nullable();
             $table->string('guardian_contact_no');
             $table->string('proof_image');
-            $table->string('status')->default('Pending');
+            $table->string('status')->default('Unverified');
             $table->timestamps();
         });
     }
