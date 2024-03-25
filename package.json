@@ -17,6 +17,7 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
-        "@alpinejs/anchor": "^3.13.7"
+        "@alpinejs/anchor": "^3.13.7",
+        "validatorjs": "^3.22.1"
     }
 }
