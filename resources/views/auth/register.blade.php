@@ -9,7 +9,7 @@ use App\Enums\Suffix;
             <h1 class="font-bold text-2xl">
                 Register Account
             </h1>
-            <x-auth.register-form ::studentRegForm="studentRegForm" />
+            <x-auth.register-form />
 
             {{-- <form x-data="studentRegForm()" action="{{ route('register') }}" method="POST" class="flex flex-col gap-y-7">
                 @csrf
@@ -343,7 +343,7 @@ use App\Enums\Suffix;
         </x-card>
     </x-container>
 
-    @push('js')
+    {{-- @push('js')
         <script src="validator.js"></script>
         <script>
             function studentRegForm() {
@@ -448,5 +448,5 @@ use App\Enums\Suffix;
                 }
             }
         </script>
-    @endpush
+    @endpush --}}
 </x-guest-layout>

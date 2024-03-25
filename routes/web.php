@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StudentRegistrationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,6 +17,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('index');
+});
+
+Route::middleware(['guest'])->prefix('register')->as('student-register.')->group(function () {
+    Route::post('/submit', [StudentRegistrationController::class, 'store'])->name('store');
+    Route::post('/verify-account', [StudentRegistrationController::class, 'verifyAccount'])->name('verify-account');
+    Route::post('/verify-student', [StudentRegistrationController::class, 'verifyStudentInfo'])->name('verify-student');
+    Route::post('/verify-guardian', [StudentRegistrationController::class, 'verifyGuardianInfo'])->name('verify-guardian');
 });
 
 Route::get('/dashboard', function () {
