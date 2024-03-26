@@ -37,6 +37,8 @@
 </head>
 
 <body class="font-is bg-base-100 text-neutral antialiased">
+    <x-flash-message />
+
     <x-guest.header />
 
     <main>
