@@ -25,3 +25,7 @@ h6,
 .optional {
     @apply after:content-['(Optional)'] after:uppercase;
 }
+
+.primary-hover {
+    @apply hover:bg-[#2a447a];
+}

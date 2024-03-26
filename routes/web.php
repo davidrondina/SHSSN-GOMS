@@ -1,8 +1,11 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentRegistrationController;
+use App\Http\Controllers\Admin\DashboardController as ADDashboardController;
+use App\Http\Controllers\Counselor\DashboardController as CODashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,9 +34,18 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::middleware(['role:admin'])->prefix('admin')->as('admin.')->group(function () {
+        Route::get('/dashboard', [ADDashboardController::class, 'index'])->name('dashboard');
+    });
+    Route::middleware(['role:guidance_counselor'])->prefix('counselor')->as('counselor.')->group(function () {
+        Route::get('/dashboard', [CODashboardController::class, 'index'])->name('dashboard');
+    });
 });
 
 require __DIR__ . '/auth.php';
