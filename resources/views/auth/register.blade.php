@@ -6,9 +6,15 @@ use App\Enums\Suffix;
 <x-guest-layout>
     <x-container class="py-16 flex justify-center items-center">
         <x-card class="w-1/2 flex flex-col justify-center gap-y-5 px-6 py-5">
-            <h1 class="font-bold text-2xl">
-                Register Account
-            </h1>
+            <div class="flex flex-col gap-y-2">
+                <h1 class="font-bold text-2xl">
+                    Register Account
+                </h1>
+
+                <p class="text-gray-500 text-sm">Fulfill the following steps to submit your request for account
+                    registration.</p>
+            </div>
+
             <x-auth.register-form />
 
             {{-- <form x-data="studentRegForm()" action="{{ route('register') }}" method="POST" class="flex flex-col gap-y-7">

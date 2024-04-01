@@ -5,27 +5,22 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class UnverifiedUser extends Model
+class UnverifiedUserGuardian extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'lrn',
-        'email',
-        'password',
+        'unverified_user_id',
         'first_name',
         'middle_name',
         'surname',
         'suffix',
-        'birthdate',
-        'sex',
+        'email',
         'phone_no',
-        'proof_image',
-        'status'
     ];
 
-    public function unverifiedUserGuardian()
+    public function unverifiedUser()
     {
-        return $this->hasOne(UnverifiedUserGuardian::class);
+        return $this->belongsTo(UnverifiedUser::class);
     }
 }

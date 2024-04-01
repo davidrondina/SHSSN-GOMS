@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\UnverifiedUser;
+use App\Models\UnverifiedUserGuardian;
 
 class StudentRegistrationController extends Controller
 {
@@ -28,7 +29,7 @@ class StudentRegistrationController extends Controller
             'address' => ['required', 'string', 'max:90'],
             'sex' => ['required'],
             'birthdate' => ['required', 'date'],
-            'phone_no' => ['numeric', 'sometimes', 'max_digits:11'],
+            'phone_no' => ['required', 'numeric', 'max_digits:11'],
             'proof_image' => ['required', 'base64mimes:jpg,jpeg,png', 'base64max:5000']
         ]);
 
@@ -50,30 +51,52 @@ class StudentRegistrationController extends Controller
 
     public function store(Request $request)
     {
-        dd($request->all());
+        // dd($request->file(), $request->all());
+        // dd($request->file('proof_image'), $request->proof_iamge, $request->input('proof_image'), $request->all());
+        // dd($request->all());
 
-        // $uu_fields = [
-        //     'lrn' => $request->lrn,
-        //     'email' => $request->student_email,
-        //     'first_name' => $request->first_name,
-        //     'middle_name' => $request->middle_name ?? null,
-        //     'surname' => $request->surname,
-        //     'suffix' => $request->student_suffix ?? null,
-        //     'birthdate' => $request->birthdate,
-        //     'sex' => $request->sex,
-        //     'phone_no' => $request->student_phone_no ?? null,
-        // ];
+        $student_fields = [
+            'lrn' => $request->lrn,
+            'email' => $request->student_email,
+            'password' => $request->password,
+            'first_name' => $request->student_first_name,
+            'middle_name' => $request->student_middle_name ?? null,
+            'surname' => $request->student_surname,
+            'suffix' => $request->student_suffix ?? null,
+            'birthdate' => $request->birthdate,
+            'sex' => $request->sex,
+            'phone_no' => $request->student_phone_no ?? null,
+        ];
 
-        // $ug_fields = [
-        //     'first_name' => $request->guardian_first_name,
-        //     'middle_name' => $request->guardian_middle_name ?? null,
-        //     'surname' => $request->guardian_surname,
-        //     'suffix' => $request->guardian_suffix ?? null,
-        //     'birthdate' => $request->birthdate,
-        //     'sex' => $request->sex,
-        //     'email' => $request->guardian_email,
-        //     'phone_no' => $request->guardian_phone_no ?? null,
-        // ];
+        if ($request->hasFile('proof_image')) {
+            $image_name = 'IMG_' . uniqid() . '.' . $request->proof_image->extension();
+
+            $path = $request->proof_image->storeAs('uploads/images/unverified-user', $image_name, 'public');
+
+            $student_fields['proof_image'] = asset('/storage/' . $path);
+
+            // $student_fields['proof_image'] = $request->file('proof_image')->store('uploads/images/unverified-user', 'public');
+        }
+
+        // dd($student_fields);
+
+        $guardian_fields = [
+            'first_name' => $request->guardian_first_name,
+            'middle_name' => $request->guardian_middle_name ?? null,
+            'surname' => $request->guardian_surname,
+            'suffix' => $request->guardian_suffix ?? null,
+            'birthdate' => $request->birthdate,
+            'email' => $request->guardian_email,
+            'phone_no' => $request->guardian_phone_no ?? null,
+        ];
+
+        $student = UnverifiedUser::create($student_fields);
+
+        $guardian_fields['unverified_user_id'] = $student->id;
+
+        $guardian = UnverifiedUserGuardian::create($guardian_fields);
+
+        return redirect('/')->with('success_message', 'Submitted successfully! It will be reviewed by the admin.');
 
     }
 }

@@ -3,7 +3,8 @@ use App\Enums\Sex;
 use App\Enums\Suffix;
 ?>
 
-<form x-data="studentRegForm()" action="{{ route('student-register.store') }}" method="POST" class="flex flex-col gap-y-7">
+<form x-data="studentRegForm()" action="{{ route('student-register.store') }}" method="POST" enctype="multipart/form-data"
+    class="flex flex-col gap-y-7">
     @csrf
 
     <ul class="steps steps-vertical lg:steps-horizontal">
@@ -13,6 +14,9 @@ use App\Enums\Suffix;
         <li :class="step === 4 ? 'step-primary' : ''" class="step">Confirm</li>
     </ul>
 
+    {{-- <input type="file" name="proof_image" id="">
+    <x-primary-button>Go</x-primary-button> --}}
+
     <section x-transition.duration.400ms x-claok x-show="step === 1" class="flex flex-col gap-y-4">
         <h2 class="text-xl font-bold">Account Information</h2>
 
@@ -20,7 +24,7 @@ use App\Enums\Suffix;
             <x-form.input-label for="email" :value="__('Email address')" />
 
             <x-form.text-input @change="errors.account.email = null" x-model="data.account.email" id="email"
-                class="block mt-1 w-full" type="email" name="email" required autocomplete="current-password"
+                class="block mt-1 w-full" type="email" name="student_email" required autocomplete="current-password"
                 placeholder="juandc@gmail.com" />
 
             <p class="text-sm text-red-600"><span x-text="errors.account.email ? errors.account.email : ''"></span>
@@ -169,7 +173,7 @@ use App\Enums\Suffix;
             <x-form.input-label for="student_phone_no" :value="__('Phone Number')" class="optional" />
             <x-form.text-input @change="errors.student.phone_no = null" x-model="data.student.phone_no"
                 id="student_phone_no" class="block mt-1 w-full" type="text" name="student_phone_no"
-                :value="old('student_phone_no')" required autofocus autocomplete="on" placeholder="09123456789" />
+                :value="old('student_phone_no')" autofocus autocomplete="one" placeholder="09123456789" required />
 
             <p class="text-sm text-red-600"><span
                     x-text="errors.student.phone_no ? errors.student.phone_no : ''"></span>
@@ -178,8 +182,9 @@ use App\Enums\Suffix;
 
         <div class="flex flex-col gap-y-2">
             <span class="block font-fs font-semibold text-sm uppercase">Proof Image</span>
+
             <div class="flex flex-col items-center justify-center w-full">
-                <template x-if="!data.student.proof_image">
+                <div x-show="!data.student.proof_image" class="w-full">
                     <label for="dropzone-file"
                         class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 hover:bg-gray-100">
                         <div class="flex flex-col items-center justify-center pt-5 pb-6">
@@ -194,10 +199,10 @@ use App\Enums\Suffix;
                                     upload</span></p>
                             <p class="text-xs text-gray-500 dark:text-gray-400">PNG, JPG or JPEG (MAX. 5MB)</p>
                         </div>
-                        <input @change="previewUpload($event)" id="dropzone-file" name="proof_image" type="file"
-                            class="hidden" />
+                        <input type="file" name="proof_image" @change="previewUpload($event)" id="dropzone-file"
+                            class="hidden" required />
                     </label>
-                </template>
+                </div>
 
                 <template x-if="data.student.proof_image">
                     <div class="w-full flex flex-col items-center gap-y-4">
@@ -306,17 +311,17 @@ use App\Enums\Suffix;
                 <div class="flex gap-x-2 flex-wrap">
                     <div class="flex-1 flex flex-col gap-y-1">
                         <span class="font-fs font-semibold text-sm uppercase">First Name</span>
-                        <span x-text="data.student.firstName"></span>
+                        <span x-text="data.student.first_name"></span>
                     </div>
 
                     <div class="flex-1 flex flex-col gap-y-1">
                         <span class="font-fs font-semibold text-sm uppercase">Middle Name</span>
-                        <span x-text="data.student.middleName ? data.student.middleName : 'N/A'"></span>
+                        <span x-text="data.student.middle_name ? data.student.middle_name : 'N/A'"></span>
                     </div>
 
                     <div class="flex-1 flex flex-col gap-y-1">
-                        <span class="font-fs font-semibold text-sm uppercase">Last Name</span>
-                        <span x-text="data.student.lastName"></span>
+                        <span class="font-fs font-semibold text-sm uppercase">Surname</span>
+                        <span x-text="data.student.surname"></span>
                     </div>
 
                     <div class="flex-1 flex flex-col gap-y-1">
@@ -343,7 +348,7 @@ use App\Enums\Suffix;
 
                     <div class="flex-1 flex flex-col gap-y-1">
                         <span class="font-fs font-semibold text-sm uppercase">Phone No.</span>
-                        <span x-text="data.student.phoneNo ? data.student.phoneNo : 'N/A'"></span>
+                        <span x-text="data.student.phone_no ? data.student.phone_no : 'N/A'"></span>
                     </div>
                 </div>
             </div>
@@ -354,17 +359,17 @@ use App\Enums\Suffix;
                 <div class="flex gap-x-2 flex-wrap">
                     <div class="flex-1 flex flex-col gap-y-1">
                         <span class="font-fs font-semibold text-sm uppercase">First Name</span>
-                        <span x-text="data.guardian.firstName"></span>
+                        <span x-text="data.guardian.first_name"></span>
                     </div>
 
                     <div class="flex-1 flex flex-col gap-y-1">
                         <span class="font-fs font-semibold text-sm uppercase">Middle Name</span>
-                        <span x-text="data.guardian.middleName ? data.guardian.middleName : 'N/A'"></span>
+                        <span x-text="data.guardian.middle_name ? data.guardian.middle_name : 'N/A'"></span>
                     </div>
 
                     <div class="flex-1 flex flex-col gap-y-1">
-                        <span class="font-fs font-semibold text-sm uppercase">Last Name</span>
-                        <span x-text="data.guardian.lastName"></span>
+                        <span class="font-fs font-semibold text-sm uppercase">Surname</span>
+                        <span x-text="data.guardian.surname"></span>
                     </div>
 
                     <div class="flex-1 flex flex-col gap-y-1">
@@ -376,12 +381,12 @@ use App\Enums\Suffix;
                 <div class="flex gap-x-2 flex-wrap">
                     <div class="flex-1 flex flex-col gap-y-1">
                         <span class="font-fs font-semibold text-sm uppercase">Email Address</span>
-                        <span x-text="data.guardian.email"></span>
+                        <span x-text="data.guardian.email ? data.guardian.email : 'N/A'"></span>
                     </div>
 
                     <div class="flex-1 flex flex-col gap-y-1">
                         <span class="font-fs font-semibold text-sm uppercase">Phone No.</span>
-                        <span x-text="data.guardian.phoneNo ? data.guardian.phoneNo : 'N/A'"></span>
+                        <span x-text="data.guardian.phone_no ? data.guardian.phone_no : 'N/A'"></span>
                     </div>
                 </div>
             </div>

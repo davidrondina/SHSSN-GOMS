@@ -13,19 +13,15 @@ return new class extends Migration {
         Schema::create('unverified_users', function (Blueprint $table) {
             $table->id();
             $table->string('lrn');
-            $table->string('student_email');
-            $table->string('student_first_name');
-            $table->string('student_middle_name')->nullable();
-            $table->string('student_surname');
-            $table->string('student_suffix')->nullable();
-            $table->date('student_birthdate');
-            $table->string('student_sex');
-            $table->string('guardian_first_name');
-            $table->string('guardian_middle_name')->nullable();
-            $table->string('guardian_surname');
-            $table->string('guardian_suffix')->nullable();
-            $table->string('guardian_email')->nullable();
-            $table->string('guardian_contact_no');
+            $table->string('email');
+            $table->string('password');
+            $table->string('first_name');
+            $table->string('middle_name')->nullable();
+            $table->string('surname');
+            $table->string('suffix')->nullable();
+            $table->date('birthdate');
+            $table->string('sex');
+            $table->string('phone_no');
             $table->string('proof_image');
             $table->string('status')->default('Unverified');
             $table->timestamps();
