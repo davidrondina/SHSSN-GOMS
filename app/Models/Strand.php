@@ -10,6 +10,7 @@ class Strand extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name'
+        'name',
+        'abbr'
     ];
 }

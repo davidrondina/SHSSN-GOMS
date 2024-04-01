@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Enums\UserRole;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
+use Database\Seeders\FacultySeeder;
 use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
@@ -17,6 +18,8 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // \App\Models\User::factory(10)->create();
+
+        $this->call([FacultySeeder::class]);
 
         $user_roles = UserRole::cases();
 
