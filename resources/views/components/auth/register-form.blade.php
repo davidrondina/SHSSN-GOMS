@@ -18,7 +18,10 @@ use App\Enums\Suffix;
     <x-primary-button>Go</x-primary-button> --}}
 
     <section x-transition.duration.400ms x-claok x-show="step === 1" class="flex flex-col gap-y-4">
-        <h2 class="text-xl font-bold">Account Information</h2>
+        <div class="flex flex-col gap-y-2">
+            <h2 class="text-xl font-bold">Account Information</h2>
+            <p class="text-gray-500 text-sm">Provide email address and password of your account.</p>
+        </div>
 
         <div>
             <x-form.input-label for="email" :value="__('Email address')" />
@@ -62,7 +65,10 @@ use App\Enums\Suffix;
     </section>
 
     <section x-transition.duration.400ms x-cloak x-show="step === 2" class="flex flex-col gap-y-4">
-        <h2 class="text-xl font-bold">Personal Information (Student)</h2>
+        <div class="flex flex-col gap-y-2">
+            <h2 class="text-xl font-bold">Personal Information (Student)</h2>
+            <p class="text-gray-500 text-sm">Provide your information as a student.</p>
+        </div>
 
         <div class="flex gap-x-2">
             <div class="flex-1">
@@ -221,7 +227,10 @@ use App\Enums\Suffix;
     </section>
 
     <section x-transition.duration.400ms x-cloak x-show="step === 3" class="flex flex-col gap-y-4">
-        <h2 class="text-xl font-bold">Guardian Information</h2>
+        <div class="flex flex-col gap-y-2">
+            <h2 class="text-xl font-bold">Guardian Information</h2>
+            <p class="text-gray-500 text-sm">Provide the information of your guardian.</p>
+        </div>
 
         <div class="flex gap-x-2">
             <div class="flex-1">
@@ -297,7 +306,10 @@ use App\Enums\Suffix;
     </section>
 
     <section x-transition.duration.400ms x-cloak x-show="step === 4" class="flex flex-col gap-y-4">
-        <h2 class="text-xl font-bold">Please confirm the following information:</h2>
+        <div class="flex flex-col gap-y-2">
+            <h2 class="text-xl font-bold">Summary</h2>
+            <p class="text-gray-500 text-sm">Please confirm the information you provided before submitting.</p>
+        </div>
 
         <div class="flex flex-col gap-y-10 text-sm">
             <div class="flex flex-col gap-y-3">

@@ -5,7 +5,7 @@
         <i class="fa-solid" :class="open ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
     </button>
 
-    <div x-cloak x-show="open" x-transition.duration.200ms class="bg-[#2a447a] flex flex-col">
+    <div x-cloak x-show="open" x-transition.duration.200ms class="bg-neutral flex flex-col">
         {{ $dropdownItems }}
     </div>
 </div>

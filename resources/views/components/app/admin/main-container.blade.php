@@ -6,7 +6,7 @@
                 Academic
                 <x-slot name="dropdownItems">
                     <x-sidebar.link>Manage Academic Years</x-sidebar.link>
-                    <x-sidebar.link>Manage Strands</x-sidebar.link>
+                    <x-sidebar.link href="{{ route('admin.strands.index') }}">Manage Strands</x-sidebar.link>
                     <x-sidebar.link>Manage Subjects</x-sidebar.link>
                     <x-sidebar.link>Manage Sections</x-sidebar.link>
                 </x-slot>
@@ -14,8 +14,8 @@
             <x-sidebar.dropdown.container>
                 Faculty
                 <x-slot name="dropdownItems">
-                    <x-sidebar.link>Manage Faculties</x-sidebar.link>
-                    <x-sidebar.link>Manage Departments</x-sidebar.link>
+                    <x-sidebar.link href="{{ route('admin.faculties.index') }}">Manage Faculties</x-sidebar.link>
+                    <x-sidebar.link href="{{ route('admin.departments.index') }}">Manage Departments</x-sidebar.link>
                 </x-slot>
             </x-sidebar.dropdown.container>
             <x-sidebar.link>Students</x-sidebar.link>
