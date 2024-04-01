@@ -16,11 +16,11 @@ class SectionStudent extends Model
 
     public function section()
     {
-        return $this->belongsTo(Section::class);
+        return $this->belongsToMany(Section::class);
     }
 
     public function student()
     {
-        return $this->belongsTo(Student::class);
+        return $this->belongsToMany(Student::class);
     }
 }

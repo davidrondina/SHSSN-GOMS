@@ -17,13 +17,18 @@ class Section extends Model
         'grade_level',
     ];
 
+    public function academicYear()
+    {
+        return $this->belongsTo(AcademicYear::class);
+    }
+
     public function subjects()
     {
-        return $this->hasMany(Subject::class);
+        return $this->hasMany(SectionSubject::class);
     }
 
     public function students()
     {
-        return $this->hasMany(Student::class);
+        return $this->hasMany(SectionStudent::class);
     }
 }

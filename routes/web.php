@@ -1,8 +1,11 @@
 <?php
 
-use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Admin\StrandController;
+use App\Http\Controllers\Admin\FacultyController;
+use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\StudentRegistrationController;
 use App\Http\Controllers\Admin\DashboardController as ADDashboardController;
 use App\Http\Controllers\Counselor\DashboardController as CODashboardController;
@@ -42,8 +45,13 @@ Route::middleware('auth')->group(function () {
 
     Route::middleware(['role:admin'])->prefix('admin')->as('admin.')->group(function () {
         Route::get('/dashboard', [ADDashboardController::class, 'index'])->name('dashboard');
+
+        Route::resource('strands', StrandController::class)->except(['show']);
+        Route::resource('departments', DepartmentController::class);
+        Route::resource('faculties', FacultyController::class);
     });
-    Route::middleware(['role:guidance_counselor'])->prefix('counselor')->as('counselor.')->group(function () {
+
+    Route::middleware(['role:counselor'])->prefix('counselor')->as('counselor.')->group(function () {
         Route::get('/dashboard', [CODashboardController::class, 'index'])->name('dashboard');
     });
 });
