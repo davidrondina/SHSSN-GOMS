@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->string('middle_name')->nullable();
             $table->string('surname');
             $table->string('suffix')->nullable();
+            $table->string('address');
             $table->date('birthdate');
             $table->string('sex');
             $table->string('phone_no');

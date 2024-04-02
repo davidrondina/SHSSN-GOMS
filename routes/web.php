@@ -5,8 +5,10 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\StrandController;
 use App\Http\Controllers\Admin\FacultyController;
+use App\Http\Controllers\Admin\SubjectController;
 use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\StudentRegistrationController;
+use App\Http\Controllers\Admin\UnverifiedUserController;
 use App\Http\Controllers\Admin\DashboardController as ADDashboardController;
 use App\Http\Controllers\Counselor\DashboardController as CODashboardController;
 
@@ -49,6 +51,16 @@ Route::middleware('auth')->group(function () {
         Route::resource('strands', StrandController::class)->except(['show']);
         Route::resource('departments', DepartmentController::class);
         Route::resource('faculties', FacultyController::class);
+        Route::resource('subjects', SubjectController::class);
+
+        Route::prefix('unverified-users')->as('unverified-users.')->group(function () {
+            Route::get('/', [UnverifiedUserController::class, 'index'])->name('index');
+            Route::get('/{id}', [UnverifiedUserController::class, 'show'])->name('show');
+            Route::post('/{id}/edit', [UnverifiedUserController::class, 'approve'])->name('approve');
+            Route::post('/{id}/approve', [UnverifiedUserController::class, 'approve'])->name('approve');
+            Route::delete('/{id}/reject', [UnverifiedUserController::class, 'reject'])->name('reject');
+            Route::delete('/{id}', [UnverifiedUserController::class, 'destroy'])->name('destroy');
+        });
     });
 
     Route::middleware(['role:counselor'])->prefix('counselor')->as('counselor.')->group(function () {

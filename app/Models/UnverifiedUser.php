@@ -19,12 +19,22 @@ class UnverifiedUser extends Model
         'suffix',
         'birthdate',
         'sex',
+        'address',
         'phone_no',
         'proof_image',
-        'status'
+        'status',
     ];
 
-    public function unverifiedUserGuardian()
+    public function getFullName()
+    {
+        return $this->surname .
+            (($this->suffix) ? (' ' . $this->suffix . ', ') : ', ') .
+            $this->first_name .
+            (($this->middle_name) ? (' ' . substr($this->middle_name, 0, 1) . '.') : '')
+        ;
+    }
+
+    public function guardian()
     {
         return $this->hasOne(UnverifiedUserGuardian::class);
     }

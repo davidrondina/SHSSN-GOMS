@@ -22,7 +22,11 @@ class Profile extends Model
 
     public function getFullName()
     {
-        return $this->first_name . ' ' . $this->surname;
+        return $this->surname .
+            (($this->suffix) ? (' ' . $this->suffix . ', ') : ', ') .
+            $this->first_name .
+            (($this->middle_name) ? (' ' . substr($this->middle_name, 0, 1) . '.') : '')
+        ;
     }
 
     public function user()

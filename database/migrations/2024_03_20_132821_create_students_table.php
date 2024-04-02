@@ -17,7 +17,6 @@ return new class extends Migration {
             $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Guardian::class)->nullable()->constrained()->cascadeOnDelete();
             $table->string('lrn')->unique();
-            $table->boolean('is_enrolled')->default(true);
             $table->timestamps();
         });
     }

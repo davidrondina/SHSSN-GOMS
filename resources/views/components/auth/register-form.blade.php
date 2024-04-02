@@ -176,7 +176,7 @@ use App\Enums\Suffix;
         </div>
 
         <div>
-            <x-form.input-label for="student_phone_no" :value="__('Phone Number')" class="optional" />
+            <x-form.input-label for="student_phone_no" :value="__('Phone Number')" />
             <x-form.text-input @change="errors.student.phone_no = null" x-model="data.student.phone_no"
                 id="student_phone_no" class="block mt-1 w-full" type="text" name="student_phone_no"
                 :value="old('student_phone_no')" autofocus autocomplete="one" placeholder="09123456789" required />

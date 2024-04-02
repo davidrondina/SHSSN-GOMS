@@ -63,6 +63,7 @@ class StudentRegistrationController extends Controller
             'middle_name' => $request->student_middle_name ?? null,
             'surname' => $request->student_surname,
             'suffix' => $request->student_suffix ?? null,
+            'address' => $request->address,
             'birthdate' => $request->birthdate,
             'sex' => $request->sex,
             'phone_no' => $request->student_phone_no ?? null,

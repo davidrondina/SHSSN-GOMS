@@ -13,7 +13,6 @@ class Student extends Model
         'user_id',
         'guardian_id',
         'lrn',
-        'is_enrolled',
     ];
 
     public function guardian()
