@@ -2,20 +2,22 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Strand;
+use App\Models\Faculty;
+use App\Models\Department;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class StrandController extends Controller
+class FacultyController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $strands = Strand::orderBy('name')->get();
+        $departments = Department::orderBy('name')->get();
+        $faculties = Faculty::get();
 
-        return view('users.admin.strands.index', compact(['strands']));
+        return view('users.admin.faculties.index', compact(['faculties', 'departments']));
     }
 
     /**
@@ -23,7 +25,7 @@ class StrandController extends Controller
      */
     public function create()
     {
-        return view('users.admin.strands.create');
+        //
     }
 
     /**
@@ -31,17 +33,7 @@ class StrandController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => ['required', 'string', 'regex:/^[\s\w-]*$/', 'max:140'],
-            'abbr' => ['required', 'string', 'max:50'],
-        ]);
-
-        Strand::create([
-            'name' => $request->name,
-            'abbr' => $request->abbr,
-        ]);
-
-        return to_route('admin.strands.index')->with('success_message', 'Strand has been added successfully');
+        //
     }
 
     /**
@@ -57,9 +49,7 @@ class StrandController extends Controller
      */
     public function edit(string $id)
     {
-        $strand = Strand::find($id);
-
-        return view('users.admin.strands.edit', compact(['strand']));
+        //
     }
 
     /**

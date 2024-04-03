@@ -2,20 +2,20 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Strand;
+use App\Models\Subject;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class StrandController extends Controller
+class SubjectController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $strands = Strand::orderBy('name')->get();
+        $subjects = Subject::orderBy('name')->get();
 
-        return view('users.admin.strands.index', compact(['strands']));
+        return view('users.admin.subjects.index', compact(['subjects']));
     }
 
     /**
@@ -23,7 +23,7 @@ class StrandController extends Controller
      */
     public function create()
     {
-        return view('users.admin.strands.create');
+        return view('users.admin.subjects.create');
     }
 
     /**
@@ -33,15 +33,13 @@ class StrandController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'regex:/^[\s\w-]*$/', 'max:140'],
-            'abbr' => ['required', 'string', 'max:50'],
         ]);
 
-        Strand::create([
+        Subject::create([
             'name' => $request->name,
-            'abbr' => $request->abbr,
         ]);
 
-        return to_route('admin.strands.index')->with('success_message', 'Strand has been added successfully');
+        return to_route('admin.subjects.index')->with('success_message', 'Subject has been added successfully');
     }
 
     /**
@@ -57,9 +55,7 @@ class StrandController extends Controller
      */
     public function edit(string $id)
     {
-        $strand = Strand::find($id);
-
-        return view('users.admin.strands.edit', compact(['strand']));
+        //
     }
 
     /**
@@ -75,6 +71,6 @@ class StrandController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        dd('deleted');
     }
 }
