@@ -67,7 +67,7 @@
 
                                     <x-slot name="action">
                                         <form action="{{ route('admin.unverified-users.destroy', $user->id) }}"
-                                            method="get" class="flex">
+                                            method="post" class="flex">
                                             @csrf
                                             @method('DELETE')
 

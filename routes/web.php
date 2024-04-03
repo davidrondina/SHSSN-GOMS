@@ -56,7 +56,6 @@ Route::middleware('auth')->group(function () {
         Route::prefix('unverified-users')->as('unverified-users.')->group(function () {
             Route::get('/', [UnverifiedUserController::class, 'index'])->name('index');
             Route::get('/{id}', [UnverifiedUserController::class, 'show'])->name('show');
-            Route::post('/{id}/edit', [UnverifiedUserController::class, 'approve'])->name('approve');
             Route::post('/{id}/approve', [UnverifiedUserController::class, 'approve'])->name('approve');
             Route::delete('/{id}/reject', [UnverifiedUserController::class, 'reject'])->name('reject');
             Route::delete('/{id}', [UnverifiedUserController::class, 'destroy'])->name('destroy');
