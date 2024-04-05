@@ -13,4 +13,9 @@ class Strand extends Model
         'name',
         'abbr'
     ];
+
+    public function sections()
+    {
+        return $this->hasMany(Section::class);
+    }
 }

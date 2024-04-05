@@ -10,7 +10,7 @@
 
     <div class="flex justify-between items-center">
         @if ($show_title)
-            <h1 class="font-bold text-2xl">
+            <h1 class="self-start font-bold text-2xl">
                 {{ $title }}
             </h1>
         @endif

@@ -102,7 +102,7 @@ class UnverifiedUserController extends Controller
     }
 
     public function destroy(string $id)
-    {   
+    {
         dd('Deleted');
         // $user = UnverifiedUser::find($id);
 

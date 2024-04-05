@@ -32,7 +32,7 @@ class StrandController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => ['required', 'string', 'regex:/^[\s\w-]*$/', 'max:140'],
+            'name' => ['required', 'string', 'max:140'],
             'abbr' => ['required', 'string', 'max:50'],
         ]);
 

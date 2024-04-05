@@ -23,9 +23,31 @@
                         <x-table.regular-cell>
                             <div class="flex gap-x-3">
                                 <a href="{{ route('admin.departments.edit', $dept->id) }}"
-                                    class="btn btn-sm btn-secondary inline-flex items-center font-semibold">Edit</a>
-                                <a href="{{ route('admin.departments.destroy', $dept->id) }}"
-                                    class="btn btn-sm btn-error inline-flex items-center font-semibold">Delete</a>
+                                    class="btn btn-sm btn-secondary inline-flex items-center font-semibold"><i
+                                        class="ri-edit-box-line font-normal"></i>Edit</a>
+                                <x-confirm-modal :type="__('warning')">
+                                    <button @click="open = !open" class="btn btn-sm btn-error"><i
+                                            class="ri-delete-bin-line font-normal"></i>Delete
+                                    </button>
+
+                                    <x-slot name="header">
+                                        Delete Department?
+                                    </x-slot>
+                                    <x-slot name="body">
+                                        <p class="text-gray-500 text-sm">This action cannot be
+                                            undone.</p>
+                                    </x-slot>
+
+                                    <x-slot name="action">
+                                        <form action="{{ route('admin.departments.destroy', $dept->id) }}"
+                                            method="post" class="flex">
+                                            @csrf
+                                            @method('DELETE')
+
+                                            <button class="flex btn btn-warning font-poppins uppercase">Confirm</button>
+                                        </form>
+                                    </x-slot>
+                                </x-confirm-modal>
                             </div>
                         </x-table.regular-cell>
                     </tr>
