@@ -12,7 +12,7 @@ class Section extends Model
     protected $fillable = [
         'strand_id',
         'academic_year_id',
-        'faculty_id',
+        'adviser_id',
         'name',
         'grade_level',
     ];
@@ -22,13 +22,24 @@ class Section extends Model
         return $this->belongsTo(AcademicYear::class);
     }
 
+    public function adviser()
+    {
+        return $this->belongsTo(Faculty::class, 'adviser_id');
+    }
+
     public function subjects()
     {
-        return $this->hasMany(SectionSubject::class);
+        return $this->belongsToMany(Subject::class, 'section_subjects');
+        ;
+    }
+
+    public function strand()
+    {   
+        return $this->belongsTo(Strand::class);
     }
 
     public function students()
     {
-        return $this->hasMany(SectionStudent::class);
+        return $this->belongsToMany(Student::class, 'section_students');
     }
 }

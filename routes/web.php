@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\StrandController;
 use App\Http\Controllers\Admin\FacultyController;
+use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\Admin\SubjectController;
 use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\StudentRegistrationController;
@@ -52,6 +53,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('departments', DepartmentController::class);
         Route::resource('faculties', FacultyController::class);
         Route::resource('subjects', SubjectController::class);
+        Route::resource('sections', SectionController::class);
 
         Route::prefix('unverified-users')->as('unverified-users.')->group(function () {
             Route::get('/', [UnverifiedUserController::class, 'index'])->name('index');

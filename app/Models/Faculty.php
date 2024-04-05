@@ -14,9 +14,19 @@ class Faculty extends Model
         'department_id',
     ];
 
+    public function advisorySection()
+    {
+        return $this->hasOne(Section::class, 'adviser_id');
+    }
+
     public function department()
     {
         return $this->belongsTo(Department::class);
+    }
+
+    public function subjects()
+    {
+        return $this->belongsToMany(Subject::class, 'faculty_subjects');
     }
 
     public function user()

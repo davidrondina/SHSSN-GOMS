@@ -15,6 +15,11 @@ class AcademicYear extends Model
         'is_current',
     ];
 
+    public function enrolledStudents()
+    {
+        return $this->hasMany(EnrolledStudent::class);
+    }
+
     public function getfullYear()
     {
         return $this->start . ' - ' . $this->end;

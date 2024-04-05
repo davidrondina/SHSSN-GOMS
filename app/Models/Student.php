@@ -15,9 +15,21 @@ class Student extends Model
         'lrn',
     ];
 
+    public function enrolments()
+    {
+        return $this->hasMany(EnrolledStudent::class);
+    }
+
     public function guardian()
     {
         return $this->belongsTo(Guardian::class);
+    }
+
+    public function isEnrolledToCurrentAY()
+    {
+        $year = AcademicYear::where('is_current', true)->first();
+
+        return EnrolledStudent::where('academic_year_id', $year->id)->exists();
     }
 
     public function user()
@@ -27,6 +39,6 @@ class Student extends Model
 
     public function sections()
     {
-        return $this->hasMany(SectionStudent::class);
+        return $this->belongsToMany(Section::class, 'section_students');
     }
 }

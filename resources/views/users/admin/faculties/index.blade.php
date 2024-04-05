@@ -39,7 +39,6 @@
                         <x-table.regular-cell>{{ $fac->department->name }}</x-table.regular-cell>
                         <x-table.regular-cell>
                             <div class="flex gap-x-3">
-                                <button class="btn btn-sm btn-accent"><i class="ri-eye-line font-normal"></i>View</button>
                                 <a href="{{ route('admin.faculties.show', $fac->id) }}" class="btn btn-sm btn-accent"><i
                                         class="ri-eye-line font-normal"></i>View</a>
                                 <a href="{{ route('admin.faculties.edit', $fac->id) }}"

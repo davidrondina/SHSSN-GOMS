@@ -13,8 +13,13 @@ class Subject extends Model
         'name',
     ];
 
-    public function sectionSubject()
+    public function faculties()
     {
-        return $this->hasMany(SectionSubject::class);
+        return $this->belongsToMany(Faculty::class, 'faculty_subjects');
+    }
+
+    public function sections()
+    {
+        return $this->belongsToMany(Section::class, 'section_subjects');
     }
 }

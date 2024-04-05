@@ -14,9 +14,16 @@ return new class extends Migration {
     {
         Schema::create('students', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(User::class)->nullable()->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Guardian::class)->nullable()->constrained()->cascadeOnDelete();
             $table->string('lrn')->unique();
+            $table->string('first_name');
+            $table->string('middle_name')->nullable();
+            $table->string('surname');
+            $table->string('suffix')->nullable();
+            $table->string('sex');
+            $table->string('address');
+            $table->string('phone_no');
             $table->timestamps();
         });
     }

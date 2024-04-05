@@ -7,8 +7,8 @@
                 <x-slot name="dropdownItems">
                     <x-sidebar.link>Manage Academic Years</x-sidebar.link>
                     <x-sidebar.link href="{{ route('admin.strands.index') }}">Manage Strands</x-sidebar.link>
-                    <x-sidebar.link>Manage Subjects</x-sidebar.link>
-                    <x-sidebar.link>Manage Sections</x-sidebar.link>
+                    <x-sidebar.link href="{{ route('admin.subjects.index') }}">Manage Subjects</x-sidebar.link>
+                    <x-sidebar.link href="{{ route('admin.sections.index') }}">Manage Sections</x-sidebar.link>
                 </x-slot>
             </x-sidebar.dropdown.container>
             <x-sidebar.dropdown.container>
@@ -23,7 +23,7 @@
                 Misc
                 <x-slot name="dropdownItems">
                     <x-sidebar.link>Verified Users</x-sidebar.link>
-                    <x-sidebar.link>Unverified Users</x-sidebar.link>
+                    <x-sidebar.link href="{{ route('admin.unverified-users.index') }}">Unverified Users</x-sidebar.link>
                     <x-sidebar.link>Document Guides</x-sidebar.link>
                     <x-sidebar.link>Reports</x-sidebar.link>
                 </x-slot>
