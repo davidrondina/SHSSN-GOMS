@@ -24,6 +24,11 @@ class Faculty extends Model
         return $this->belongsTo(Department::class);
     }
 
+    public function sectionSubjects()
+    {
+        return $this->hasMany(SectionSubject::class);
+    }
+
     public function subjects()
     {
         return $this->belongsToMany(Subject::class, 'faculty_subjects');

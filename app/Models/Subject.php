@@ -20,6 +20,6 @@ class Subject extends Model
 
     public function sections()
     {
-        return $this->belongsToMany(Section::class, 'section_subjects');
+        return $this->hasMany(SectionSubject::class);
     }
 }

@@ -11,16 +11,22 @@ class SectionSubject extends Model
 
     protected $fillable = [
         'section_id',
-        'faculty_subject_id',
+        'subject_id',
+        'faculty_id',
     ];
 
-    public function sections()
+    public function section()
     {
-        return $this->belongsToMany(Section::class);
+        return $this->belongsTo(Section::class);
     }
 
-    public function facultySubject()
+    public function subject()
     {
-        return $this->belongsTo(FacultySubject::class);
+        return $this->belongsTo(Subject::class);
+    }
+
+    public function faculty()
+    {
+        return $this->belongsTo(Faculty::class);
     }
 }

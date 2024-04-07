@@ -29,12 +29,12 @@ class Section extends Model
 
     public function subjects()
     {
-        return $this->belongsToMany(Subject::class, 'section_subjects');
+        return $this->hasMany(SectionSubject::class);
         ;
     }
 
     public function strand()
-    {   
+    {
         return $this->belongsTo(Strand::class);
     }
 

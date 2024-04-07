@@ -20,6 +20,15 @@ class Student extends Model
         return $this->hasMany(EnrolledStudent::class);
     }
 
+    public function getFullName()
+    {
+        return $this->surname .
+            (($this->suffix) ? (' ' . $this->suffix . ', ') : ', ') .
+            $this->first_name .
+            (($this->middle_name) ? (' ' . substr($this->middle_name, 0, 1) . '.') : '')
+        ;
+    }
+
     public function guardian()
     {
         return $this->belongsTo(Guardian::class);

@@ -30,7 +30,9 @@ class SectionController extends Controller
     public function index()
     {
         $strands = $this->strands;
-        $sections = Section::with('academicYear')->get();
+        $sections = Section::whereHas('academicYear', function ($query) {
+            $query->where('is_current', true);
+        })->orderBy('name')->get();
         // dd($sections);
 
         return view('users.admin.sections.index', compact(['sections', 'strands']));
@@ -79,10 +81,18 @@ class SectionController extends Controller
 
         if ($request->subjects) {
             foreach ($request->subjects as $key => $value) {
+                $fac_subject = FacultySubject::find($value);
+
                 SectionSubject::create([
                     'section_id' => $section->id,
-                    'faculty_subject_id' => $value
+                    'subject_id' => $fac_subject->subject_id,
+                    'faculty_id' => $fac_subject->faculty_id,
                 ]);
+
+                // SectionSubject::create([
+                //     'section_id' => $section->id,
+                //     'faculty_subject_id' => $value
+                // ]);
             }
         }
 
@@ -94,7 +104,19 @@ class SectionController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $year = AcademicYear::where('is_current', true)->first();
+        $section = Section::find($id);
+        // $fac_with_subjects = FacultySubject::whereDoesntHave('sectionSubjects', function ($query) use ($section) {
+        //     $query->where('section_id', $section->id);
+        // })->get();
+        $subjects = $section->subjects;
+        $students = $year->enrolledStudents;
+        $sec_subjects = SectionSubject::get();
+        $fac_with_subjects = FacultySubject::with('faculty', 'subject')->get();
+
+        // dd($subjects, $students, $sec_subjects->pluck('faculty_id'), $fac_with_subjects);
+
+        return view('users.admin.sections.show', compact(['section', 'subjects', 'students', 'fac_with_subjects', 'sec_subjects']));
     }
 
     /**
@@ -102,7 +124,7 @@ class SectionController extends Controller
      */
     public function edit(string $id)
     {
-        //
+
     }
 
     /**
@@ -111,6 +133,18 @@ class SectionController extends Controller
     public function update(Request $request, string $id)
     {
         //
+    }
+
+    // TODO: Update section students based on the students array
+    public function updateStudents(Request $request, string $id)
+    {
+        dd($request->all());
+    }
+
+    // TODO: Update section subjects based on the subjects array
+    public function updateSubjects(Request $request, string $id)
+    {
+        dd($request->all());
     }
 
     /**
