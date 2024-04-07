@@ -14,9 +14,9 @@ class Faculty extends Model
         'department_id',
     ];
 
-    public function advisorySection()
+    public function advisorySections()
     {
-        return $this->hasOne(Section::class, 'adviser_id');
+        return $this->hasMany(Section::class, 'adviser_id');
     }
 
     public function department()

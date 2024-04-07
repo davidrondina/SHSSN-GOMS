@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Faculty;
 use App\Models\Department;
+use App\Models\Subject;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -41,7 +42,10 @@ class FacultyController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $faculty = Faculty::find($id);
+        $subjects = Subject::orderBy('name')->get();
+
+        return view('users.admin.faculties.show', compact(['faculty', 'subjects']));
     }
 
     /**
@@ -58,6 +62,16 @@ class FacultyController extends Controller
     public function update(Request $request, string $id)
     {
         //
+    }
+
+    public function updateSubjects(Request $request, string $id)
+    {
+        $faculty = Faculty::findOrFail($id);
+        $request->validate(['subjects' => 'required']);
+
+        $faculty->subjects()->sync($request->subjects);
+
+        return back()->with('success_message', 'Faculty subjects updated successfully');
     }
 
     /**
