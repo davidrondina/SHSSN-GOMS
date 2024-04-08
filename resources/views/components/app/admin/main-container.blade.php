@@ -18,7 +18,7 @@
                     <x-sidebar.link href="{{ route('admin.departments.index') }}">Manage Departments</x-sidebar.link>
                 </x-slot>
             </x-sidebar.dropdown.container>
-            <x-sidebar.link>Students</x-sidebar.link>
+            <x-sidebar.link href="{{ route('admin.students.index') }}">Students</x-sidebar.link>
             <x-sidebar.dropdown.container>
                 Misc
                 <x-slot name="dropdownItems">

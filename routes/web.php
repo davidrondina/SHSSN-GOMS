@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\StudentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
@@ -55,15 +56,13 @@ Route::middleware('auth')->group(function () {
         Route::prefix('faculties')->as('faculties.')->group(function () {
             Route::put('/{id}/subjects', [FacultyController::class, 'updateSubjects'])->name('subjects');
         });
-
         Route::resource('subjects', SubjectController::class);
-
         Route::resource('sections', SectionController::class);
         Route::prefix('sections')->as('sections.')->group(function () {
             Route::put('/{id}/students', [SectionController::class, 'updateStudents'])->name('students');
             Route::put('/{id}/subjects', [SectionController::class, 'updateSubjects'])->name('subjects');
         });
-
+        Route::resource('students', StudentController::class);
         Route::prefix('unverified-users')->as('unverified-users.')->group(function () {
             Route::get('/', [UnverifiedUserController::class, 'index'])->name('index');
             Route::get('/{id}', [UnverifiedUserController::class, 'show'])->name('show');
