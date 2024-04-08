@@ -16,6 +16,7 @@ class Profile extends Model
         'surname',
         'suffix',
         'sex',
+        'birthdate',
         'address',
         'phone_no',
     ];

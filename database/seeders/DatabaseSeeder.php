@@ -53,6 +53,7 @@ class DatabaseSeeder extends Seeder
             'surname' => 'User',
             'sex' => 'Male',
             'phone_no' => '09123456789',
+            'birthdate' => '1999-01-01',
             'address' => 'Bacoor City, Cavite',
         ]);
 

@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->string('surname');
             $table->string('suffix')->nullable();
             $table->string('sex');
+            $table->date('birthdate');
             $table->string('address');
             $table->string('phone_no');
             $table->timestamps();

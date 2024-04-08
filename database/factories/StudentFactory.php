@@ -36,6 +36,7 @@ class StudentFactory extends Factory
             'middle_name' => fake()->lastName(),
             'surname' => fake()->lastName(),
             'sex' => fake()->randomElement(Sex::class),
+            'birthdate' => fake()->date('Y-m-d'),
             'address' => fake()->address(),
             'phone_no' => '09123456789',
         ];
@@ -82,6 +83,7 @@ class StudentFactory extends Factory
             'middle_name' => $student_info['first_name'],
             'surname' => $student_info['surname'],
             'sex' => $student_info['sex'],
+            'birthdate' => $student_info['birthdate'],
             'address' => $student_info['address'],
             'phone_no' => $student_info['phone_no'],
         ]);

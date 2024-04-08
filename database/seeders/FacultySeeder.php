@@ -33,6 +33,7 @@ class FacultySeeder extends Seeder
             'first_name' => 'David',
             'surname' => 'Rondina',
             'sex' => 'Male',
+            'birthdate' => '1999-01-01',
             'address' => 'Bacoor City, Cavite',
             'phone_no' => '09123456789',
         ]);

@@ -13,6 +13,13 @@ class Student extends Model
         'user_id',
         'guardian_id',
         'lrn',
+        'first_name',
+        'middle_name',
+        'surname',
+        'sex',
+        'birthdate',
+        'address',
+        'phone_no',
     ];
 
     public function enrolments()
