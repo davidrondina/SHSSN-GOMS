@@ -45,7 +45,10 @@ class Student extends Model
     {
         $year = AcademicYear::where('is_current', true)->first();
 
-        return EnrolledStudent::where('academic_year_id', $year->id)->exists();
+        return EnrolledStudent::where([
+            ['academic_year_id', $year->id],
+            ['student_id', $this->id]
+            ])->exists();
     }
 
     public function user()

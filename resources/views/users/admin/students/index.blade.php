@@ -83,7 +83,7 @@
                     <tr class="bg-white border-b">
                         <x-table.header-cell :scope="__('row')">{{ $stu->lrn }}</x-table.header-cell>
                         <x-table.regular-cell>{{ $stu->getFullName() }}</x-table.regular-cell>
-                        <x-table.regular-cell>Enrolled</x-table.regular-cell>
+                        <x-table.regular-cell>{{ $stu->isEnrolledToCurrentAY() ? 'Enrolled' : 'Not Enrolled' }}</x-table.regular-cell>
                         <x-table.regular-cell>
                             <div class="flex gap-x-3">
                                 <a href="{{ route('admin.students.show', $stu->id) }}" class="btn btn-sm btn-accent"><i

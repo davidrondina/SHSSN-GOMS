@@ -38,7 +38,7 @@
                 <div class="sm:flex sm:items-start">
                     @if (isset($icon))
                         <div
-                            class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-{{ $type }}/30 sm:mx-0 sm:h-10 sm:w-10 text-lg">
+                            class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full sm:mx-0 sm:h-10 sm:w-10 text-2xl">
                             <i class="{{ $icon }}"></i>
                         </div>
                     @endif
@@ -58,14 +58,14 @@
 
                     </div>
                 </div>
-                {{-- <div class="mt-5 sm:mt-4 flex flex-col sm:flex-row-reverse gap-3">
+                <div class="mt-5 sm:mt-4 flex flex-col sm:flex-row-reverse gap-3">
                     @isset($action)
                         {{ $action }}
                     @endisset
 
                     <button @click="open = false" type="button"
                         class="flex btn uppercase font-poppins font-semibold">Cancel</button>
-                </div> --}}
+                </div>
             </div>
         </div>
     </div>
