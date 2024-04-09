@@ -74,7 +74,7 @@
                 <div x-cloak x-show="open">
                     <x-form.select2 id="students" name="students[]">
                         @forelse ($students as $stu)
-                            <option value="{{ $stu->student->id }}">{{ $stu->student->user->profile->getFullName() }}
+                            <option value="{{ $stu->student->id }}">{{ $stu->student->getFullName() }}
                             </option>
                         @empty
                         @endforelse

@@ -34,7 +34,7 @@
                         @forelse ($section->students as $stu)
                             <tr class="bg-white border-b">
                                 <x-table.header-cell
-                                    :scope="__('row')">{{ $stu->user->profile->getFullName() ?? $stu->getFullName() }}</x-table.header-cell>
+                                    :scope="__('row')">{{ $stu?->user?->profile->getFullName() ?? $stu->getFullName() }}</x-table.header-cell>
                                 <x-table.regular-cell>
                                     <div class="flex gap-x-3">
                                         <a href="#" class="btn btn-sm btn-accent"><i
@@ -86,8 +86,8 @@
                         <x-form.select2 id="students" name="students[]">
                             @foreach ($students as $stu)
                                 <option class="mb-2" value="{{ $stu->id }}"
-                                    @if (in_array($stu->id, $section->students->pluck('id')->toArray())) selected @endif>
-                                    {{ $stu->student->user->profile->getFullName() ?? $stu->getFullName() }}</option>
+                                    @if (in_array($stu->student->id, $section->students->pluck('id')->toArray())) selected @endif>
+                                    {{ $stu->student->getFullName() }}</option>
                             @endforeach
                         </x-form.select2>
 
