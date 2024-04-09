@@ -121,7 +121,9 @@ class StudentController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $student = Student::find($id);
+
+        return view('users.admin.students.show', compact(['student']));
     }
 
     /**

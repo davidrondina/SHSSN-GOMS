@@ -18,6 +18,15 @@ class Guardian extends Model
         'email',
     ];
 
+    public function getFullName()
+    {
+        return $this->surname .
+            (($this->suffix) ? (' ' . $this->suffix . ', ') : ', ') .
+            $this->first_name .
+            (($this->middle_name) ? (' ' . substr($this->middle_name, 0, 1) . '.') : '')
+        ;
+    }
+
     public function students()
     {
         return $this->hasMany(Student::class);
