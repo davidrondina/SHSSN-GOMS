@@ -2,20 +2,23 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\EnrolledStudent;
-use App\Models\Guardian;
+use App\Models\Strand;
 use App\Models\Student;
+use App\Models\Guardian;
 use App\Models\AcademicYear;
 use Illuminate\Http\Request;
+use App\Models\EnrolledStudent;
 use App\Http\Controllers\Controller;
 
 class StudentController extends Controller
 {
     private $currentAY;
+    private $strands;
 
     public function __construct()
     {
         $this->currentAY = AcademicYear::where('is_current', true)->first();
+        $this->strands = Strand::orderBy('abbr')->get();
     }
 
     /**
@@ -24,6 +27,7 @@ class StudentController extends Controller
     public function index(Request $request)
     {
         $year = $this->currentAY;
+        $strands = $this->strands;
         $students = Student::orderBy('surname')->paginate(30)->withQueryString();
 
         if ($request->view === 'enrolled') {
@@ -40,7 +44,7 @@ class StudentController extends Controller
             })->orderBy('surname')->paginate(30)->withQueryString();
         }
 
-        return view('users.admin.students.index', compact(['students', 'year']));
+        return view('users.admin.students.index', compact(['students', 'year', 'strands']));
     }
 
     /**
@@ -49,6 +53,22 @@ class StudentController extends Controller
     public function create()
     {
         return view('users.admin.students.create');
+    }
+
+    public function enrollToCurrentYear(Request $request, string $id)
+    {
+        $year = $this->currentAY;
+        $student = Student::find($id);
+
+        $request->validate(['grade_level' => 'required']);
+
+        EnrolledStudent::create([
+            'student_id' => $id,
+            'academic_year_id' => $year->id,
+            'grade_level' => $request->grade_level,
+        ]);
+
+        return back()->with('success_message', 'Student successfully enrolled');
     }
 
     /**

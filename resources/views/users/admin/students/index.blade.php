@@ -2,24 +2,41 @@
     <main class="w-full flex-grow">
         <x-app.page-header :show_title="true" :title="__('Students')">
             <x-slot name="controls">
-                <div class="flex items-center gap-x-4">
-                    <x-form.search-form :form_action="__('#')" :placeholder="__('Search student name')" />
-
-                    {{-- <form action="" method="get" class="flex gap-x-2">
-                        <x-form.select.select-input>
-                            @foreach ($departments as $dept)
-                                <x-form.select.select-option :disabled="true" :selected="true" :option_name="__('Filter by dept.')" />
-                                <x-form.select.select-option :value="$dept->id" :option_name="$dept->name" />
-                            @endforeach
-                        </x-form.select.select-input>
-
-                        <x-primary-button>Go</x-primary-button>
-                    </form> --}}
-
+                <div x-data="{ filterOpened: false }" class="flex gap-x-4">
                     <a href="{{ route('admin.students.create') }}"
                         class="btn btn-primary btn-sm inline-flex items-center font-semibold">
                         <i class="fa-solid fa-plus"></i>Add Student
                     </a>
+
+                    <button x-ref="filterBtn" @click="filterOpened = !filterOpened" type="button"
+                        class="btn btn-sm btn-accent">
+                        <i class="fa-solid" :class="filterOpened ? 'fa-times' : 'fa-filter'"></i>
+                        <span x-text="filterOpened ? 'Close' : 'Filter'"></span>
+                    </button>
+
+                    <div x-cloak @click.outside="filterOpened = false" x-show="filterOpened"
+                        x-anchor.bottom-end="$refs.filterBtn"
+                        class="z-20 bg-white p-4 w-[600px] flex flex-col gap-y-4 border border-gray-300 shadow-md">
+                        <x-form.search-form :form_action="__('#')" :placeholder="__('Search student name')" class="w-full" />
+
+                        <form action="" method="get" class="flex gap-x-2">
+                            {{-- <x-form.select.select-input>
+                                @foreach ($strands as $str)
+                                    <x-form.select.select-option :disabled="true" :selected="true"
+                                        :option_name="__('Filter by strand')" />
+                                    <x-form.select.select-option :value="$str->id" :option_name="$str->abbr" />
+                                @endforeach
+                            </x-form.select.select-input> --}}
+
+                            <x-form.select.select-input>
+                                <x-form.select.select-option :disabled="true" :selected="true" :option_name="__('Filter by grade level')" />
+                                <x-form.select.select-option :value="11" :option_name="__('Gr. 11')" />
+                                <x-form.select.select-option :value="12" :option_name="__('Gr. 12')" />
+                            </x-form.select.select-input>
+
+                            <x-primary-button>Go</x-primary-button>
+                        </form>
+                    </div>
                 </div>
             </x-slot>
         </x-app.page-header>

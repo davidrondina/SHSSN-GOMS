@@ -36,6 +36,17 @@ class Student extends Model
         ;
     }
 
+    public function getCurrentGradeLvl()
+    {
+        $year = AcademicYear::where('is_current', true)->first();
+        $currentEnrolment = EnrolledStudent::where([
+            ['academic_year_id', $year->id],
+            ['student_id', $this->id]
+        ])->first();
+
+        return $currentEnrolment->grade_level;
+    }
+
     public function guardian()
     {
         return $this->belongsTo(Guardian::class);
@@ -48,7 +59,7 @@ class Student extends Model
         return EnrolledStudent::where([
             ['academic_year_id', $year->id],
             ['student_id', $this->id]
-            ])->exists();
+        ])->exists();
     }
 
     public function user()

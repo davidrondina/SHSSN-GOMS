@@ -1,5 +1,6 @@
 @props([
     'maxWidth' => 'sm',
+    'showCancelBtn' => false,
     'icon',
 ])
 
@@ -43,7 +44,7 @@
                         </div>
                     @endif
 
-                    <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                    <div class="w-full mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                         @isset($header)
                             <h3 class="flex items-center text-lg leading-6 font-semibold" id="modal-headline">
                                 {{ $header }}
@@ -63,8 +64,10 @@
                         {{ $action }}
                     @endisset
 
-                    <button @click="open = false" type="button"
-                        class="flex btn uppercase font-poppins font-semibold">Cancel</button>
+                    @if ($showCancelBtn)
+                        <button @click="open = false" type="button"
+                            class="flex btn uppercase font-poppins font-semibold">Cancel</button>
+                    @endif
                 </div>
             </div>
         </div>

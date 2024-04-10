@@ -8,12 +8,54 @@
                     {{ $student->getFullName() }}
                 </h1>
                 <p class="font-semibold text-sm">LRN: <span class="text-gray-500">{{ $student->lrn }}</span></p>
+
+                @if ($student->isEnrolledToCurrentAY())
+                    <p class="text-sm text-gray-500">Currently enrolled as <span class="text-neutral font-semibold">Grade
+                            {{ $student->getCurrentGradeLvl() }}</span> student</p>
+                @endif
             </div>
 
             <div class="flex gap-x-3">
+                @if (!$student->isEnrolledToCurrentAY())
+                    <x-modal.regular :icon="__('ri-checkbox-circle-line')">
+                        <button @click="open = !open" class="btn btn-sm btn-success"><i
+                                class="ri-checkbox-circle-line font-normal"></i>Enroll
+                        </button>
+
+                        <x-slot name="header">
+                            Choose grade level
+                        </x-slot>
+
+                        <x-slot name="body">
+                            <form action="{{ route('admin.students.enroll', $student->id) }}" method="post"
+                                class="flex flex-col gap-y-4">
+                                @csrf
+
+                                <div>
+                                    <x-form.select.select-input name="grade_level" id="grade_level"
+                                        class="block mt-1 w-full">
+                                        <x-form.select.select-option :disabled="true" :selected="true"
+                                            :option_name="__('Select grade level')" required s />
+
+                                        <x-form.select.select-option :value="11" :option_name="__('Gr. 11')" />
+                                        <x-form.select.select-option :value="12" :option_name="__('Gr. 12')" />
+                                    </x-form.select.select-input>
+
+                                    <x-form.input-error :messages="$errors->get('grade_level')" class="mt-2" />
+                                </div>
+
+                                <div>
+                                    <button class="flex btn btn-success font-poppins uppercase">Enroll</button>
+                                </div>
+                            </form>
+                        </x-slot>
+                    </x-modal.regular>
+                @endif
+
                 <a href="{{ route('admin.students.edit', $student->id) }}"
                     class="btn btn-sm btn-secondary inline-flex items-center font-semibold"><i
                         class="ri-edit-box-line font-normal"></i>Edit</a>
+
                 <x-confirm-modal :type="__('warning')">
                     <button @click="open = !open" class="btn btn-sm btn-error"><i
                             class="ri-delete-bin-line font-normal"></i>Delete

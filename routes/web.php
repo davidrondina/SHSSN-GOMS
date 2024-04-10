@@ -63,6 +63,9 @@ Route::middleware('auth')->group(function () {
             Route::put('/{id}/subjects', [SectionController::class, 'updateSubjects'])->name('subjects');
         });
         Route::resource('students', StudentController::class);
+        Route::prefix('students')->as('students.')->group(function () {
+            Route::post('/{id}/enroll', [StudentController::class, 'enrollToCurrentYear'])->name('enroll');
+        });
         Route::prefix('unverified-users')->as('unverified-users.')->group(function () {
             Route::get('/', [UnverifiedUserController::class, 'index'])->name('index');
             Route::get('/{id}', [UnverifiedUserController::class, 'show'])->name('show');
