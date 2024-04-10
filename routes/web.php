@@ -1,14 +1,15 @@
 <?php
 
-use App\Http\Controllers\Admin\StudentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\StrandController;
 use App\Http\Controllers\Admin\FacultyController;
 use App\Http\Controllers\Admin\SectionController;
+use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Admin\SubjectController;
 use App\Http\Controllers\Admin\DepartmentController;
+use App\Http\Controllers\Admin\AcademicYearController;
 use App\Http\Controllers\StudentRegistrationController;
 use App\Http\Controllers\Admin\UnverifiedUserController;
 use App\Http\Controllers\Admin\DashboardController as ADDashboardController;
@@ -50,6 +51,7 @@ Route::middleware('auth')->group(function () {
     Route::middleware(['role:admin'])->prefix('admin')->as('admin.')->group(function () {
         Route::get('/dashboard', [ADDashboardController::class, 'index'])->name('dashboard');
 
+        Route::resource('academic-years', AcademicYearController::class);
         Route::resource('strands', StrandController::class)->except(['show']);
         Route::resource('departments', DepartmentController::class);
         Route::resource('faculties', FacultyController::class);
