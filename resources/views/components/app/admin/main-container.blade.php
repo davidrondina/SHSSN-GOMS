@@ -2,28 +2,49 @@
     <x-slot name="sidebar">
         <x-sidebar.wrapper>
             <x-sidebar.link href="{{ route('home') }}">Dashboard</x-sidebar.link>
-            <x-sidebar.dropdown.container>
+            <x-sidebar.dropdown.container :pageIsOnMenu="Request::routeIs([
+                'admin.academic-years.*',
+                'admin.strands.*',
+                'admin.subjects.*',
+                'admin.sections.*',
+            ])">
                 Academic
                 <x-slot name="dropdownItems">
-                    <x-sidebar.link>Manage Academic Years</x-sidebar.link>
-                    <x-sidebar.link href="{{ route('admin.strands.index') }}">Manage Strands</x-sidebar.link>
-                    <x-sidebar.link href="{{ route('admin.subjects.index') }}">Manage Subjects</x-sidebar.link>
-                    <x-sidebar.link href="{{ route('admin.sections.index') }}">Manage Sections</x-sidebar.link>
+                    <x-sidebar.link href="{{ route('admin.academic-years.index') }}"
+                        class="{{ Request::routeIs('admin.academic-years.*') ? 'bg-[#2a447a]' : '' }}">Manage
+                        Academic
+                        Years</x-sidebar.link>
+                    <x-sidebar.link href="{{ route('admin.strands.index') }}"
+                        class="{{ Request::routeIs('admin.strands.*') ? 'bg-[#2a447a]' : '' }}">Manage
+                        Strands</x-sidebar.link>
+                    <x-sidebar.link href="{{ route('admin.subjects.index') }}"
+                        class="{{ Request::routeIs('admin.subjects.*') ? 'bg-[#2a447a]' : '' }}">Manage
+                        Subjects</x-sidebar.link>
+                    <x-sidebar.link href="{{ route('admin.sections.index') }}"
+                        class="{{ Request::routeIs('admin.sections.*') ? 'bg-[#2a447a]' : '' }}">Manage
+                        Sections</x-sidebar.link>
                 </x-slot>
             </x-sidebar.dropdown.container>
-            <x-sidebar.dropdown.container>
+            <x-sidebar.dropdown.container :pageIsOnMenu="Request::routeIs(['admin.faculties.*', 'admin.departments.*'])">
                 Faculty
                 <x-slot name="dropdownItems">
-                    <x-sidebar.link href="{{ route('admin.faculties.index') }}">Manage Faculties</x-sidebar.link>
-                    <x-sidebar.link href="{{ route('admin.departments.index') }}">Manage Departments</x-sidebar.link>
+                    <x-sidebar.link href="{{ route('admin.faculties.index') }}"
+                        class="{{ Request::routeIs('admin.faculties.*') ? 'bg-[#2a447a]' : '' }}">Manage
+                        Faculties</x-sidebar.link>
+                    <x-sidebar.link href="{{ route('admin.departments.index') }}"
+                        class="{{ Request::routeIs('admin.departments.*') ? 'bg-[#2a447a]' : '' }}">Manage
+                        Departments</x-sidebar.link>
                 </x-slot>
             </x-sidebar.dropdown.container>
-            <x-sidebar.link href="{{ route('admin.students.index') }}">Students</x-sidebar.link>
+            <x-sidebar.link href="{{ route('admin.students.index') }}"
+                class="{{ Request::routeIs('admin.students.*') ? 'bg-[#2a447a]' : '' }}">Students</x-sidebar.link>
             <x-sidebar.dropdown.container>
                 Misc
-                <x-slot name="dropdownItems">
+                <x-slot name="dropdownItems" :pageIsOnMenu="Request::routeIs(['admin.unverified-users.*'])">
                     <x-sidebar.link>Verified Users</x-sidebar.link>
-                    <x-sidebar.link href="{{ route('admin.unverified-users.index') }}">Unverified Users</x-sidebar.link>
+                    <x-sidebar.link href="{{ route('admin.unverified-users.index') }}"
+                        class="{{ Request::routeIs('admin.unverified-users.*') ? 'bg-[#2a447a]' : '' }}">Unverified
+                        Users</x-sidebar.link>
                     <x-sidebar.link>Document Guides</x-sidebar.link>
                     <x-sidebar.link>Reports</x-sidebar.link>
                 </x-slot>
