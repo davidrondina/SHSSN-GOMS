@@ -1,7 +1,8 @@
 <?php
 
-use App\Models\AcademicYear;
+use App\Models\Strand;
 use App\Models\Student;
+use App\Models\AcademicYear;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -16,6 +17,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignIdFor(Student::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(AcademicYear::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Strand::class)->constrained()->cascadeOnDelete();
             $table->integer('grade_level');
             $table->timestamps();
         });

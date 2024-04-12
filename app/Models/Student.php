@@ -71,4 +71,14 @@ class Student extends Model
     {
         return $this->belongsToMany(Section::class, 'section_students');
     }
+
+    public function currentEnrolment()
+    {
+        $year = AcademicYear::where('is_current', true)->first();
+
+        return EnrolledStudent::where([
+            ['academic_year_id', $year->id],
+            ['student_id', $this->id]
+        ])->with(['strand'])->first();
+    }
 }

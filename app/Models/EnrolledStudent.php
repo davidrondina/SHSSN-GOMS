@@ -12,6 +12,7 @@ class EnrolledStudent extends Model
     protected $fillable = [
         'student_id',
         'academic_year_id',
+        'strand_id',
         'grade_level',
     ];
 
@@ -23,5 +24,10 @@ class EnrolledStudent extends Model
     public function student()
     {
         return $this->belongsTo(Student::class);
+    }
+
+    public function strand()
+    {
+        return $this->belongsTo(Strand::class);
     }
 }

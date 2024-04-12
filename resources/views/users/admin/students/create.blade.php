@@ -190,14 +190,26 @@
                         class="p-2 accent-primary">
                 </div>
 
-                <div x-cloak x-show="checked">
-                    <x-form.input-label for="grade_level" :value="__('Enroll the student to which grade level?')" />
-                    <x-form.select.select-input name="grade_level" id="grade_level" class="block mt-1 w-full">
-                        <x-form.select.select-option :disabled="true" :selected="true" :option_name="__('Select grade level')" />
+                <div x-cloak x-show="checked" class="flex gap-x-2">
+                    <div class="flex-1">
+                        <x-form.input-label for="grade_level" :value="__('Enroll the student to which grade level?')" />
+                        <x-form.select.select-input name="grade_level" id="grade_level" class="block mt-1 w-full">
+                            <x-form.select.select-option :disabled="true" :selected="true" :option_name="__('Select grade level')" />
 
-                        <x-form.select.select-option :value="11" :option_name="__('Gr. 11')" />
-                        <x-form.select.select-option :value="12" :option_name="__('Gr. 12')" />
-                    </x-form.select.select-input>
+                            <x-form.select.select-option :value="11" :option_name="__('Gr. 11')" />
+                            <x-form.select.select-option :value="12" :option_name="__('Gr. 12')" />
+                        </x-form.select.select-input>
+                    </div>
+                    <div class="flex-1">
+                        <x-form.input-label for="strand" :value="__('Strand')" />
+                        <x-form.select.select-input name="strand" id="strand" class="block mt-1 w-full">
+                            <x-form.select.select-option :disabled="true" :selected="true" :option_name="__('Select a strand')" />
+
+                            @foreach ($strands as $str)
+                                <x-form.select.select-option :value="$str->id" :option_name="$str->abbr" />
+                            @endforeach
+                        </x-form.select.select-input>
+                    </div>
                 </div>
             </div>
 

@@ -52,7 +52,9 @@ class StudentController extends Controller
      */
     public function create()
     {
-        return view('users.admin.students.create');
+        $strands = $this->strands;
+
+        return view('users.admin.students.create', compact(['strands']));
     }
 
     public function enrollToCurrentYear(Request $request, string $id)
@@ -60,11 +62,15 @@ class StudentController extends Controller
         $year = $this->currentAY;
         $student = Student::find($id);
 
-        $request->validate(['grade_level' => 'required']);
+        $request->validate([
+            'grade_level' => 'required',
+            'strand' => 'required'
+        ]);
 
         EnrolledStudent::create([
             'student_id' => $id,
             'academic_year_id' => $year->id,
+            'strand_id' => $request->strand,
             'grade_level' => $request->grade_level,
         ]);
 
@@ -124,10 +130,16 @@ class StudentController extends Controller
         $registered_student = Student::create($student_fields);
 
         if ($request->has('enroll_student')) {
+            $request->validate([
+                'strand' => 'required',
+                'grade_level' => 'required',
+            ]);
+
             if ($request->grade_level) {
                 EnrolledStudent::create([
                     'student_id' => $registered_student->id,
                     'academic_year_id' => $year->id,
+                    'strand_id' => $request->strand,
                     'grade_level' => $request->grade_level,
                 ]);
             }
@@ -141,9 +153,10 @@ class StudentController extends Controller
      */
     public function show(string $id)
     {
+        $strands = $this->strands;
         $student = Student::find($id);
 
-        return view('users.admin.students.show', compact(['student']));
+        return view('users.admin.students.show', compact(['student', 'strands']));
     }
 
     /**

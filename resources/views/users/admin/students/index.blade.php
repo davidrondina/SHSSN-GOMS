@@ -47,7 +47,7 @@
             <x-tablist.item href="{{ route('admin.students.index') . '?view=enrolled' }}"
                 class="{{ Request::getRequestUri() === '/admin/students?view=enrolled' ? 'tab-active font-semibold' : '' }}">Enrolled
                 {{ '(A.Y. ' . $year->getFullYear() . ')' }}</x-tablist.item>
-            <x-tablist.item href="{{ route('admin.students.index') . '?view=notenrolled' }}"
+            <x-tablist.item href="{{ route('admin.students.index') . '/admin/students?view=notenrolled' }}"
                 class="{{ Request::getRequestUri() === '/admin/students?view=notenrolled' ? 'tab-active font-semibold' : '' }}">Not
                 Enrolled</x-tablist.item>
         </x-tablist.container>
@@ -58,6 +58,10 @@
                     <x-table.header-cell :scope="__('col')">LRN</x-table.header-cell>
                     <x-table.header-cell :scope="__('col')">Student Name</x-table.header-cell>
                     <x-table.header-cell :scope="__('col')">Enrolled\Not enrolled</x-table.header-cell>
+                    @if (Request::getRequestUri() === '/admin/students?view=enrolled')
+                        <x-table.header-cell :scope="__('col')">Grade Lvl</x-table.header-cell>
+                        <x-table.header-cell :scope="__('col')">Strand</x-table.header-cell>
+                    @endif
                     <x-table.header-cell :scope="__('col')">Actions</x-table.header-cell>
                 </tr>
             </x-table.head>
@@ -101,6 +105,13 @@
                         <x-table.header-cell :scope="__('row')">{{ $stu->lrn }}</x-table.header-cell>
                         <x-table.regular-cell>{{ $stu->getFullName() }}</x-table.regular-cell>
                         <x-table.regular-cell>{{ $stu->isEnrolledToCurrentAY() ? 'Enrolled' : 'Not Enrolled' }}</x-table.regular-cell>
+                        @if (Request::getRequestUri() === '/admin/students?view=enrolled')
+                            @php
+                                $enrolment_info = $stu->currentEnrolment();
+                            @endphp
+                            <x-table.regular-cell>{{ $enrolment_info->grade_level }}</x-table.regular-cell>
+                            <x-table.regular-cell>{{ $enrolment_info->strand->abbr }}</x-table.regular-cell>
+                        @endif
                         <x-table.regular-cell>
                             <div class="flex gap-x-3">
                                 <a href="{{ route('admin.students.show', $stu->id) }}" class="btn btn-sm btn-accent"><i

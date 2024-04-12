@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\User;
+use App\Models\Strand;
 use App\Enums\UserRole;
 use App\Models\Profile;
 use App\Models\Student;
@@ -27,6 +28,11 @@ class DatabaseSeeder extends Seeder
             'start' => 2024,
             'end' => 2025,
             'is_current' => true
+        ]);
+
+        $gas_strand = Strand::create([
+            'name' => 'General Academic Strand',
+            'abbr' => 'GAS',
         ]);
 
         $user_roles = UserRole::cases();
@@ -62,12 +68,13 @@ class DatabaseSeeder extends Seeder
         // Enroll students to current AY
         $enrolled_students = Student::factory(10)->create();
 
-        collect($enrolled_students)->map(function ($stu) {
+        collect($enrolled_students)->map(function ($stu) use ($gas_strand) {
             $year = AcademicYear::where('is_current', true)->first();
 
             EnrolledStudent::create([
                 'student_id' => $stu->id,
                 'academic_year_id' => $year->id,
+                'strand_id' => $gas_strand->id,
                 'grade_level' => 11,
             ]);
         });

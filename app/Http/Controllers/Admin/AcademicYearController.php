@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use Closure;
+use App\Models\Strand;
 use App\Models\AcademicYear;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -75,7 +76,11 @@ class AcademicYearController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $year = AcademicYear::find($id);
+        $sections = $year->sections;
+        $strands = Strand::orderBy('abbr')->get();
+
+        return view('users.admin.academic-years.show', compact(['sections', 'year', 'strands']));
     }
 
     /**

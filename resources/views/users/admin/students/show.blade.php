@@ -23,7 +23,7 @@
                         </button>
 
                         <x-slot name="header">
-                            Choose grade level
+                            Choose grade level & strand
                         </x-slot>
 
                         <x-slot name="body">
@@ -45,6 +45,17 @@
                                 </div>
 
                                 <div>
+                                    <x-form.select.select-input name="strand" id="strand" class="block mt-1 w-full">
+                                        <x-form.select.select-option :disabled="true" :selected="true"
+                                            :option_name="__('Select a strand')" />
+
+                                        @foreach ($strands as $str)
+                                            <x-form.select.select-option :value="$str->id" :option_name="$str->abbr" />
+                                        @endforeach
+                                    </x-form.select.select-input>
+                                </div>
+
+                                <div class="flex justify-end">
                                     <button class="flex btn btn-success font-poppins uppercase">Enroll</button>
                                 </div>
                             </form>
