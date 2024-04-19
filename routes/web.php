@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Admin\SubjectController;
 use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\AcademicYearController;
+use App\Http\Controllers\Admin\VerifiedUserController;
 use App\Http\Controllers\StudentRegistrationController;
 use App\Http\Controllers\Admin\UnverifiedUserController;
 use App\Http\Controllers\Admin\DashboardController as ADDashboardController;
@@ -68,12 +69,19 @@ Route::middleware('auth')->group(function () {
         Route::prefix('students')->as('students.')->group(function () {
             Route::post('/{id}/enroll', [StudentController::class, 'enrollToCurrentYear'])->name('enroll');
         });
-        Route::prefix('unverified-users')->as('unverified-users.')->group(function () {
-            Route::get('/', [UnverifiedUserController::class, 'index'])->name('index');
-            Route::get('/{id}', [UnverifiedUserController::class, 'show'])->name('show');
-            Route::post('/{id}/approve', [UnverifiedUserController::class, 'approve'])->name('approve');
-            Route::delete('/{id}/reject', [UnverifiedUserController::class, 'reject'])->name('reject');
-            Route::delete('/{id}', [UnverifiedUserController::class, 'destroy'])->name('destroy');
+        Route::prefix('users')->as('users.')->group(function () {
+            Route::prefix('verified')->as('verified.')->group(function () {
+                Route::get('/', [VerifiedUserController::class, 'index'])->name('index');
+                Route::delete('/{id}', [VerifiedUserController::class, 'destroy'])->name('destroy');
+            });
+
+            Route::prefix('unverified')->as('unverified.')->group(function () {
+                Route::get('/', [UnverifiedUserController::class, 'index'])->name('index');
+                Route::get('/{id}', [UnverifiedUserController::class, 'show'])->name('show');
+                Route::post('/{id}/approve', [UnverifiedUserController::class, 'approve'])->name('approve');
+                Route::delete('/{id}/reject', [UnverifiedUserController::class, 'reject'])->name('reject');
+                Route::delete('/{id}', [UnverifiedUserController::class, 'destroy'])->name('destroy');
+            });
         });
     });
 

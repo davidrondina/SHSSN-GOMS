@@ -19,14 +19,14 @@ class UnverifiedUserController extends Controller
     {
         $users = UnverifiedUser::where('status', RegisterStatus::UNVERIFIED->value)->latest()->get();
 
-        return view('users.admin.unverified-users.index', compact(['users']));
+        return view('users.admin.users.unverified.index', compact(['users']));
     }
 
     public function show(string $id)
     {
         $user = UnverifiedUser::find($id);
 
-        return view('users.admin.unverified-users.show', compact(['user']));
+        return view('users.admin.users.unverified.show', compact(['user']));
     }
 
     public function approve(string $id)
@@ -66,7 +66,7 @@ class UnverifiedUserController extends Controller
             'status' => RegisterStatus::VERIFIED->value
         ]);
 
-        return to_route('admin.unverified-users.index')->with('success_message', 'Student & guardian info registered successfully.');
+        return to_route('admin.users.unverified.index')->with('success_message', 'Student & guardian info registered successfully.');
     }
 
     // TODO: Send email to student's email address
@@ -98,7 +98,7 @@ class UnverifiedUserController extends Controller
 
         $user->delete();
 
-        return to_route('admin.unverified-users.index')->with('success_message', 'Unverified student deleted successfully.');
+        return to_route('admin.users.unverified.index')->with('success_message', 'Unverified student deleted successfully.');
     }
 
     public function destroy(string $id)
@@ -108,6 +108,6 @@ class UnverifiedUserController extends Controller
 
         // $user->delete();
 
-        // return to_route('admin.unverified-users.index')->with('success_message', 'Unverified student deleted successfully.');
+        // return to_route('admin.users.unverified.index')->with('success_message', 'Unverified student deleted successfully.');
     }
 }

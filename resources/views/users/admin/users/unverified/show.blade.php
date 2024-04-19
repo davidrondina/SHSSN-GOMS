@@ -1,5 +1,5 @@
 <x-app.admin.main-container>
-    <x-app.page-header :show_back_btn="true" :back_btn_url="route('admin.unverified-users.index')" />
+    <x-app.page-header :show_back_btn="true" :back_btn_url="route('admin.users.unverified.index')" />
 
     <x-card class="px-6 py-5 flex flex-col gap-y-5">
         <div class="card-title justify-between">
@@ -14,13 +14,13 @@
             </div>
 
             <div class="flex gap-x-3">
-                <form action="{{ route('admin.unverified-users.approve', $user->id) }}" method="post">
+                <form action="{{ route('admin.users.unverified.approve', $user->id) }}" method="post">
                     @csrf
 
                     <button class="btn btn-sm btn-success"><i
                             class="ri-checkbox-circle-line font-normal"></i>Approve</button>
                 </form>
-                <form action="{{ route('admin.unverified-users.reject', $user->id) }}" method="post">
+                <form action="{{ route('admin.users.unverified.reject', $user->id) }}" method="post">
                     @csrf
                     @method('DELETE')
 

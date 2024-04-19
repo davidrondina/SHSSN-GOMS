@@ -40,10 +40,12 @@
                 class="{{ Request::routeIs('admin.students.*') ? 'bg-[#2a447a]' : '' }}">Students</x-sidebar.link>
             <x-sidebar.dropdown.container>
                 Misc
-                <x-slot name="dropdownItems" :pageIsOnMenu="Request::routeIs(['admin.unverified-users.*'])">
-                    <x-sidebar.link>Verified Users</x-sidebar.link>
-                    <x-sidebar.link href="{{ route('admin.unverified-users.index') }}"
-                        class="{{ Request::routeIs('admin.unverified-users.*') ? 'bg-[#2a447a]' : '' }}">Unverified
+                <x-slot name="dropdownItems" :pageIsOnMenu="Request::routeIs(['admin.users.verified.*', 'admin.users.unverified.*'])">
+                    <x-sidebar.link href="{{ route('admin.users.verified.index') }}"
+                        class="{{ Request::routeIs('admin.users.verified.*') ? 'bg-[#2a447a]' : '' }}">Verified
+                        Users</x-sidebar.link>
+                    <x-sidebar.link href="{{ route('admin.users.unverified.index') }}"
+                        class="{{ Request::routeIs('admin.users.unverified.*') ? 'bg-[#2a447a]' : '' }}">Unverified
                         Users</x-sidebar.link>
                     <x-sidebar.link>Document Guides</x-sidebar.link>
                     <x-sidebar.link>Reports</x-sidebar.link>
