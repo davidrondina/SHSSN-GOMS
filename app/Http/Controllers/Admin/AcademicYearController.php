@@ -22,7 +22,7 @@ class AcademicYearController extends Controller
      */
     public function index()
     {
-        $academic_years = AcademicYear::whereNot('is_current', true)->latest()->paginate(30);
+        $academic_years = AcademicYear::whereNot('is_current', true)->latest()->paginate(30)->withQueryString();
 
         return view('users.admin.academic-years.index', compact(['academic_years']));
     }
@@ -78,6 +78,7 @@ class AcademicYearController extends Controller
     {
         $year = AcademicYear::find($id);
         $sections = $year->sections;
+        $sections = $sections->paginate(30)->withQueryString();
         $strands = Strand::orderBy('abbr')->get();
 
         return view('users.admin.academic-years.show', compact(['sections', 'year', 'strands']));

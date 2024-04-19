@@ -20,13 +20,13 @@
                         <x-form.search-form :form_action="__('#')" :placeholder="__('Search student name')" class="w-full" />
 
                         <form action="" method="get" class="flex gap-x-2">
-                            {{-- <x-form.select.select-input>
+                            <x-form.select.select-input>
                                 @foreach ($strands as $str)
                                     <x-form.select.select-option :disabled="true" :selected="true"
                                         :option_name="__('Filter by strand')" />
                                     <x-form.select.select-option :value="$str->id" :option_name="$str->abbr" />
                                 @endforeach
-                            </x-form.select.select-input> --}}
+                            </x-form.select.select-input>
 
                             <x-form.select.select-input>
                                 <x-form.select.select-option :disabled="true" :selected="true" :option_name="__('Filter by grade level')" />
