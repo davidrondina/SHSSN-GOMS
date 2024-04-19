@@ -162,7 +162,6 @@ Alpine.data('studentRegForm', () => ({
     }
 }));
 
-
 window.Alpine = Alpine;
 
 Alpine.plugin(anchor);

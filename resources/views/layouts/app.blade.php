@@ -24,6 +24,8 @@
 
     <script src="https://cdn.jsdelivr.net/npm/validatorjs@3.22.1/dist/validator.min.js"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
     <style>
         [x-cloak] {
             display: none !important;
