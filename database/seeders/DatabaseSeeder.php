@@ -43,15 +43,22 @@ class DatabaseSeeder extends Seeder
             ]);
         });
 
-        // Create admin user & profile
+        // Create admin and counselor user & profile
         $admin_user = User::factory()->create([
             'email' => 'test@example.com',
             'password' => Hash::make('1234'),
         ]);
 
+        $counselor_user = User::factory()->create([
+            'email' => 'counselor@example.com',
+            'password' => Hash::make('1234'),
+        ]);
+
         $admin_role = Role::where('name', UserRole::AD->value)->first();
+        $counselor_role = Role::where('name', UserRole::CO->value)->first();
 
         $admin_user->assignRole($admin_role);
+        $counselor_user->assignRole($counselor_role);
 
         Profile::create([
             'user_id' => $admin_user->id,
@@ -63,10 +70,20 @@ class DatabaseSeeder extends Seeder
             'address' => 'Bacoor City, Cavite',
         ]);
 
+        Profile::create([
+            'user_id' => $counselor_user->id,
+            'first_name' => 'Counselor',
+            'surname' => 'User',
+            'sex' => 'Male',
+            'phone_no' => '09123456789',
+            'birthdate' => '1999-01-01',
+            'address' => 'Bacoor City, Cavite',
+        ]);
+
         $this->call([FacultySeeder::class]);
 
         // Enroll students to current AY
-        $enrolled_students = Student::factory(10)->create();
+        $enrolled_students = Student::factory(20)->create();
 
         collect($enrolled_students)->map(function ($stu) use ($gas_strand) {
             $year = AcademicYear::where('is_current', true)->first();
