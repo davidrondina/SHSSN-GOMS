@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Counselor\AppointmentController;
+use App\Http\Controllers\Faculty\DashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
@@ -16,6 +17,7 @@ use App\Http\Controllers\StudentRegistrationController;
 use App\Http\Controllers\Admin\UnverifiedUserController;
 use App\Http\Controllers\Admin\DashboardController as ADDashboardController;
 use App\Http\Controllers\Counselor\DashboardController as CODashboardController;
+use App\Http\Controllers\Faculty\DashboardController as FADashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -90,6 +92,10 @@ Route::middleware('auth')->group(function () {
         Route::get('/dashboard', [CODashboardController::class, 'index'])->name('dashboard');
 
         Route::resource('appointments', AppointmentController::class);
+    });
+
+    Route::middleware(['role:faculty'])->prefix('faculty')->as('faculty.')->group(function () {
+        Route::get('/dashboard', [FADashboardController::class , 'index'])->name('dashboard');
     });
 });
 
