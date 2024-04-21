@@ -1,6 +1,6 @@
 @props(['show_back_btn' => false, 'back_btn_url', 'show_title' => false, 'title'])
 
-<div class="w-full mb-3 flex flex-col gap-y-2">
+<div class="w-full mb-5 flex flex-col gap-y-2">
     @if ($show_back_btn)
         <div class="mb-3">
             <a href="{{ $back_btn_url }}" class="btn btn-sm inline-flex items-center gap-x-2"><i

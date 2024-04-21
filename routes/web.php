@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Counselor\AppointmentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
@@ -87,6 +88,8 @@ Route::middleware('auth')->group(function () {
 
     Route::middleware(['role:counselor'])->prefix('counselor')->as('counselor.')->group(function () {
         Route::get('/dashboard', [CODashboardController::class, 'index'])->name('dashboard');
+
+        Route::resource('appointments', AppointmentController::class);
     });
 });
 
