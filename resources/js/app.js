@@ -5,6 +5,36 @@ import anchor from '@alpinejs/anchor';
 import axios from "axios";
 import * as Validator from 'validatorjs';
 
+Alpine.data('quillEditor', () => ({
+    content: null,
+
+    init() {
+        const quill = new Quill(this.$refs.editor, {
+            modules: {
+                toolbar: [
+                    ['bold', 'italic'],
+                    ['link'],
+                    [{
+                        list: 'ordered'
+                    }, {
+                        list: 'bullet'
+                    }],
+                ],
+            },
+            theme: 'snow',
+        });
+
+        quill.on("editor-change", (eventName, ...args) => {
+            if (eventName === "text-change") {
+                this.content = quill.root.innerHTML;
+
+
+                console.log(this.content);
+            }
+        });
+    }
+}));
+
 Alpine.data('studentRegForm', () => ({
     step: 1,
     data: {
