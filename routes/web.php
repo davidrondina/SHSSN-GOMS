@@ -18,6 +18,7 @@ use App\Http\Controllers\Admin\UnverifiedUserController;
 use App\Http\Controllers\Admin\DashboardController as ADDashboardController;
 use App\Http\Controllers\Counselor\DashboardController as CODashboardController;
 use App\Http\Controllers\Faculty\DashboardController as FADashboardController;
+use App\Http\Controllers\Faculty\ComplaintController;
 
 /*
 |--------------------------------------------------------------------------
@@ -95,7 +96,9 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::middleware(['role:faculty'])->prefix('faculty')->as('faculty.')->group(function () {
-        Route::get('/dashboard', [FADashboardController::class , 'index'])->name('dashboard');
+        Route::get('/dashboard', [FADashboardController::class, 'index'])->name('dashboard');
+
+        Route::resource('complaints', ComplaintController::class);
     });
 });
 

@@ -2,13 +2,14 @@
     <x-slot name="sidebar">
         <x-sidebar.wrapper>
             <x-sidebar.link href="{{ route('home') }}"
-                class="{{ Request::routeIs('counselor.dashboard') ? 'bg-[#2a447a]' : '' }}">Dashboard</x-sidebar.link>
+                class="{{ Request::routeIs('faculty.dashboard') ? 'bg-[#2a447a]' : '' }}">Dashboard</x-sidebar.link>
             <x-sidebar.link href="#"
                 class="{{ Request::routeIs('admin.students.*') ? 'bg-[#2a447a]' : '' }}">Advisory</x-sidebar.link>
             <x-sidebar.link href="#"
                 class="{{ Request::routeIs('counselor.appointments.*') ? 'bg-[#2a447a]' : '' }}">My
                 Classes</x-sidebar.link>
-            <x-sidebar.link href="#" class="{{ Request::routeIs('admin.students.*') ? 'bg-[#2a447a]' : '' }}">My
+            <x-sidebar.link href="{{ route('faculty.complaints.index') }}"
+                class="{{ Request::routeIs('faculty.complaints.*') ? 'bg-[#2a447a]' : '' }}">My
                 Complaints</x-sidebar.link>
         </x-sidebar.wrapper>
     </x-slot>

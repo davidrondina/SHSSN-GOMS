@@ -22,6 +22,11 @@ class Student extends Model
         'phone_no',
     ];
 
+    public function complaintsReceived()
+    {
+        return $this->hasMany(Complaint::class, 'student_id');
+    }
+
     public function enrolments()
     {
         return $this->hasMany(EnrolledStudent::class);

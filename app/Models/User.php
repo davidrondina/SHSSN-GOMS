@@ -48,9 +48,14 @@ class User extends Authenticatable
         return $this->hasMany(DocumentAcquisition::class);
     }
 
-    public function complaints()
+    // public function complaintsReceived()
+    // {
+    //     return $this->hasMany(Complaint::class, 'student_user_id');
+    // }
+
+    public function complaintsSubmitted()
     {
-        return $this->hasMany(Report::class, 'student_user_id');
+        return $this->hasMany(Complaint::class, 'faculty_user_id');
     }
 
     public function facultyInfo()
@@ -66,6 +71,11 @@ class User extends Authenticatable
     public function reports()
     {
         return $this->hasMany(Report::class, 'student_user_id');
+    }
+
+    public function reportsSubmitted()
+    {
+        return $this->hasMany(Complaint::class, 'faculty_user_id');
     }
 
     public function studentInfo()
