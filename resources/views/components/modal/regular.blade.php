@@ -46,7 +46,7 @@
 
                     <div class="w-full mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                         @isset($header)
-                            <h3 class="flex items-center text-lg leading-6 font-semibold" id="modal-headline">
+                            <h3 class="mb-4 flex items-center text-lg leading-6 font-semibold" id="modal-headline">
                                 {{ $header }}
                             </h3>
                         @endisset

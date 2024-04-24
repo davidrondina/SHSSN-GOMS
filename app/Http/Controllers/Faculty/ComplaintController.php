@@ -67,7 +67,7 @@ class ComplaintController extends Controller
             'additional_info' => $request->additional_info
         ]);
 
-        dd($complaint);
+        // dd($complaint);
 
         return to_route('faculty.complaints.index')->with('success_message', 'Complaint has been submitted');
     }
