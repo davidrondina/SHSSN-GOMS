@@ -1,9 +1,10 @@
 <?php
 
-use App\Models\Report;
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
+use App\Models\Complaint;
+use App\Models\Appointment;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration {
     /**
@@ -13,7 +14,7 @@ return new class extends Migration {
     {
         Schema::create('appointments', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Report::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Complaint::class)->constrained()->cascadeOnDelete();
             $table->dateTime('start_date');
             $table->dateTime('end_date');
             $table->timestamps();

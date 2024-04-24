@@ -10,10 +10,16 @@ class Appointment extends Model
     use HasFactory;
 
     protected $fillable = [
-        'report_id',
+        // 'report_id',
+        'complaint_id',
         'start_date',
         'end_date',
     ];
+
+    public function complaint()
+    {
+        return $this->belongsTo(Complaint::class);
+    }
 
     public function report()
     {
