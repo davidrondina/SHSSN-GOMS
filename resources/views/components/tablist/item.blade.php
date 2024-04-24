@@ -1,1 +1,1 @@
-<a role="tab" {!! $attributes->merge(['class' => 'tab']) !!}>{{ $slot }}</a>
+<a role="tab" {!! $attributes->merge(['class' => 'tab text-base']) !!}>{{ $slot }}</a>

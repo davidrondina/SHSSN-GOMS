@@ -1,3 +1,3 @@
-<div role="tablist" {!! $attributes->merge(['class' => 'tabs tabs-bordered font-fs']) !!}>
+<div role="tablist" {!! $attributes->merge(['class' => 'w-fit tabs tabs-bordered font-fs']) !!}>
     {{ $slot }}
 </div>

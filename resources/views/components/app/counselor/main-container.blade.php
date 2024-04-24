@@ -39,7 +39,7 @@
             </x-sidebar.dropdown.container> --}}
             <x-sidebar.link href="{{ route('counselor.appointments.index') }}"
                 class="{{ Request::routeIs('counselor.appointments.*') ? 'bg-[#2a447a]' : '' }}">Appointments</x-sidebar.link>
-            <x-sidebar.link href="#"
+            <x-sidebar.link href="{{ route('counselor.complaints.index') }}"
                 class="{{ Request::routeIs('admin.students.*') ? 'bg-[#2a447a]' : '' }}">Complaints</x-sidebar.link>
             {{-- <x-sidebar.dropdown.container>
                 Misc
