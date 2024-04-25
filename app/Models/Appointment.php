@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Appointment extends Model
 {
@@ -24,5 +25,10 @@ class Appointment extends Model
     public function report()
     {
         return $this->belongsTo(Report::class);
+    }
+
+    public function upcomingAppointments()
+    {
+        return $this->whereDate('start_date', '>=', Carbon::today());
     }
 }

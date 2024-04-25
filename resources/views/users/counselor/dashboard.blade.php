@@ -1,3 +1,7 @@
+@php
+    use Carbon\Carbon;
+@endphp
+
 <x-app.counselor.main-container>
     <main class="w-full flex-grow">
         <x-app.page-header :show_title="true" :title="__('Hello, ') . Auth::user()->profile->first_name" />
@@ -18,7 +22,7 @@
                                 <h2 class="font-semibold uppercase text-sm text-gray-500">Total Cases</h2>
 
                                 <div>
-                                    <span class="text-2xl truncate font-semibold">200000</span>
+                                    <span class="text-2xl truncate font-semibold">{{ $cases_count }}</span>
                                 </div>
                             </div>
                         </x-card>
@@ -33,7 +37,7 @@
                                 <h2 class="font-semibold uppercase text-sm text-gray-500">Upcoming Appointments</h2>
 
                                 <div>
-                                    <span class="text-2xl truncate font-semibold">20</span>
+                                    <span class="text-2xl truncate font-semibold">{{ $upcoming_apps->count() }}</span>
                                 </div>
                             </div>
                         </x-card>
@@ -74,30 +78,28 @@
                             <a href="{{ route('counselor.appointments.index') }}" class="btn-link">See More</a>
                         </div>
 
-                        <ul class="flex flex-col gap-y-2 text-sm">
-                            <li class="flex justify-between items-center">
-                                <div class="flex flex-col gap-y-1">
-                                    <span class="font-semibold">Complainant: David Rondina</span>
-                                    <span class="text-xs text-gray-500">4:00PM - 5:00PM</span>
-                                </div>
+                        <ul class="max-h-[300px] flex flex-col gap-y-2 text-sm overflow-y-auto">
+                            @forelse ($weekly_apps as $app)
+                                @php
+                                    $respondent = $app->complaint->respondent;
+                                @endphp
 
-                                <div class="tooltip" data-tip="View">
-                                    <a href="#" class="btn btn-outline btn-primary btn-circle"><i
-                                            class="ri-arrow-right-up-line"> </i></a>
-                                </div>
-                            </li>
+                                <li class="flex justify-between items-center">
+                                    <div class="flex flex-col gap-y-1">
+                                        <span class="font-semibold">Respondent: {{ $respondent->getFullName() }}</span>
+                                        <span
+                                            class="text-xs text-gray-500">{{ Carbon::parse($app->start_date)->format('l, M. d') . ', ' . Carbon::parse($app->start_date)->format('g:i A') . ' - ' . Carbon::parse($app->end_date)->format('g:i A') }}</span>
+                                    </div>
 
-                            <li class="flex justify-between items-center">
-                                <div class="flex flex-col gap-y-1">
-                                    <span class="font-semibold">Complainant: David Rondina</span>
-                                    <span class="text-xs text-gray-500">5:00PM - 6:00PM</span>
-                                </div>
-
-                                <div class="tooltip" data-tip="View">
-                                    <a href="#" class="btn btn-outline btn-primary btn-circle"><i
-                                            class="ri-arrow-right-up-line"> </i></a>
-                                </div>
-                            </li>
+                                    <div class="tooltip" data-tip="View">
+                                        <a href="{{ route('counselor.appointments.show', $app->id) }}"
+                                            class="btn btn-outline btn-primary btn-circle"><i
+                                                class="ri-arrow-right-up-line"> </i></a>
+                                    </div>
+                                </li>
+                            @empty
+                                <li class="text-center text-gray-500">There are no upcoming appoitments.</li>
+                            @endforelse
                         </ul>
                     </div>
                 </x-card>
@@ -187,7 +189,7 @@
                     options: {
                         series: [{
                             name: "Cases submitted",
-                            data: [10, 41, 35, 51]
+                            data: {{ json_encode($cases) }}
                         }],
                         chart: {
                             height: 350,
@@ -209,7 +211,7 @@
                             },
                         },
                         xaxis: {
-                            categories: ['Jan', 'Feb', 'Mar', 'Apr', ],
+                            categories: @php echo json_encode($month_names) @endphp,
                         }
                     },
 
