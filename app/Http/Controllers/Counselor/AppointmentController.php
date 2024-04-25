@@ -101,7 +101,12 @@ class AppointmentController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $appointment = Appointment::find($id);
+        $complaint = $appointment->complaint;
+        $respondent = $complaint->respondent;
+        $respondent_guardian = $respondent->guardian;
+
+        return view('users.counselor.appointments.show', compact(['appointment', 'complaint', 'respondent', 'respondent_guardian']));
     }
 
     /**
