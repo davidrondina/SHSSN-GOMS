@@ -20,7 +20,7 @@
             <x-tablist.item href="{{ route('counselor.complaints.index') }}"
                 class="{{ Request::getRequestUri() === '/counselor/complaints' ? 'tab-active font-semibold' : '' }}">Pending</x-tablist.item>
             <x-tablist.item href="{{ route('counselor.complaints.index') . '?view=closed' }}"
-                class="{{ Request::getRequestUri() === '/counselor/students?view=closed' ? 'tab-active font-semibold' : '' }}">Closed</x-tablist.item>
+                class="{{ Request::getRequestUri() === '/counselor/complaints?view=closed' ? 'tab-active font-semibold' : '' }}">Closed</x-tablist.item>
         </x-tablist.container>
 
         <x-table.wrapper>

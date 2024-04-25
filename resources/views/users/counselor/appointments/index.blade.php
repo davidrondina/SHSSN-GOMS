@@ -1,3 +1,7 @@
+@php
+    use Carbon\Carbon;
+@endphp
+
 <x-app.counselor.main-container>
     <main class="w-full flex-grow">
         <x-app.page-header :show_title="true" :title="__('Appointments')">
@@ -57,19 +61,29 @@
                         <h2 class="font-bold text-lg">Upcoming appointments</h2>
 
                         <ul class="max-h-[300px] flex flex-col gap-y-2 text-sm overflow-y-auto">
-                            <li class="flex justify-between items-center">
-                                <div class="flex flex-col gap-y-1">
-                                    <span class="font-semibold">Respondent: David Rondina</span>
-                                    <span class="text-xs text-gray-500">4:00PM - 5:00PM</span>
-                                </div>
+                            @forelse ($upcoming_apps as $app)
+                                @php
+                                    $respondent = $app->complaint->respondent;
+                                @endphp
 
-                                <div class="tooltip" data-tip="View">
-                                    <a href="#" class="btn btn-outline btn-primary btn-circle"><i
-                                            class="ri-arrow-right-up-line"> </i></a>
-                                </div>
-                            </li>
+                                <li class="flex justify-between items-center">
+                                    <div class="flex flex-col gap-y-1">
+                                        <span class="font-semibold">Respondent: {{ $respondent->getFullName() }}</span>
+                                        <span
+                                            class="text-xs text-gray-500">{{ Carbon::parse($app->start_date)->format('l, M. d') . ', ' . Carbon::parse($app->start_date)->format('g:i A') . ' - ' . Carbon::parse($app->end_date)->format('g:i A') }}</span>
+                                    </div>
 
-                            <li class="flex justify-between items-center">
+                                    <div class="tooltip" data-tip="View">
+                                        <a href="{{ route('counselor.appointments.show', $app->id) }}"
+                                            class="btn btn-outline btn-primary btn-circle"><i
+                                                class="ri-arrow-right-up-line"> </i></a>
+                                    </div>
+                                </li>
+                            @empty
+                                <li class="text-center text-gray-500">There are no upcoming appoitments.</li>
+                            @endforelse
+
+                            {{-- <li class="flex justify-between items-center">
                                 <div class="flex flex-col gap-y-1">
                                     <span class="font-semibold">Respondent: David Rondina</span>
                                     <span class="text-xs text-gray-500">5:00PM - 6:00PM</span>
@@ -79,7 +93,7 @@
                                     <a href="#" class="btn btn-outline btn-primary btn-circle"><i
                                             class="ri-arrow-right-up-line"> </i></a>
                                 </div>
-                            </li>
+                            </li> --}}
                         </ul>
                     </div>
                 </x-card>

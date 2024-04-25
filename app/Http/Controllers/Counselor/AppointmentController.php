@@ -29,9 +29,12 @@ class AppointmentController extends Controller
             ];
         }
 
+        $appointment_obj = new Appointment();
+        $upcoming_apps = $appointment_obj->upcomingAppointments()->get();
+
         // dd($appointments);
 
-        return view('users.counselor.appointments.index', compact(['appointments']));
+        return view('users.counselor.appointments.index', compact(['appointments', 'upcoming_apps']));
     }
 
     /**
