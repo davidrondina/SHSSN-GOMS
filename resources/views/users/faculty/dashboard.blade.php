@@ -1,3 +1,8 @@
+@php
+    use App\Models\Subject;
+    use App\Models\SectionSubject;
+@endphp
+
 <x-app.faculty.main-container>
     <main class="w-full flex-grow">
         <x-app.page-header :show_title="true" :title="__('Hello, ') . Auth::user()->profile->first_name" />
@@ -19,7 +24,7 @@
                                 <h2 class="font-semibold uppercase text-sm text-gray-500">Subjects</h2>
 
                                 <div>
-                                    <span class="text-2xl truncate font-semibold">2</span>
+                                    <span class="text-2xl truncate font-semibold">{{ $fac_subjects->count() }}</span>
                                 </div>
                             </div>
                         </x-card>
@@ -34,7 +39,8 @@
                                 <h2 class="font-semibold uppercase text-sm text-gray-500">Complaints Submitted</h2>
 
                                 <div>
-                                    <span class="text-2xl truncate font-semibold">4</span>
+                                    <span
+                                        class="text-2xl truncate font-semibold">{{ Auth::user()->complaintsSubmitted->count() }}</span>
                                 </div>
                             </div>
                         </x-card>
@@ -101,10 +107,12 @@
                         <div class="flex flex-col gap-y-2">
                             <div class="flex justify-between items-center">
                                 <h3 class="text-lg font-bold">Advisory (A.Y. {{ $year->getFullYear() }})</h3>
-                                <a href="#" class="btn-link">See Info</a>
+                                @if ($current_advisory)
+                                    <a href="#" class="btn-link">See Info</a>
+                                @endif
                             </div>
 
-                            <h4 class="font-bold font-fs text-gray-500">GAS 11-A</h4>
+                            <h4 class="font-bold font-fs text-gray-500">{{ $current_advisory->name }}</h4>
                         </div>
 
                         <div class="font-fs grid grid-cols-1 md:grid-cols-2">
@@ -119,7 +127,8 @@
                                     <h2 class="font-semibold uppercase text-sm text-gray-500">Students</h2>
 
                                     <div>
-                                        <span class="text-2xl truncate font-semibold">35</span>
+                                        <span
+                                            class="text-2xl truncate font-semibold">{{ $current_advisory->students->count() }}</span>
                                     </div>
                                 </div>
                             </x-card>
@@ -135,7 +144,8 @@
                                     <h2 class="font-semibold uppercase text-sm text-gray-500">Subjects</h2>
 
                                     <div>
-                                        <span class="text-2xl truncate font-semibold">7</span>
+                                        <span
+                                            class="text-2xl truncate font-semibold">{{ $current_advisory->subjects->count() }}</span>
                                     </div>
                                 </div>
                             </x-card>
@@ -149,30 +159,30 @@
                             <a href="#" class="btn-link">See More</a>
                         </div>
 
-                        <ul class="flex flex-col gap-y-2 text-sm">
-                            <li class="flex justify-between items-center">
-                                <div class="flex flex-col gap-y-1">
-                                    <span class="font-semibold">Reading and Writing</span>
-                                    <span class="text-xs text-gray-500">2 section(s)</span>
-                                </div>
+                        <ul class="max-h-[300px] overflow-y-auto flex flex-col gap-y-2 text-sm">
+                            @forelse ($fac_subjects as $sub)
+                                @php
+                                    $sections = SectionSubject::where([
+                                        ['faculty_id', $faculty->id],
+                                        ['subject_id', $sub->id],
+                                    ])->whereHas('section', function ($query) use ($year) {
+                                        $query->where('academic_year_id', $year->id);
+                                    });
+                                @endphp
+                                <li class="flex justify-between items-center">
+                                    <div class="flex flex-col gap-y-1">
+                                        <span class="font-semibold">{{ $sub->name }}</span>
+                                        <span class="text-xs text-gray-500">{{ $sections->count() }} section(s)</span>
+                                    </div>
 
-                                <div class="tooltip" data-tip="View">
-                                    <a href="#" class="btn btn-outline btn-primary btn-circle"><i
-                                            class="ri-arrow-right-up-line"> </i></a>
-                                </div>
-                            </li>
-
-                            <li class="flex justify-between items-center">
-                                <div class="flex flex-col gap-y-1">
-                                    <span class="font-semibold">Entrepreneurship</span>
-                                    <span class="text-xs text-gray-500">1 section(s)</span>
-                                </div>
-
-                                <div class="tooltip" data-tip="View">
-                                    <a href="#" class="btn btn-outline btn-primary btn-circle"><i
-                                            class="ri-arrow-right-up-line"> </i></a>
-                                </div>
-                            </li>
+                                    <div class="tooltip" data-tip="View">
+                                        <a href="#" class="btn btn-outline btn-primary btn-circle"><i
+                                                class="ri-arrow-right-up-line"> </i></a>
+                                    </div>
+                                </li>
+                            @empty
+                                <li class="text-center text-gray-500">You have no subjects.</li>
+                            @endforelse
                         </ul>
                     </div>
 
