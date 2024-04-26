@@ -3,8 +3,8 @@
         <x-sidebar.wrapper>
             <x-sidebar.link href="{{ route('home') }}"
                 class="{{ Request::routeIs('faculty.dashboard') ? 'bg-[#2a447a]' : '' }}">Dashboard</x-sidebar.link>
-            <x-sidebar.link href="#"
-                class="{{ Request::routeIs('admin.students.*') ? 'bg-[#2a447a]' : '' }}">Advisory</x-sidebar.link>
+            <x-sidebar.link href="{{ route('faculty.advisory.index') }}"
+                class="{{ Request::routeIs('faculty.advisory.*') ? 'bg-[#2a447a]' : '' }}">Advisory</x-sidebar.link>
             <x-sidebar.link href="#"
                 class="{{ Request::routeIs('counselor.appointments.*') ? 'bg-[#2a447a]' : '' }}">My
                 Classes</x-sidebar.link>

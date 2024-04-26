@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Counselor\AppointmentController;
+use App\Http\Controllers\Faculty\AdvisoryController;
 use App\Http\Controllers\Faculty\DashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
@@ -102,7 +103,10 @@ Route::middleware('auth')->group(function () {
 
     Route::middleware(['role:faculty'])->prefix('faculty')->as('faculty.')->group(function () {
         Route::get('/dashboard', [FADashboardController::class, 'index'])->name('dashboard');
-
+        Route::prefix('advisory')->as('advisory.')->group(function () {
+            Route::get('/current', [AdvisoryController::class, 'current'])->name('current');
+        });
+        Route::resource('advisory', AdvisoryController::class)->except(['create', 'store', 'edit', 'update', 'destroy']);
         Route::resource('complaints', FAComplaintController::class);
     });
 });
