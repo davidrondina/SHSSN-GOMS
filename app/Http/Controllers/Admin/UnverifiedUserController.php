@@ -47,6 +47,7 @@ class UnverifiedUserController extends Controller
             'surname' => $uv_user->surname,
             'suffix' => $uv_user->suffix,
             'sex' => $uv_user->sex,
+            'birthdate' => $uv_user->birthdate,
             'address' => $uv_user->address,
             'phone_no' => $uv_user->phone_no,
         ];
@@ -79,11 +80,18 @@ class UnverifiedUserController extends Controller
         // Create profile related to registered user
         $profile['user_id'] = $registered_user->id;
 
-        Profile::create($profile);
+        $user_profile = Profile::create($profile);
 
         // Create student record related to user
         $student_info = [
             'user_id' => $registered_user->id,
+            'first_name' => $user_profile->first_name,
+            'middle_name' => $user_profile->middle_name,
+            'surname' => $user_profile->surname,
+            'sex' => $user_profile->sex,
+            'birthdate' => $user_profile->birthdate,
+            'address' => $user_profile->address,
+            'phone_no' => $user_profile->phone_no,
             'guardian_id' => $registered_guardian->id,
             'lrn' => $lrn,
         ];

@@ -1,6 +1,6 @@
 <x-app.admin.main-container>
     <main class="w-full flex-grow">
-        <x-app.page-header :show_title="true" :title="__('Verified Users')">
+        <x-app.page-header :show_title="true" :title="__('Unverified Users')">
             <x-slot name="controls">
                 <div class="flex items-center gap-x-4">
                     <x-form.search-form :form_action="__('#')" :placeholder="__('Search user name')" />
@@ -38,12 +38,34 @@
                             <div class="flex gap-x-3">
                                 <a href="{{ route('admin.users.unverified.show', $user->id) }}"
                                     class="btn btn-sm btn-accent"><i class="ri-eye-line font-normal"></i>View</a>
-                                <form action="{{ route('admin.users.unverified.approve', $user->id) }}" method="post">
+                                <x-confirm-modal :type="__('success')">
+                                    <button @click="open = !open" class="btn btn-sm btn-success"><i
+                                            class="fa-solid fa-circle-check font-normal"></i>Approve
+                                    </button>
+
+                                    <x-slot name="header">
+                                        Approve User?
+                                    </x-slot>
+                                    <x-slot name="body">
+                                        <p class="text-gray-500 text-sm">This will create a user account & other records
+                                            for the student.</p>
+                                    </x-slot>
+
+                                    <x-slot name="action">
+                                        <form action="{{ route('admin.users.unverified.approve', $user->id) }}"
+                                            method="post" class="flex">
+                                            @csrf
+
+                                            <button class="flex btn btn-success font-poppins uppercase">Approve</button>
+                                        </form>
+                                    </x-slot>
+                                </x-confirm-modal>
+                                {{-- <form action="{{ route('admin.users.unverified.approve', $user->id) }}" method="post">
                                     @csrf
 
                                     <button class="btn btn-sm btn-success"><i
                                             class="ri-checkbox-circle-line font-normal"></i>Approve</button>
-                                </form>
+                                </form> --}}
                                 <form action="{{ route('admin.users.unverified.reject', $user->id) }}" method="post">
                                     @csrf
                                     @method('DELETE')
