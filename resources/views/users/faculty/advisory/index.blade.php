@@ -111,7 +111,7 @@
                             <x-table.regular-cell>{{ $sec->grade_level }} </x-table.regular-cell>
                             <x-table.regular-cell>
                                 <div class="flex gap-x-3">
-                                    <a href="{{ route('admin.sections.show', $sec->id) }}"
+                                    <a href="{{ route('faculty.advisory.show', $sec->id) }}"
                                         class="btn btn-sm btn-accent"><i class="ri-eye-line font-normal"></i>View</a>
                                 </div>
                             </x-table.regular-cell>

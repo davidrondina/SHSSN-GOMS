@@ -11,9 +11,24 @@ class StudentController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $students = null;
+
+        if ($request->search) {
+            $students = Student::where('surname', 'LIKE', '%' . $request->search . '%')
+                ->orWhere('first_name', 'LIKE', '%' . $request->search . '%')
+                ->orWhere('middle_name', 'LIKE', '%' . $request->search . '%')
+                ->orWhere('lrn', 'LIKE', '%' . $request->search . '%')->orderBy('surname')->paginate(30)->withQueryString();
+            // dd('onSearch', $students);
+        } else {
+            $students = Student::orderBy('surname')->paginate(30)->withQueryString();
+            // dd('index', $students);
+        }
+
+        // dd($students);;
+
+        return view('users.faculty.students.index', compact(['students']));
     }
 
     /**

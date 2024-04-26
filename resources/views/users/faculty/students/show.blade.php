@@ -3,7 +3,7 @@
 @endphp
 
 <x-app.faculty.main-container>
-    <x-app.page-header :show_back_btn="true" :back_btn_url="__('javascript:history.go(-1)')" />
+    <x-app.page-header :show_back_btn="true" :back_btn_url="url()->previous()" />
 
     <x-card class="px-6 py-5 flex flex-col gap-y-5">
         <div class="card-title justify-between">
