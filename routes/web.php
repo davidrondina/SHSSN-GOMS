@@ -95,6 +95,9 @@ Route::middleware('auth')->group(function () {
 
         Route::resource('appointments', AppointmentController::class);
         Route::resource('complaints', COComplaintController::class);
+        Route::prefix('complaints')->as('complaints.')->group(function () {
+            Route::patch('/{id}/close', [COComplaintController::class, 'close'])->name('close');
+        });
     });
 
     Route::middleware(['role:faculty'])->prefix('faculty')->as('faculty.')->group(function () {

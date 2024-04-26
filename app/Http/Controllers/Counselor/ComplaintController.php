@@ -12,9 +12,24 @@ class ComplaintController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $complaints = Complaint::where('is_closed', false)->latest()->paginate(30)->withQueryString();
+        $complaints = Complaint::where('is_closed', false);
+
+        if ($request->view === 'closed') {
+            $complaints = Complaint::where('is_closed', true)->latest();
+        }
+        if ($request->filter) {
+            if ($request->filter === 'latest') {
+                $complaints = $complaints->latest();
+                // dd('latest', $complaints);
+            } else if ($request->filter === 'oldest') {
+                $comp = $complaints->oldest();
+                // dd('oldest', $complaints);
+            }
+        }
+
+        $complaints = $complaints->paginate(30)->withQueryString();
 
         return view('users.counselor.complaints.index', compact(['complaints']));
     }
@@ -63,6 +78,15 @@ class ComplaintController extends Controller
     public function update(Request $request, string $id)
     {
         //
+    }
+
+    public function close(string $id)
+    {
+        $complaint = Complaint::find($id);
+
+        $complaint->update(['is_closed' => true]);
+
+        return to_route('counselor.complaints.index')->with('success_message', 'Complaint has been closed');
     }
 
     /**

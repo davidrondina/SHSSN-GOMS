@@ -3,11 +3,11 @@
         <x-app.page-header :show_title="true" :title="__('Complaints')">
             <x-slot name="controls">
                 <div class="flex items-center gap-x-4">
-                    <form action="" method="get" class="flex gap-x-2">
-                        <x-form.select.select-input>
+                    <form action="{{ route('counselor.complaints.index') }}" method="get" class="flex gap-x-2">
+                        <x-form.select.select-input name="filter">
                             <x-form.select.select-option :disabled="true" :selected="true" :option_name="__('Filter by date submitted')" />
-                            <x-form.select.select-option :value="__('Latest')" :option_name="__('Latest')" />
-                            <x-form.select.select-option :value="__('Oldest')" :option_name="__('Oldest')" />
+                            <x-form.select.select-option :value="__('latest')" :option_name="__('Latest')" />
+                            <x-form.select.select-option :value="__('oldest')" :option_name="__('Oldest')" />
                         </x-form.select.select-input>
 
                         <x-primary-button>Go</x-primary-button>
@@ -48,6 +48,31 @@
                                 <a href="{{ route('faculty.complaints.edit', $com->id) }}"
                                     class="btn btn-sm btn-secondary inline-flex items-center font-semibold"><i
                                         class="ri-edit-box-line font-normal"></i>Edit</a>
+                                @if (!$com->is_closed)
+                                    <x-confirm-modal :type="__('warning')">
+                                        <button @click="open = !open" class="btn btn-sm btn-warning"><i
+                                                class="ri-close-large-fill font-normal"></i>Close
+                                        </button>
+
+                                        <x-slot name="header">
+                                            Close Complaint?
+                                        </x-slot>
+                                        <x-slot name="body">
+                                            <p class="text-gray-500 text-sm">This record will be archived.</p>
+                                        </x-slot>
+
+                                        <x-slot name="action">
+                                            <form action="{{ route('counselor.complaints.close', $com->id) }}"
+                                                method="post" class="flex">
+                                                @csrf
+                                                @method('PATCH')
+
+                                                <button
+                                                    class="flex btn btn-warning font-poppins uppercase">Confirm</button>
+                                            </form>
+                                        </x-slot>
+                                    </x-confirm-modal>
+                                @endif
                                 <x-confirm-modal :type="__('warning')">
                                     <button @click="open = !open" class="btn btn-sm btn-error"><i
                                             class="ri-delete-bin-line font-normal"></i>Delete

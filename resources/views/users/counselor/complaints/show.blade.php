@@ -100,8 +100,28 @@
                     </x-slot>
                 </x-modal.regular>
 
-                {{-- <a href="#" class="btn btn-sm btn-accent inline-flex items-center font-semibold"><i
-                        class="fa-solid fa-calendar font-normal"></i>Schedule an appointment</a> --}}
+                <x-confirm-modal :type="__('warning')">
+                    <button @click="open = !open" class="btn btn-sm btn-warning"><i
+                            class="ri-close-large-fill font-normal"></i>Close
+                    </button>
+
+                    <x-slot name="header">
+                        Close Complaint?
+                    </x-slot>
+                    <x-slot name="body">
+                        <p class="text-gray-500 text-sm">This record will be archived.</p>
+                    </x-slot>
+
+                    <x-slot name="action">
+                        <form action="{{ route('counselor.complaints.close', $complaint->id) }}" method="post"
+                            class="flex">
+                            @csrf
+                            @method('PATCH')
+
+                            <button class="flex btn btn-warning font-poppins uppercase">Confirm</button>
+                        </form>
+                    </x-slot>
+                </x-confirm-modal>
 
                 <x-confirm-modal :type="__('warning')">
                     <button @click="open = !open" class="btn btn-sm btn-error"><i
@@ -109,15 +129,15 @@
                     </button>
 
                     <x-slot name="header">
-                        Delete Faculty?
+                        Delete Complaint?
                     </x-slot>
                     <x-slot name="body">
-                        <p class="text-gray-500 text-sm">This will delete their subjects, complaints, and advisory
-                            sections.</p>
+                        <p class="text-gray-500 text-sm">This action cannot be undone.</p>
                     </x-slot>
 
                     <x-slot name="action">
-                        <form action="#" method="post" class="flex">
+                        <form action="{{ route('counselor.complaints.destroy', $complaint->id) }}" method="post"
+                            class="flex">
                             @csrf
                             @method('DELETE')
 
