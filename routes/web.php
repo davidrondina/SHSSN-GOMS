@@ -9,7 +9,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\StrandController;
 use App\Http\Controllers\Admin\FacultyController;
 use App\Http\Controllers\Admin\SectionController;
-use App\Http\Controllers\Admin\StudentController;
+use App\Http\Controllers\Admin\StudentController as ADStudentController;
+use App\Http\Controllers\Faculty\StudentController as FAStudentController;;
 use App\Http\Controllers\Admin\SubjectController;
 use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\AcademicYearController;
@@ -71,9 +72,9 @@ Route::middleware('auth')->group(function () {
             Route::put('/{id}/students', [SectionController::class, 'updateStudents'])->name('students');
             Route::put('/{id}/subjects', [SectionController::class, 'updateSubjects'])->name('subjects');
         });
-        Route::resource('students', StudentController::class);
+        Route::resource('students', ADStudentController::class);
         Route::prefix('students')->as('students.')->group(function () {
-            Route::post('/{id}/enroll', [StudentController::class, 'enrollToCurrentYear'])->name('enroll');
+            Route::post('/{id}/enroll', [ADStudentController::class, 'enrollToCurrentYear'])->name('enroll');
         });
         Route::prefix('users')->as('users.')->group(function () {
             Route::prefix('verified')->as('verified.')->group(function () {
@@ -107,6 +108,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/current', [AdvisoryController::class, 'current'])->name('current');
         });
         Route::resource('advisory', AdvisoryController::class)->except(['create', 'store', 'edit', 'update', 'destroy']);
+        Route::resource('students', FAStudentController::class)->except(['create', 'store', 'edit', 'update', 'destroy']);
         Route::resource('complaints', FAComplaintController::class);
     });
 });

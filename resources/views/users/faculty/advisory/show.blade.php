@@ -21,6 +21,7 @@
                 <x-table.head>
                     <tr>
                         <x-table.header-cell :scope="__('col')">Student Name</x-table.header-cell>
+                        <x-table.header-cell :scope="__('col')">Actions</x-table.header-cell>
                     </tr>
                 </x-table.head>
                 <x-table.body>
@@ -28,10 +29,16 @@
                         <tr class="bg-white border-b">
                             <x-table.header-cell
                                 :scope="__('row')">{{ $stu?->user?->profile->getFullName() ?? $stu->getFullName() }}</x-table.header-cell>
+                            <x-table.regular-cell>
+                                <div class="flex gap-x-3">
+                                    <a href="{{ route('faculty.students.show', $stu->id) }}"
+                                        class="btn btn-sm btn-accent"><i class="ri-eye-line font-normal"></i>View</a>
+                                </div>
+                            </x-table.regular-cell>
                         </tr>
                     @empty
                         <tr class="bg-white border-b">
-                            <x-table.regular-cell class="text-center">No students
+                            <x-table.regular-cell colspan="2" class="text-center">No students
                                 found.</x-table.regular-cell>
                         </tr>
                     @endforelse
