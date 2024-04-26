@@ -15,19 +15,20 @@
                         class="ri-edit-box-line font-normal"></i>Edit</a>
 
                 <x-confirm-modal :type="__('warning')">
-                    <button @click="open = !open" class="btn btn-sm btn-warning"><i
-                            class="ri-close-large-fill font-normal"></i>Close Case
+                    <button @click="open = !open" class="btn btn-sm btn-error"><i
+                            class="ri-delete-bin-line font-normal"></i>Delete
                     </button>
 
                     <x-slot name="header">
-                        Close Case?
+                        Delete Appointment?
                     </x-slot>
                     <x-slot name="body">
-                        <p class="text-gray-500 text-sm">This record will be archived.</p>
+                        <p class="text-gray-500 text-sm">This action cannot be undone.</p>
                     </x-slot>
 
                     <x-slot name="action">
-                        <form action="#" method="post" class="flex">
+                        <form action="{{ route('counselor.appointments.destroy', $appointment->id) }}" method="post"
+                            class="flex">
                             @csrf
                             @method('DELETE')
 
