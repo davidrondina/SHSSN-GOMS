@@ -1,3 +1,7 @@
+@php
+    use App\Models\Student;
+@endphp
+
 <x-app.admin.main-container>
     <main class="w-full flex-grow">
         <x-app.page-header :show_title="true" :title="__('Unverified Users')">
@@ -35,31 +39,41 @@
                         <x-table.regular-cell>{{ $user->getFullName() }}</x-table.regular-cell>
                         <x-table.regular-cell>{{ $user->address }}</x-table.regular-cell>
                         <x-table.regular-cell>
+                            @php
+                                $student_has_user = Student::where('lrn', $user->lrn)
+                                    ->with('user')
+                                    ->exists();
+                            @endphp
+
                             <div class="flex gap-x-3">
                                 <a href="{{ route('admin.users.unverified.show', $user->id) }}"
                                     class="btn btn-sm btn-accent"><i class="ri-eye-line font-normal"></i>View</a>
-                                <x-confirm-modal :type="__('success')">
-                                    <button @click="open = !open" class="btn btn-sm btn-success"><i
-                                            class="fa-solid fa-circle-check font-normal"></i>Approve
-                                    </button>
+                                @if (!$student_has_user)
+                                    <x-confirm-modal :type="__('success')">
+                                        <button @click="open = !open" class="btn btn-sm btn-success"><i
+                                                class="fa-solid fa-circle-check font-normal"></i>Approve
+                                        </button>
 
-                                    <x-slot name="header">
-                                        Approve User?
-                                    </x-slot>
-                                    <x-slot name="body">
-                                        <p class="text-gray-500 text-sm">This will create a user account & other records
-                                            for the student.</p>
-                                    </x-slot>
+                                        <x-slot name="header">
+                                            Approve User?
+                                        </x-slot>
+                                        <x-slot name="body">
+                                            <p class="text-gray-500 text-sm">This will create a user account & other
+                                                records
+                                                for the student.</p>
+                                        </x-slot>
 
-                                    <x-slot name="action">
-                                        <form action="{{ route('admin.users.unverified.approve', $user->id) }}"
-                                            method="post" class="flex">
-                                            @csrf
+                                        <x-slot name="action">
+                                            <form action="{{ route('admin.users.unverified.approve', $user->id) }}"
+                                                method="post" class="flex">
+                                                @csrf
 
-                                            <button class="flex btn btn-success font-poppins uppercase">Approve</button>
-                                        </form>
-                                    </x-slot>
-                                </x-confirm-modal>
+                                                <button
+                                                    class="flex btn btn-success font-poppins uppercase">Approve</button>
+                                            </form>
+                                        </x-slot>
+                                    </x-confirm-modal>
+                                @endif
                                 {{-- <form action="{{ route('admin.users.unverified.approve', $user->id) }}" method="post">
                                     @csrf
 

@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\User;
+use App\Enums\UserRole;
 use App\Models\Profile;
 use App\Models\Student;
 use App\Models\Guardian;
 use Illuminate\Http\Request;
 use App\Enums\RegisterStatus;
 use App\Models\UnverifiedUser;
+use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\CssSelector\XPath\Extension\FunctionExtension;
@@ -25,8 +27,9 @@ class UnverifiedUserController extends Controller
     public function show(string $id)
     {
         $user = UnverifiedUser::find($id);
+        $student_has_user = Student::where('lrn', $user->lrn)->with('user')->exists();
 
-        return view('users.admin.users.unverified.show', compact(['user']));
+        return view('users.admin.users.unverified.show', compact(['user', 'student_has_user']));
     }
 
     public function approve(string $id)
@@ -74,6 +77,10 @@ class UnverifiedUserController extends Controller
     private function store(string $lrn, array $user, array $profile, array $guardian)
     {
         $registered_user = User::create($user);
+
+        $student_role = Role::where('name', UserRole::ST->value)->first();
+
+        $registered_user->assignRole($student_role);
 
         $registered_guardian = Guardian::create($guardian);
 

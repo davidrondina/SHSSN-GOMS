@@ -10,16 +10,45 @@
                         $user->first_name .
                         ($user->middle_name ? ' ' . $user->middle_name : '') }}
                 </h1>
-                <p class="font-semibold uppercase text-sm">LRN: <span class="text-gray-500">{{ $user->lrn }}</span></p>
+                <div class="flex flex-col gap-y-1">
+                    <p class="font-semibold uppercase text-sm">LRN: <span class="text-gray-500">{{ $user->lrn }}</span>
+                    </p>
+                    @if ($student_has_user)
+                        <p class="text-sm text-primary"><i class="fa-solid fa-circle-info"></i> User account is already
+                            registered
+                            under this LRN.</p>
+                    @else
+                        <p class="text-sm text-primary"><i class="fa-solid fa-circle-info"></i> No user account is
+                            registered under this LRN.</p>
+                    @endif
+                </div>
             </div>
 
             <div class="flex gap-x-3">
-                <form action="{{ route('admin.users.unverified.approve', $user->id) }}" method="post">
-                    @csrf
+                @if (!$student_has_user)
+                    <x-confirm-modal :type="__('success')">
+                        <button @click="open = !open" class="btn btn-sm btn-success"><i
+                                class="fa-solid fa-circle-check font-normal"></i>Approve
+                        </button>
 
-                    <button class="btn btn-sm btn-success"><i
-                            class="ri-checkbox-circle-line font-normal"></i>Approve</button>
-                </form>
+                        <x-slot name="header">
+                            Approve User?
+                        </x-slot>
+                        <x-slot name="body">
+                            <p class="text-gray-500 text-sm">This will create a user account & other records
+                                for the student.</p>
+                        </x-slot>
+
+                        <x-slot name="action">
+                            <form action="{{ route('admin.users.unverified.approve', $user->id) }}" method="post"
+                                class="flex">
+                                @csrf
+
+                                <button class="flex btn btn-success font-poppins uppercase">Approve</button>
+                            </form>
+                        </x-slot>
+                    </x-confirm-modal>
+                @endif
                 <form action="{{ route('admin.users.unverified.reject', $user->id) }}" method="post">
                     @csrf
                     @method('DELETE')
