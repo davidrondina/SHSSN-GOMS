@@ -5,8 +5,8 @@
                 class="{{ Request::routeIs('faculty.dashboard') ? 'bg-[#2a447a]' : '' }}">Dashboard</x-sidebar.link>
             <x-sidebar.link href="{{ route('faculty.advisory.index') }}"
                 class="{{ Request::routeIs('faculty.advisory.*') ? 'bg-[#2a447a]' : '' }}">Advisory</x-sidebar.link>
-            <x-sidebar.link href="#"
-                class="{{ Request::routeIs('counselor.appointments.*') ? 'bg-[#2a447a]' : '' }}">My
+            <x-sidebar.link href="{{ route('faculty.classes.index') }}"
+                class="{{ Request::routeIs('faculty.classes.*') ? 'bg-[#2a447a]' : '' }}">My
                 Classes</x-sidebar.link>
             <x-sidebar.link href="{{ route('faculty.complaints.index') }}"
                 class="{{ Request::routeIs('faculty.complaints.*') ? 'bg-[#2a447a]' : '' }}">My

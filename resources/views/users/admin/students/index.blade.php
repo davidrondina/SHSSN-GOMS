@@ -47,7 +47,7 @@
             <x-tablist.item href="{{ route('admin.students.index') . '?view=enrolled' }}"
                 class="{{ Request::getRequestUri() === '/admin/students?view=enrolled' ? 'tab-active font-semibold' : '' }}">Enrolled
                 {{ '(A.Y. ' . $year->getFullYear() . ')' }}</x-tablist.item>
-            <x-tablist.item href="{{ route('admin.students.index') . '/admin/students?view=notenrolled' }}"
+            <x-tablist.item href="{{ route('admin.students.index') . '?view=notenrolled' }}"
                 class="{{ Request::getRequestUri() === '/admin/students?view=notenrolled' ? 'tab-active font-semibold' : '' }}">Not
                 Enrolled</x-tablist.item>
         </x-tablist.container>

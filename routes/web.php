@@ -1,27 +1,28 @@
 <?php
 
-use App\Http\Controllers\Counselor\AppointmentController;
-use App\Http\Controllers\Faculty\AdvisoryController;
-use App\Http\Controllers\Faculty\DashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\StrandController;
 use App\Http\Controllers\Admin\FacultyController;
 use App\Http\Controllers\Admin\SectionController;
-use App\Http\Controllers\Admin\StudentController as ADStudentController;
-use App\Http\Controllers\Faculty\StudentController as FAStudentController;;
 use App\Http\Controllers\Admin\SubjectController;
+use App\Http\Controllers\Faculty\ClassController;
 use App\Http\Controllers\Admin\DepartmentController;
+use App\Http\Controllers\Faculty\AdvisoryController;
+use App\Http\Controllers\Faculty\DashboardController;
 use App\Http\Controllers\Admin\AcademicYearController;
 use App\Http\Controllers\Admin\VerifiedUserController;
 use App\Http\Controllers\StudentRegistrationController;
 use App\Http\Controllers\Admin\UnverifiedUserController;
+use App\Http\Controllers\Counselor\AppointmentController;
+use App\Http\Controllers\Admin\StudentController as ADStudentController;
+use App\Http\Controllers\Faculty\StudentController as FAStudentController;
 use App\Http\Controllers\Admin\DashboardController as ADDashboardController;
-use App\Http\Controllers\Counselor\DashboardController as CODashboardController;
-use App\Http\Controllers\Counselor\ComplaintController as COComplaintController;
-use App\Http\Controllers\Faculty\DashboardController as FADashboardController;
 use App\Http\Controllers\Faculty\ComplaintController as FAComplaintController;
+use App\Http\Controllers\Faculty\DashboardController as FADashboardController;
+use App\Http\Controllers\Counselor\ComplaintController as COComplaintController;
+use App\Http\Controllers\Counselor\DashboardController as CODashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -110,6 +111,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('advisory', AdvisoryController::class)->except(['create', 'store', 'edit', 'update', 'destroy']);
         Route::resource('students', FAStudentController::class)->except(['create', 'store', 'edit', 'update', 'destroy']);
         Route::resource('complaints', FAComplaintController::class);
+        Route::resource('classes', ClassController::class)->except(['create', 'store', 'edit', 'update', 'destroy']);
     });
 });
 
