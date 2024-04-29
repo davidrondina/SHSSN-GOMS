@@ -97,7 +97,11 @@ class StudentRegistrationController extends Controller
 
         $guardian = UnverifiedUserGuardian::create($guardian_fields);
 
-        return redirect('/')->with('success_message', 'Submitted successfully! It will be reviewed by the admin.');
+        return to_route('student-register.success')->with('success_message', 'Submitted successfully! It will be reviewed by the admin.');
+    }
 
+    public function success()
+    {
+        return view('auth.register-success');
     }
 }

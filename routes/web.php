@@ -44,6 +44,7 @@ Route::middleware(['guest'])->prefix('register')->as('student-register.')->group
     Route::post('/verify-account', [StudentRegistrationController::class, 'verifyAccount'])->name('verify-account');
     Route::post('/verify-student', [StudentRegistrationController::class, 'verifyStudentInfo'])->name('verify-student');
     Route::post('/verify-guardian', [StudentRegistrationController::class, 'verifyGuardianInfo'])->name('verify-guardian');
+    Route::get('/success', [StudentRegistrationController::class, 'success'])->name('success');
 });
 
 Route::get('/dashboard', function () {
