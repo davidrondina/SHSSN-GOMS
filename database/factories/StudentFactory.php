@@ -55,9 +55,9 @@ class StudentFactory extends Factory
             'remember_token' => Str::random(10),
         ]);
 
-        $user_role = Role::where('name', UserRole::US->value)->first();
+        $student_role = Role::where('name', UserRole::ST->value)->first();
 
-        $user->assignRole($user_role);
+        $user->assignRole($student_role);
 
         return $user->id;
     }
