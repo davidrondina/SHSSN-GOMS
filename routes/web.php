@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\FacultyController;
 use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\Admin\SubjectController;
 use App\Http\Controllers\Faculty\ClassController;
+use App\Http\Controllers\Student\ServiceController;
 use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Faculty\AdvisoryController;
 use App\Http\Controllers\Faculty\DashboardController;
@@ -21,6 +22,7 @@ use App\Http\Controllers\Faculty\StudentController as FAStudentController;
 use App\Http\Controllers\Admin\DashboardController as ADDashboardController;
 use App\Http\Controllers\Faculty\ComplaintController as FAComplaintController;
 use App\Http\Controllers\Faculty\DashboardController as FADashboardController;
+use App\Http\Controllers\Student\DashboardController as STDashboardController;
 use App\Http\Controllers\Counselor\ComplaintController as COComplaintController;
 use App\Http\Controllers\Counselor\DashboardController as CODashboardController;
 
@@ -113,6 +115,11 @@ Route::middleware('auth')->group(function () {
         Route::resource('students', FAStudentController::class)->except(['create', 'store', 'edit', 'update', 'destroy']);
         Route::resource('complaints', FAComplaintController::class);
         Route::resource('classes', ClassController::class)->except(['create', 'store', 'edit', 'update', 'destroy']);
+    });
+
+    Route::middleware(['role:student'])->prefix('student')->as('student.')->group(function () {
+        Route::get('/dashboard', [STDashboardController::class, 'index'])->name('dashboard');
+        Route::resource('services', ServiceController::class)->except(['edit', 'update', 'destroy']);
     });
 });
 
