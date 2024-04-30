@@ -25,8 +25,8 @@ class HomeController extends Controller
             case UserRole::FA->value;
                 return to_route('faculty.dashboard');
                 break;
-            default:
-                # code...
+            default: // User role is student
+                return to_route('student.dashboard');
                 break;
         }
     }

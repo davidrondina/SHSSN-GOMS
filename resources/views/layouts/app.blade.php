@@ -58,7 +58,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="font-is text-neutral antialiased">
+<body class="font-is bg-base-100 text-neutral antialiased">
     <x-flash-message />
 
     {{ $slot }}
