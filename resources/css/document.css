@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+    font-family: 'Bookman Old Style';
+    src: url('/public/fonts/bookman-old-style/regular.ttf');
+    font-style: normal;
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: 'Bookman Old Style';
+    src: url('/public/fonts/bookman-old-style/bold.otf');
+    font-style: normal;
+    font-weight: bold;
+}
+
+header {
+    font-family: 'Bookman Old Style', sans-serif;
+}
+
+main {
+    font-family: 'Bookman Old Style', sans-serif;
+}
