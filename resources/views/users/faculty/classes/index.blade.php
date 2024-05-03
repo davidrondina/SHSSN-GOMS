@@ -40,8 +40,8 @@
 
         <div class="flex gap-x-5">
             <div class="flex-[2_2_0%] flex flex-col gap-y-4">
-                @unless ($fac_classes)
-                    <p class="text-center text-gray-500">You have no classes.</p>
+                @unless (count($fac_classes) !== 0)
+                    <p class="py-24 text-center text-gray-500">You have no classes.</p>
                 @else
                     <div class="md:max-h-screen md:overflow-y-auto grid md:grid-cols-2 gap-6">
                         @foreach ($fac_classes as $class)
