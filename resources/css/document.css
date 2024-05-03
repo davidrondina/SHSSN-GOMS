@@ -1,25 +1,45 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-@font-face {
-    font-family: 'Bookman Old Style';
-    src: url('/public/fonts/bookman-old-style/regular.ttf');
-    font-style: normal;
-    font-weight: normal;
+table,
+td {
+    border: none;
 }
 
-@font-face {
-    font-family: 'Bookman Old Style';
-    src: url('/public/fonts/bookman-old-style/bold.otf');
-    font-style: normal;
-    font-weight: bold;
+.document-end {
+    margin-top: 7rem;
+    display: flex;
+    align-items: center;
+    column-gap: 0.5rem;
 }
 
-header {
-    font-family: 'Bookman Old Style', sans-serif;
+.document-header {
+    padding-bottom: 1.25rem;
+    display: flex;
+    column-gap: 0.5 rem;
+    min-height: 12rem;
+    border-bottom: 4px solid black;
 }
 
-main {
-    font-family: 'Bookman Old Style', sans-serif;
+.header-logo-container {
+    display: flex;
+    flex: 1 1 0%;
+    justify-content: center;
+    align-items: center;
+    column-gap: 0.75rem;
+}
+
+.header-logo-container div {
+    width: 5rem;
+    aspect-ratio: 1 / 1;
+}
+
+.header-logo-container div>img {
+    object-fit: cover;
+}
+
+.header-text {
+    font-size: 12pt;
+    padding-top: 0.5rem;
+}
+
+.header-text p {
+    text-align: center;
 }
