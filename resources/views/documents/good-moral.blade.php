@@ -1,3 +1,19 @@
+@php
+    use App\Models\AcademicYear;
+    use App\Models\Section;
+    use App\Models\SectionStudent;
+
+    $current_year = AcademicYear::where('is_current', true)->first();
+    $student = $user->studentInfo;
+    $section = Section::with([
+        'students' => function ($query) use ($student) {
+            $query->where('student_id', $student->id);
+        },
+    ])
+        ->where('academic_year_id', $current_year->id)
+        ->first();
+@endphp
+
 <x-document.base :title="__('Certificate of Good Moral')">
     <main>
         <div id="canvas">
@@ -7,7 +23,7 @@
 
             <div style="float: right; padding-top: 2.5rem;">
                 <div>Date <span
-                        style="display: inline-block; width: 12rem; border-bottom: 1px solid black; text-align: center;"></span>
+                        style="display: inline-block; width: 12rem; border-bottom: 1px solid black; text-align: center;">{{ now()->format('M d, Y') }}</span>
                 </div>
             </div>
 
@@ -21,16 +37,13 @@
                 <div style="font-size: 12pt; display: flex; flex-direction: column; row-gap: 1.5rem; text-wrap: wrap;">
                     <p>To whom it may concern:</p>
                     <p style="text-indent: 3.5rem;">This is to certify that <span
-                            style="display: inline-block; min-width: 400px; border-bottom: 1px solid black; font-weight: 700; text-align: center; font-size: 1rem; line-height: 1.5rem">David
-                            R.
-                            Rondina</span> is
+                            style="display: inline-block; min-width: 400px; border-bottom: 1px solid black; font-weight: 700; text-align: center; font-size: 1rem; line-height: 1.5rem">{{ $student->getFullName() }}</span>
+                        is
                         a student of this institution this school year <span
-                            style="font-weight: 700; text-decoration: underline;">2024
-                            -
-                            2025</span> . He/she
+                            style="font-weight: 700; text-decoration: underline;">{{ $current_year->getFullYear() }}</span>
+                        . He/she
                         belongs to
-                        <span style="font-weight: 700; text-decoration: underline;">GAS
-                            11-A</span> .
+                        <span style="font-weight: 700; text-decoration: underline;">{{ $section->name }}</span> .
                     </p>
                     <p style="text-indent: 3.5rem;">
                         This certifies further he/she is of good moral character and had not been charged of any
