@@ -7,6 +7,8 @@
      <input type="hidden" name="{{ $input_name }}" x-model="content">
  </div>
 
+ <x-form.input-error :messages="$errors->get($input_name)" class="mt-2" />
+
  @push('js')
      {{-- <script>
          const quill = new Quill('#editor', {

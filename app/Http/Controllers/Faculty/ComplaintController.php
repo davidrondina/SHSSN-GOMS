@@ -47,7 +47,7 @@ class ComplaintController extends Controller
             'student' => ['required'],
             'reason' => ['required'],
             'other' => ['required_if:reason,Other', 'max:100'],
-            'additional_info' => ['required', 'max:255'],
+            'additional_info' => ['required'],
         ]);
 
         $user = Auth::user();
