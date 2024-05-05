@@ -1,12 +1,17 @@
 <?php
 
+use App\Http\Controllers\Student\UserFeedbackController as STUserFeedbackController;
+use App\Mail\DocumentSent; // Testing
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\Admin\StrandController;
+use App\Http\Controllers\DocumentFormController;
 use App\Http\Controllers\Admin\FacultyController;
 use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\Admin\SubjectController;
+use App\Http\Controllers\DocumentGuideController;
 use App\Http\Controllers\Faculty\ClassController;
 use App\Http\Controllers\Student\ServiceController;
 use App\Http\Controllers\Admin\DepartmentController;
@@ -48,6 +53,8 @@ Route::middleware(['guest'])->prefix('register')->as('student-register.')->group
     Route::post('/verify-guardian', [StudentRegistrationController::class, 'verifyGuardianInfo'])->name('verify-guardian');
     Route::get('/success', [StudentRegistrationController::class, 'success'])->name('success');
 });
+
+Route::get('/file/download', [DocumentController::class, 'index'])->middleware(['document_link_is_valid'])->name('download-file');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -120,7 +127,32 @@ Route::middleware('auth')->group(function () {
     Route::middleware(['role:student'])->prefix('student')->as('student.')->group(function () {
         Route::get('/dashboard', [STDashboardController::class, 'index'])->name('dashboard');
         Route::resource('services', ServiceController::class)->except(['edit', 'update', 'destroy']);
+        Route::post('/feedback', [STUserFeedbackController::class, 'store'])->name('feedback.store');
     });
+
+    Route::get('/guides', [DocumentGuideController::class, 'index'])->name('document-guide.index');
+
+    // TEST ROUTES: DELETE ONCE IN PRODUCTION
+
+    // Route::get('/gm', function () {
+    //     return view('documents.good-moral');
+    // });
+
+    Route::get('/gm', [DocumentFormController::class, 'goodMoral']);
+
+    Route::get('/mail', function () {
+        $user = Auth::user();
+        $document = App\Models\DocumentLink::find(1);
+
+        return (new Documentsent($user, $document))->render();
+    });
+
+    // Route::get('/email-test', function () {
+    //     $type = 'Good Moral';
+
+    //     // The email sending is done using the to method on the Mail facade
+    //     Mail::to('testreceiver@gmail.com')->send(new DocumentSent($type));
+    // });
 });
 
 require __DIR__ . '/auth.php';

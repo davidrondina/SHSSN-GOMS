@@ -192,6 +192,20 @@ Alpine.data('studentRegForm', () => ({
     }
 }));
 
+Alpine.data('feedbackForm', () => ({
+    open: false,
+
+    init() {
+        setTimeout(() => {
+            this.open = true;
+        }, 1000);
+    },
+}));
+
+Alpine.data('starRating', () => ({
+    rating: 1,
+}));
+
 window.Alpine = Alpine;
 
 Alpine.plugin(anchor);
