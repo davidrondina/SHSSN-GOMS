@@ -1,35 +1,36 @@
 <?php
 
-use App\Http\Controllers\Student\UserFeedbackController as STUserFeedbackController;
 use App\Mail\DocumentSent; // Testing
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\DocumentGuideController;
+use App\Http\Controllers\StudentRegistrationController;
+use App\Http\Controllers\DocumentFormController; // Remove
 use App\Http\Controllers\Admin\StrandController;
-use App\Http\Controllers\DocumentFormController;
 use App\Http\Controllers\Admin\FacultyController;
 use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\Admin\SubjectController;
-use App\Http\Controllers\DocumentGuideController;
 use App\Http\Controllers\Faculty\ClassController;
 use App\Http\Controllers\Student\ServiceController;
 use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Faculty\AdvisoryController;
-use App\Http\Controllers\Faculty\DashboardController;
 use App\Http\Controllers\Admin\AcademicYearController;
 use App\Http\Controllers\Admin\VerifiedUserController;
-use App\Http\Controllers\StudentRegistrationController;
 use App\Http\Controllers\Admin\UnverifiedUserController;
-use App\Http\Controllers\Counselor\AppointmentController;
 use App\Http\Controllers\Admin\StudentController as ADStudentController;
 use App\Http\Controllers\Faculty\StudentController as FAStudentController;
 use App\Http\Controllers\Admin\DashboardController as ADDashboardController;
 use App\Http\Controllers\Faculty\ComplaintController as FAComplaintController;
 use App\Http\Controllers\Faculty\DashboardController as FADashboardController;
 use App\Http\Controllers\Student\DashboardController as STDashboardController;
+use App\Http\Controllers\Student\UserFeedbackController as STUserFeedbackController;
+use App\Http\Controllers\Student\AppointmentController as STAppointmentController;
+use App\Http\Controllers\Student\ComplaintController as STComplaintController;
 use App\Http\Controllers\Counselor\ComplaintController as COComplaintController;
 use App\Http\Controllers\Counselor\DashboardController as CODashboardController;
+use App\Http\Controllers\Counselor\AppointmentController as COAppointmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -106,7 +107,7 @@ Route::middleware('auth')->group(function () {
     Route::middleware(['role:counselor'])->prefix('counselor')->as('counselor.')->group(function () {
         Route::get('/dashboard', [CODashboardController::class, 'index'])->name('dashboard');
 
-        Route::resource('appointments', AppointmentController::class);
+        Route::resource('appointments', COAppointmentController::class);
         Route::resource('complaints', COComplaintController::class);
         Route::prefix('complaints')->as('complaints.')->group(function () {
             Route::patch('/{id}/close', [COComplaintController::class, 'close'])->name('close');
@@ -126,6 +127,8 @@ Route::middleware('auth')->group(function () {
 
     Route::middleware(['role:student'])->prefix('student')->as('student.')->group(function () {
         Route::get('/dashboard', [STDashboardController::class, 'index'])->name('dashboard');
+        Route::resource('appointments', STAppointmentController::class)->except(['create', 'store', 'edit', 'update', 'destroy']);
+        Route::resource('offenses', STComplaintController::class)->except(['create', 'store', 'edit', 'update', 'destroy']);
         Route::resource('services', ServiceController::class)->except(['edit', 'update', 'destroy']);
         Route::post('/feedback', [STUserFeedbackController::class, 'store'])->name('feedback.store');
     });
