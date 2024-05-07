@@ -22,7 +22,7 @@ class StudentRegistrationController extends Controller
     public function verifyStudentInfo(Request $request)
     {
         $request->validate([
-            'lrn' => ['required', 'integer', 'numeric', 'max_digits:12', 'unique:students,lrn'],
+            'lrn' => ['required', 'integer', 'numeric', 'max_digits:12'],
             'first_name' => ['required', 'regex:/^[\pL\s]+$/u', 'max:60'], // Regex to accept only alpha chars and whitespaces
             'middle_name' => ['nullable', 'regex:/^[\pL\s]+$/u', 'max:60',],
             'surname' => ['required', 'regex:/^[\pL\s]+$/u', 'max:60'],

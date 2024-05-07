@@ -13,6 +13,8 @@ use App\Models\UnverifiedUser;
 use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\UserVerificationSuccess;
 use Symfony\Component\CssSelector\XPath\Extension\FunctionExtension;
 
 class UnverifiedUserController extends Controller
@@ -27,12 +29,13 @@ class UnverifiedUserController extends Controller
     public function show(string $id)
     {
         $user = UnverifiedUser::find($id);
-        $student_has_user = Student::where('lrn', $user->lrn)->with('user')->exists();
+        $student_has_user = Student::where('lrn', $user->lrn)->has('user')->first();
+        $user_has_lrn = Student::where('lrn', $user->lrn)->doesntHave('user')->first();
 
-        return view('users.admin.users.unverified.show', compact(['user', 'student_has_user']));
+        return view('users.admin.users.unverified.show', compact(['user', 'student_has_user', 'user_has_lrn']));
     }
 
-    public function approve(string $id)
+    public function approve(Request $request, string $id)
     {
         $uv_user = UnverifiedUser::find($id);
         $uv_guardian = $uv_user->guardian;
@@ -64,17 +67,21 @@ class UnverifiedUserController extends Controller
             'phone_no' => $uv_guardian->phone_no,
         ];
 
-        $this->store($uv_user->lrn, $user, $profile, $guardian);
+        // dd($request->student_has_user ?? false, $request->student_has_user);
+
+        $credentials = $this->store($uv_user->lrn, $user, $profile, $guardian, $request->student_has_user ?? false);
 
         $uv_user->update([
             'status' => RegisterStatus::VERIFIED->value
         ]);
 
+        Mail::to($credentials['user']->email)->send(new UserVerificationSuccess($credentials['user'], $credentials['student']));
+
         return to_route('admin.users.unverified.index')->with('success_message', 'Student & guardian info registered successfully.');
     }
 
     // TODO: Send email to student's email address
-    private function store(string $lrn, array $user, array $profile, array $guardian)
+    private function store(string $lrn, array $user, array $profile, array $guardian, $student_has_user = false)
     {
         $registered_user = User::create($user);
 
@@ -82,28 +89,48 @@ class UnverifiedUserController extends Controller
 
         $registered_user->assignRole($student_role);
 
-        $registered_guardian = Guardian::create($guardian);
-
         // Create profile related to registered user
         $profile['user_id'] = $registered_user->id;
 
+        $student = null;
+
+        if ($student_has_user) { // If an existing lrn matches registered user's lrn, update every related models
+            $student = Student::findOrFail($student_has_user);
+
+            $student->update(['user_id' => $registered_user->id]);
+
+            $profile['first_name'] = $student->first_name;
+            $profile['middle_name'] = $student->middle_name ?? null;
+            $profile['surname'] = $student->surname;
+
+            $student_guardian = $student->guardian->update($guardian);
+        } else { // Otherwise, create new models
+            $registered_guardian = Guardian::create($guardian);
+
+            $student_info = [
+                'user_id' => $registered_user->id,
+                'first_name' => $profile['first_name'],
+                'middle_name' => $profile['middle_name'],
+                'surname' => $profile['surname'],
+                'sex' => $profile['sex'],
+                'birthdate' => $profile['birthdate'],
+                'address' => $profile['address'],
+                'phone_no' => $profile['phone_no'],
+                'guardian_id' => $registered_guardian->id,
+                'lrn' => $lrn,
+            ];
+
+            $student = Student::create($student_info);
+        }
+
         $user_profile = Profile::create($profile);
 
-        // Create student record related to user
-        $student_info = [
-            'user_id' => $registered_user->id,
-            'first_name' => $user_profile->first_name,
-            'middle_name' => $user_profile->middle_name,
-            'surname' => $user_profile->surname,
-            'sex' => $user_profile->sex,
-            'birthdate' => $user_profile->birthdate,
-            'address' => $user_profile->address,
-            'phone_no' => $user_profile->phone_no,
-            'guardian_id' => $registered_guardian->id,
-            'lrn' => $lrn,
+        $credentials = [
+            'user' => $registered_user,
+            'student' => $student,
         ];
 
-        Student::create($student_info);
+        return $credentials;
     }
 
     // TODO: Before rejection, display popup modal stating the reason for rejection

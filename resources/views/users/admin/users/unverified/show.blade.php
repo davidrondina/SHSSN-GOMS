@@ -14,13 +14,20 @@
                     <p class="font-semibold uppercase text-sm">LRN: <span class="text-gray-500">{{ $user->lrn }}</span>
                     </p>
                     @if ($student_has_user)
-                        <p class="text-sm text-primary"><i class="fa-solid fa-circle-info"></i> User account is already
-                            registered
-                            under this LRN.</p>
+                        <p class="text-sm text-primary"><i class="fa-solid fa-circle-info"></i> An existing user is
+                            already registered under the name of <span
+                                class="font-semibold">{{ $student_has_user->getFullName() }}</span></p>
                     @else
-                        <p class="text-sm text-primary"><i class="fa-solid fa-circle-info"></i> No user account is
-                            registered under this LRN.</p>
+                        @if ($user_has_lrn)
+                            <p class="text-sm text-primary"><i class="fa-solid fa-circle-info"></i> Student record with
+                                this LRN already exists under the name of {{ $user_has_lrn->getFullName() }}, but does
+                                not have an account registered.</p>
+                        @else
+                            <p class="text-sm text-primary"><i class="fa-solid fa-circle-info"></i> This user is not
+                                registered and has no student record.</p>
+                        @endif
                     @endif
+
                 </div>
             </div>
 
@@ -35,14 +42,35 @@
                             Approve User?
                         </x-slot>
                         <x-slot name="body">
-                            <p class="text-gray-500 text-sm">This will create a user account & other records
-                                for the student.</p>
+                            @if ($user_has_lrn)
+                                <p class="text-gray-500 text-sm mb-3">An existing student LRN matches this user's LRN.
+                                    You are
+                                    about to register this user under this record:</p>
+
+                                <div class="mb-6 grid grid-cols-2 font-semibold text-sm uppercase">
+                                    <div class="flex flex-col gap-y-2">
+                                        <span class="text-gray-500">Name</span>
+                                        <span>{{ $user_has_lrn->getFullName() }}</span>
+                                    </div>
+                                    <div class="flex flex-col gap-y-2">
+                                        <span class="text-gray-500">LRN</span>
+                                        <span>{{ $user_has_lrn->lrn }}</span>
+                                    </div>
+                                </div>
+                            @else
+                                <p class="text-gray-500 text-sm">This will create a user account & other records
+                                    for the student.</p>
+                            @endif
                         </x-slot>
 
                         <x-slot name="action">
                             <form action="{{ route('admin.users.unverified.approve', $user->id) }}" method="post"
                                 class="flex">
                                 @csrf
+
+                                @if ($user_has_lrn)
+                                    <input type="hidden" name="student_has_user" value="{{ $user_has_lrn->id }}">
+                                @endif
 
                                 <button class="flex btn btn-success font-poppins uppercase">Approve</button>
                             </form>
