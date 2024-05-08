@@ -30,11 +30,11 @@ class CheckDocumentLinkValidity
         // dd('passed');
 
         // Delete all expired or used links
-        $expired_links = DocumentLink::where('is_used', true)->where('expires_at', '<=', $today)->get();
+        $expired_links = DocumentLink::where('is_used', true)->orWhere('expires_at', '<=', $today);
 
-        // dd($expired_links);
+        // dd($expired_links->get()->count(), $expired_links);
 
-        if ($expired_links->count() > 0) {
+        if ($expired_links->get()->count() > 0) {
             // dd('Expired link found');
 
             $expired_links->delete();

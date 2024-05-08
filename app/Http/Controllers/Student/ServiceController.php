@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Student;
 use App\Mail\DocumentSent;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\GoodMoralForm;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Actions\GenerateDocumentLink;
 use App\Providers\RouteServiceProvider;
+use App\Enums\DocumentType;
 
 class ServiceController extends Controller
 {
@@ -49,6 +51,20 @@ class ServiceController extends Controller
         $user_recipient = Auth::user();
 
         $document_link = $generateDocumentLink->handle($request);
+
+        switch ($type) {
+            case DocumentType::GM->value:
+                GoodMoralForm::create([
+                    'academic_year_id' => $request->academic_year,
+                    'document_link_id' => $document_link->id,
+                    'is_undergraduate' => $request->is_undergraduate,
+                    'duration_as_student' => $request->duration,
+                ]);
+                break;
+            default:
+                # code...
+                break;
+        }
 
         // dd($document_link);
 

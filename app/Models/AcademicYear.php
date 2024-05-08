@@ -25,6 +25,11 @@ class AcademicYear extends Model
         return $this->start . ' - ' . $this->end;
     }
 
+    public function goodMoralForms()
+    {
+        return $this->hasMany(GoodMoralForm::class);
+    }
+
     public function sections()
     {
         return $this->hasMany(Section::class);

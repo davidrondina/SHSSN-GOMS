@@ -9,25 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{ $title }}</title>
 
-    <style>
-        @font-face {
-            font-family: 'Bookman Old Style';
-            src: url({{ storage_path('fonts/bookman-old-style-regular.ttf') }});
-            font-style: normal;
-            font-weight: normal;
-        }
-
-        @font-face {
-            font-family: 'Bookman Old Style';
-            src: url({{ storage_path('fonts/bookman-old-style-bold.otf') }});
-            font-style: normal;
-            font-weight: bold;
-        }
-
-        body {
-            font-family: 'Bookman Old Style', serif;
-        }
-    </style>
+    @stack('head')
 
     @vite(['resources/css/document.css'])
 </head>
