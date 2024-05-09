@@ -24,7 +24,7 @@ return new class extends Migration {
             $table->string('sex');
             $table->string('phone_no');
             $table->string('proof_image');
-            $table->string('status')->default('Unverified');
+            $table->string('status')->default('Pending');
             $table->timestamps();
         });
     }

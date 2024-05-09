@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Mail\UserVerificationFailed;
 use App\Models\User;
 use App\Enums\UserRole;
 use App\Models\Profile;
@@ -21,7 +22,7 @@ class UnverifiedUserController extends Controller
 {
     public function index(Request $request)
     {
-        $users = UnverifiedUser::where('status', RegisterStatus::UNVERIFIED->value)->latest()->get();
+        $users = UnverifiedUser::where('status', RegisterStatus::PE->value)->latest()->get();
 
         return view('users.admin.users.unverified.index', compact(['users']));
     }
@@ -134,13 +135,22 @@ class UnverifiedUserController extends Controller
     }
 
     // TODO: Before rejection, display popup modal stating the reason for rejection
-    public function reject(string $id)
+    public function reject(Request $request, string $id)
     {
-        $user = UnverifiedUser::find($id);
+        // dd($request->all());
 
-        $user->delete();
+        $request->validate([
+            'reason' => 'required',
+            'additional_comment' => ['required', 'string', 'max:100'],
+        ]);
 
-        return to_route('admin.users.unverified.index')->with('success_message', 'Unverified student deleted successfully.');
+        $user = UnverifiedUser::findOrFail($id);
+
+        Mail::to($user->email)->send(new UserVerificationFailed($request->reason, $request->additional_comment));
+
+        $user->update(['status' => RegisterStatus::UNVERIFIED->value]);
+
+        return to_route('admin.users.unverified.index')->with('success_message', 'Unverified student has been rejected');
     }
 
     public function destroy(string $id)

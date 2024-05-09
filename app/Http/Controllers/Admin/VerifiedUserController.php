@@ -15,7 +15,7 @@ class VerifiedUserController extends Controller
     public function index()
     {
         $users = Profile::whereHas('user', function ($query) {
-            $query->role(['counselor', 'faculty', 'user'])->where('id', '>', 1);
+            $query->role(['counselor', 'faculty', 'student'])->where('id', '>', 1);
         })->orderBy('surname')->paginate(30)->withQueryString();
 
         return view('users.admin.users.verified.index', compact(['users']));
