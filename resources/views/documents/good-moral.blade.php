@@ -92,7 +92,8 @@
                     <p style="text-indent: 3.5rem;">
                         During {{ $is_male ? 'his' : 'her' }} <span
                             style="display: inline-block; min-width: 100px; border-bottom: 1px solid black; font-weight: 700; text-align: center; text-indent; 0; font-size: 1rem; line-height: 1.5rem">{{ $good_moral->duration_as_student }}</span>
-                        months/years in this school, I know {{ $is_male ? 'him' : 'her' }} to be of <strong>good moral
+                        {{ $good_moral->is_duration_month ? 'months' : 'years' }} in this school, I know
+                        {{ $is_male ? 'him' : 'her' }} to be of <strong>good moral
                             character</strong> and
                         law-abiding citizen. {{ $is_male ? 'He' : 'She' }} is cooperative, understanding, and can get
                         among well with

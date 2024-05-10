@@ -18,6 +18,7 @@ return new class extends Migration {
             $table->foreignIdFor(AcademicYear::class)->constrained()->cascadeOnDelete();
             $table->boolean('is_undergraduate');
             $table->tinyInteger('duration_as_student');
+            $table->boolean('is_duration_month');
             $table->timestamps();
         });
     }

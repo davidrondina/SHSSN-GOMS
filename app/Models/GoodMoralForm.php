@@ -14,6 +14,7 @@ class GoodMoralForm extends Model
         'document_link_id',
         'is_undergraduate',
         'duration_as_student',
+        'is_duration_month',
     ];
 
     public function academicYear()

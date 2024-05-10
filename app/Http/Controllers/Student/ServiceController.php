@@ -54,11 +54,18 @@ class ServiceController extends Controller
 
         switch ($type) {
             case DocumentType::GM->value:
+                $request->validate([
+                    'is_undergraduate' => 'required',
+                    'duration' => ['required', 'integer', 'gt:0'],
+                    'is_duration_month' => 'required',
+                ]);
+
                 GoodMoralForm::create([
                     'academic_year_id' => $request->academic_year,
                     'document_link_id' => $document_link->id,
                     'is_undergraduate' => $request->is_undergraduate,
                     'duration_as_student' => $request->duration,
+                    'is_duration_month' => $request->is_duration_month,
                 ]);
                 break;
             default:

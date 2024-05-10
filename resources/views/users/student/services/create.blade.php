@@ -65,21 +65,37 @@
                             <x-form.select.select-option :disabled="true" :selected="true" :option_name="__('Choose an academic year')" />
 
                             @foreach ($years as $yr)
-                            <x-form.select.select-option :value="$yr->id" :option_name="$yr->getfullYear()" />
+                                <x-form.select.select-option :value="$yr->id" :option_name="$yr->getfullYear()" />
                             @endforeach
                         </x-form.select.select-input>
 
                         <x-form.input-error :messages="$errors->get('academic_year')" class="mt-2" />
                     </div>
 
-                    <div>
-                        <x-form.input-label for="duration" :value="__('How many months/years have you stayed in this school?')" />
+                    <div class="flex flex-col gap-y-2">
+                        <x-form.input-label for="duration" :value="__('How long have you stayed in this school?')" />
 
-                        <x-form.text-input id="duration" class="block mt-1 w-full" type="text" name="duration"
-                            value="{{ old('duration') }}" required autocomplete="current-password"
-                            placeholder="Enter the subject name" />
+                        <div>
+                            <x-form.text-input id="duration" class="block mt-1 w-full" type="text" name="duration"
+                                value="{{ old('duration') }}" required autocomplete="current-password"
+                                placeholder="Example: 2" />
 
-                        <x-form.input-error :messages="$errors->get('duration')" class="mt-2" />
+                            <x-form.input-error :messages="$errors->get('duration')" class="mt-2" />
+                        </div>
+
+                        <div class="mt-1 flex gap-x-8">
+                            <div class="flex gap-x-2">
+                                <x-form.radio-button id="is_month" name="is_duration_month" value="1" required />
+                                <x-form.input-label for="is_month" :value="__('Months')" />
+                            </div>
+
+                            <div class="flex gap-x-2">
+                                <x-form.radio-button id="not_month" name="is_duration_month" value="0" />
+                                <x-form.input-label for="not_month" :value="__('Years')" />
+                            </div>
+
+                            <x-form.input-error :messages="$errors->get('is_duration_month')" class="mt-2" />
+                        </div>
                     </div>
 
                     {{-- <div class="flex flex-col gap-y-4">

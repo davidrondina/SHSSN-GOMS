@@ -4,7 +4,7 @@
             <x-sidebar.link href="{{ route('home') }}"
                 class="{{ Request::routeIs('student.dashboard') ? 'bg-[#2a447a]' : '' }}">Dashboard</x-sidebar.link>
             <x-sidebar.link href="{{ route('student.services.index') }}"
-                class="{{ Request::routeIs('faculty.advisory.*') ? 'bg-[#2a447a]' : '' }}">Services</x-sidebar.link>
+                class="{{ Request::routeIs('student.services.*') ? 'bg-[#2a447a]' : '' }}">Services</x-sidebar.link>
             <x-sidebar.link href="{{ route('student.appointments.index') }}"
                 class="{{ Request::routeIs('student.appointments.*') ? 'bg-[#2a447a]' : '' }}">Appointments</x-sidebar.link>
             <x-sidebar.link href="{{ route('student.offenses.index') }}"
