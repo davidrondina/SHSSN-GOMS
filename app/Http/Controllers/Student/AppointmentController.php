@@ -32,7 +32,7 @@ class AppointmentController extends Controller
 
         foreach ($appointments_coll->get() as $app) {
             $appointments[] = [
-                'url' => '/counselor/appointments/' . (string) $app->id,
+                'url' => '/student/appointments/' . (string) $app->id,
                 'title' => $app->complaint->respondent->getFullName(),
                 'start' => $app->start_date,
                 'end' => $app->end_date,

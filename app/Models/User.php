@@ -63,6 +63,11 @@ class User extends Authenticatable
         return $this->hasOne(Faculty::class);
     }
 
+    public function feedback()
+    {
+        return $this->hasMany(UserFeedback::class);
+    }
+
     public function profile()
     {
         return $this->hasOne(Profile::class);

@@ -206,6 +206,53 @@ Alpine.data('starRating', () => ({
     rating: 1,
 }));
 
+Alpine.data('feedbackCard', (feedbackId) => ({
+    id: feedbackId,
+    open: true,
+    displayToggleBtn: true,
+    previewHidden: false,
+
+    checkContentHeight() {
+        const contentHeight = document.getElementById(`wholeContent${this.id}`).clientHeight;
+        const wrapper = document.getElementById(`contentWrapper${this.id}`);
+        const button = document.getElementById(`toggleButton${this.id}`);
+
+        console.log(contentHeight);
+
+        if (contentHeight <= 64) { this.hideToggleBtn(); }
+
+        if (wrapper.classList.contains('sr-only')) {
+            button.textContent = 'Show less';
+        } else {
+            button.textContent = 'Read more';
+        }
+    },
+
+    hideToggleBtn() {
+        const buttonWrapper = document.getElementById(`toggleButtonWrapper${this.id}`);
+        const button = document.getElementById(`toggleButton${this.id}`);
+
+        // buttonWrapper.classList.toggle('hidden');
+
+        // this.open = !this.open;
+    },
+
+    toggle() {
+        const wrapper = document.getElementById(`contentWrapper${this.id}`);
+        const preview = document.getElementById(`previewWrapper${this.id}`);
+        const contentHeight = document.getElementById(`wholeContent${this.id}`).clientHeight;
+        const button = document.getElementById(`toggleButton${this.id}`);
+
+        console.log(wrapper, contentHeight);
+
+        // this.open = !this.open;
+
+        // wrapper.classList.toggle('sr-only');
+        this.previewHidden = !this.previewHidden;
+        // preview.classList.toggle('sr-only');
+    }
+}));
+
 window.Alpine = Alpine;
 
 Alpine.plugin(anchor);

@@ -1,6 +1,8 @@
 <?php
 
 use App\Mail\DocumentSent; // Testing
+use App\Mail\UserVerificationFailed;
+use App\Mail\UserVerificationSuccess;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
@@ -20,6 +22,7 @@ use App\Http\Controllers\Admin\AcademicYearController;
 use App\Http\Controllers\Admin\VerifiedUserController;
 use App\Http\Controllers\Admin\UnverifiedUserController;
 use App\Http\Controllers\Admin\StudentController as ADStudentController;
+use App\Http\Controllers\Admin\UserFeedbackController as ADUserFeedbackController;
 use App\Http\Controllers\Faculty\StudentController as FAStudentController;
 use App\Http\Controllers\Admin\DashboardController as ADDashboardController;
 use App\Http\Controllers\Faculty\ComplaintController as FAComplaintController;
@@ -98,10 +101,11 @@ Route::middleware('auth')->group(function () {
                 Route::get('/', [UnverifiedUserController::class, 'index'])->name('index');
                 Route::get('/{id}', [UnverifiedUserController::class, 'show'])->name('show');
                 Route::post('/{id}/approve', [UnverifiedUserController::class, 'approve'])->name('approve');
-                Route::delete('/{id}/reject', [UnverifiedUserController::class, 'reject'])->name('reject');
+                Route::patch('/{id}/reject', [UnverifiedUserController::class, 'reject'])->name('reject');
                 Route::delete('/{id}', [UnverifiedUserController::class, 'destroy'])->name('destroy');
             });
         });
+        Route::resource('feedback', ADUserFeedbackController::class)->except(['show', 'create', 'store', 'edit', 'update', 'destroy']);
     });
 
     Route::middleware(['role:counselor'])->prefix('counselor')->as('counselor.')->group(function () {
@@ -144,10 +148,19 @@ Route::middleware('auth')->group(function () {
     Route::get('/gm', [DocumentFormController::class, 'goodMoral']);
 
     Route::get('/mail', function () {
-        $user = Auth::user();
-        $document = App\Models\DocumentLink::find(1);
+        $reason = 'Invalid Image Proof';
+        $additional_comment = 'Avoid using non-related image';
 
-        return (new Documentsent($user, $document))->render();
+        return (new UserVerificationFailed($reason, $additional_comment))->render();
+
+        // $user = Auth::user();
+        // $student = $user->studentInfo;
+
+        // return (new UserVerificationSuccess($user, $student))->render();
+
+        // $document = App\Models\DocumentLink::find(1);
+
+        // return (new Documentsent($user, $document))->render();
     });
 
     // Route::get('/email-test', function () {
