@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\CreateAcquisitionRecord;
 use App\Models\User;
 use App\Enums\DocumentType;
 use App\Models\DocumentLink;
@@ -11,18 +12,20 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class DocumentController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request, CreateAcquisitionRecord $createAcquisitionRecord)
     {
         $document = DocumentLink::where('token', $request->token)->first();
         $user = User::findOrFail($document->user_id);
 
         // dd($document, $user);
 
+        $acquisition = $createAcquisitionRecord->handle($request, $document->type, $document->user_id);
+
         $document->update(['is_used' => true]);
 
         switch ($document->type) {
             case DocumentType::GM->value:
-                $good_moral =  GoodMoralForm::where('document_link_id', $document->id)->first();
+                $good_moral = GoodMoralForm::where('document_link_id', $document->id)->first();
                 $pdf = Pdf::loadView('documents.good-moral', compact(['user', 'good_moral']))->setOption('fontDir', storage_path('/fonts'));
                 return $pdf->download('good-moral.pdf');
                 break;
