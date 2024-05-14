@@ -15,6 +15,12 @@ use App\Enums\DocumentType;
 
 class ServiceController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('good-moral.eligible')->only(['create']);
+        $this->middleware('good-moral.acquire')->only(['create']);
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -50,7 +56,8 @@ class ServiceController extends Controller
 
         $user_recipient = Auth::user();
 
-        $document_link = $generateDocumentLink->handle($request);
+
+        $document_link = null;
 
         switch ($type) {
             case DocumentType::GM->value:
@@ -59,6 +66,8 @@ class ServiceController extends Controller
                     'duration' => ['required', 'integer', 'gt:0'],
                     'is_duration_month' => 'required',
                 ]);
+
+                $document_link = $generateDocumentLink->handle($request);
 
                 GoodMoralForm::create([
                     'academic_year_id' => $request->academic_year,
