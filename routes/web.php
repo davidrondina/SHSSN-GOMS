@@ -1,39 +1,43 @@
 <?php
 
-use App\Mail\DocumentSent; // Testing
+use App\Models\Student; // Testing
+use App\Models\Guardian; // testing
+use App\Models\Appointment; // Testing
+use App\Mail\AppointmentNotice;
 use App\Mail\UserVerificationFailed;
+use App\Mail\DocumentSent; // Testing
 use App\Mail\UserVerificationSuccess;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DocumentController;
-use App\Http\Controllers\DocumentGuideController;
-use App\Http\Controllers\StudentRegistrationController;
-use App\Http\Controllers\DocumentFormController; // Remove
 use App\Http\Controllers\Admin\StrandController;
 use App\Http\Controllers\Admin\FacultyController;
 use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\Admin\SubjectController;
+use App\Http\Controllers\DocumentGuideController;
 use App\Http\Controllers\Faculty\ClassController;
 use App\Http\Controllers\Student\ServiceController;
 use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Faculty\AdvisoryController;
 use App\Http\Controllers\Admin\AcademicYearController;
 use App\Http\Controllers\Admin\VerifiedUserController;
+use App\Http\Controllers\StudentRegistrationController;
 use App\Http\Controllers\Admin\UnverifiedUserController;
+use App\Http\Controllers\DocumentFormController; // Remove
 use App\Http\Controllers\Admin\StudentController as ADStudentController;
-use App\Http\Controllers\Admin\UserFeedbackController as ADUserFeedbackController;
 use App\Http\Controllers\Faculty\StudentController as FAStudentController;
 use App\Http\Controllers\Admin\DashboardController as ADDashboardController;
 use App\Http\Controllers\Faculty\ComplaintController as FAComplaintController;
 use App\Http\Controllers\Faculty\DashboardController as FADashboardController;
-use App\Http\Controllers\Student\DashboardController as STDashboardController;
-use App\Http\Controllers\Student\UserFeedbackController as STUserFeedbackController;
-use App\Http\Controllers\Student\AppointmentController as STAppointmentController;
 use App\Http\Controllers\Student\ComplaintController as STComplaintController;
+use App\Http\Controllers\Student\DashboardController as STDashboardController;
 use App\Http\Controllers\Counselor\ComplaintController as COComplaintController;
 use App\Http\Controllers\Counselor\DashboardController as CODashboardController;
+use App\Http\Controllers\Admin\UserFeedbackController as ADUserFeedbackController;
+use App\Http\Controllers\Student\AppointmentController as STAppointmentController;
 use App\Http\Controllers\Counselor\AppointmentController as COAppointmentController;
+use App\Http\Controllers\Student\UserFeedbackController as STUserFeedbackController;
 
 /*
 |--------------------------------------------------------------------------
@@ -112,6 +116,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/dashboard', [CODashboardController::class, 'index'])->name('dashboard');
 
         Route::resource('appointments', COAppointmentController::class);
+        Route::prefix('appointments')->as('appointments.')->group(function () {
+            Route::post('/notify', [COAppointmentController::class, 'notify'])->name('notify');
+        });
         Route::resource('complaints', COComplaintController::class);
         Route::prefix('complaints')->as('complaints.')->group(function () {
             Route::patch('/{id}/close', [COComplaintController::class, 'close'])->name('close');
@@ -148,10 +155,16 @@ Route::middleware('auth')->group(function () {
     Route::get('/gm', [DocumentFormController::class, 'goodMoral']);
 
     Route::get('/mail', function () {
-        $reason = 'Invalid Image Proof';
-        $additional_comment = 'Avoid using non-related image';
+        $appointment = Appointment::findOrFail(1);
+        $guardian = Guardian::findOrFail(6);
+        $student = Student::findOrFail(6);
 
-        return (new UserVerificationFailed($reason, $additional_comment))->render();
+        return (new AppointmentNotice($appointment, $guardian, $student))->render();
+
+        // $reason = 'Invalid Image Proof';
+        // $additional_comment = 'Avoid using non-related image';
+
+        // return (new AppointmentNotice())->render();
 
         // $user = Auth::user();
         // $student = $user->studentInfo;

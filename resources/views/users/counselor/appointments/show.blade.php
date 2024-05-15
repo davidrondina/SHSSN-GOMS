@@ -112,10 +112,32 @@
                     @if ($respondent_guardian->email && !$appointment->is_closed)
                         <div class="flex items-center gap-x-6">
                             <p class="font-semibold">{{ $respondent_guardian->email }}</p>
-                            <form action="#" method="get">
-                                <button class="btn btn-sm btn-primary"><i class="fa-solid fa-envelope"></i>Send
-                                    Notice</button>
-                            </form>
+
+                            <x-confirm-modal :type="__('info')">
+                                <button @click="open = !open" class="btn btn-sm btn-primary"><i
+                                        class="fa-solid fa-envelope font-normal"></i>Send Email Notice
+                                </button>
+                                <x-slot name="header">
+                                    <span class="normal-case">Send Notice?</span>
+                                </x-slot>
+                                <x-slot name="body">
+                                    <p class="text-gray-500 text-sm normal-case">An email notice will be sent to the
+                                        guardian's
+                                        email address.</p>
+                                </x-slot>
+
+                                <x-slot name="action">
+                                    <form action="{{ route('counselor.appointments.notify') }}" method="post"
+                                        class="flex">
+                                        @csrf
+                                        <input type="hidden" name="guardian_id"
+                                            value="{{ $respondent_guardian->id }}">
+                                        <input type="hidden" name="student_id" value="{{ $respondent->id }}">
+                                        <input type="hidden" name="appointment_id" value="{{ $appointment->id }}">
+                                        <button class="flex btn btn-primary font-poppins uppercase">Send</button>
+                                    </form>
+                                </x-slot>
+                            </x-confirm-modal>
                         </div>
                     @else
                         <p class="font-semibold">N/A</p>

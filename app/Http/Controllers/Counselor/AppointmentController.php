@@ -4,9 +4,13 @@ namespace App\Http\Controllers\Counselor;
 
 use Closure;
 use Carbon\Carbon;
+use App\Models\Student;
+use App\Models\Guardian;
 use App\Models\Appointment;
 use Illuminate\Http\Request;
+use App\Mail\AppointmentNotice;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
 
 class AppointmentController extends Controller
 {
@@ -110,6 +114,19 @@ class AppointmentController extends Controller
         $respondent_guardian = $respondent->guardian;
 
         return view('users.counselor.appointments.show', compact(['appointment', 'complaint', 'respondent', 'respondent_guardian']));
+    }
+
+    public function notify(Request $request)
+    {
+        $guardian = Guardian::findOrFail($request->guardian_id);
+        $appointment = Appointment::findOrFail($request->appointment_id);
+        $student = Student::findOrFail($request->student_id);
+
+        // dd($guardian, $appointment, $student);
+
+        Mail::to($guardian->email)->send(new AppointmentNotice($appointment, $guardian, $student));
+
+        return back()->with('success_message', 'Email has been sent successfully');
     }
 
     /**
