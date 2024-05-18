@@ -19,6 +19,10 @@ class DocumentGuideController extends Controller
         $role = User::find(Auth::user()->id)->roles()->first();
 
         switch ($role->name) {
+            case UserRole::AD->value:
+                $document_guides = DocumentGuide::all();
+                return view('users.admin.document-guides.index', compact(['document_guides']));
+                break;
             case UserRole::FA->value;
                 // dd('faculty view');
                 // return to_route('faculty.dashboard');

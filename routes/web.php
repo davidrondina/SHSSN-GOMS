@@ -26,6 +26,7 @@ use App\Http\Controllers\StudentRegistrationController;
 use App\Http\Controllers\Admin\UnverifiedUserController;
 use App\Http\Controllers\DocumentFormController; // Remove
 use App\Http\Controllers\Admin\StudentController as ADStudentController;
+use App\Http\Controllers\Admin\DocumentGuideController as ADDocumentGuideController;
 use App\Http\Controllers\Faculty\StudentController as FAStudentController;
 use App\Http\Controllers\Admin\DashboardController as ADDashboardController;
 use App\Http\Controllers\Faculty\ComplaintController as FAComplaintController;
@@ -85,6 +86,7 @@ Route::middleware('auth')->group(function () {
         Route::prefix('faculties')->as('faculties.')->group(function () {
             Route::put('/{id}/subjects', [FacultyController::class, 'updateSubjects'])->name('subjects');
         });
+        Route::resource('guides', ADDocumentGuideController::class)->except(['index', 'create', 'store', 'destroy']);
         Route::resource('subjects', SubjectController::class);
         Route::resource('sections', SectionController::class);
         Route::prefix('sections')->as('sections.')->group(function () {
