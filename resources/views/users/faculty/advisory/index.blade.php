@@ -41,56 +41,58 @@
             </x-slot> --}}
         </x-app.page-header>
 
-        <x-card class="mb-4 px-4 py-8 flex flex-col gap-y-8">
-            <div class="flex flex-col gap-y-4">
-                <div class="flex flex-col gap-y-2">
-                    <div class="flex justify-between items-center">
-                        <h3 class="text-lg font-bold">A.Y. {{ $year->getFullYear() }}</h3>
-                        @if ($current_advisory)
-                            <a href="{{ route('faculty.advisory.current') }}" class="btn-link">See More</a>
-                        @endif
+        @if ($current_advisory)
+            <x-card class="mb-4 px-4 py-8 flex flex-col gap-y-8">
+                <div class="flex flex-col gap-y-4">
+                    <div class="flex flex-col gap-y-2">
+                        <div class="flex justify-between items-center">
+                            <h3 class="text-lg font-bold">A.Y. {{ $year->getFullYear() }}</h3>
+                            @if ($current_advisory)
+                                <a href="{{ route('faculty.advisory.current') }}" class="btn-link">See More</a>
+                            @endif
+                        </div>
+
+                        <h4 class="font-bold font-fs text-gray-500">{{ $current_advisory->name }}</h4>
                     </div>
 
-                    <h4 class="font-bold font-fs text-gray-500">{{ $current_advisory->name }}</h4>
-                </div>
-
-                <div class="font-fs grid grid-cols-1 md:grid-cols-2">
-                    <x-card class="py-3 px-4 flex flex-row gap-x-4">
-                        <div>
-                            <div
-                                class="w-12 aspect-square border border-accent rounded-full inline-flex justify-center items-center text-xl text-accent">
-                                <i class="fa-solid fa-user-graduate"></i>
-                            </div>
-                        </div>
-                        <div class="flex flex-col">
-                            <h2 class="font-semibold uppercase text-sm text-gray-500">Students</h2>
-
+                    <div class="font-fs grid grid-cols-1 md:grid-cols-2">
+                        <x-card class="py-3 px-4 flex flex-row gap-x-4">
                             <div>
-                                <span
-                                    class="text-2xl truncate font-semibold">{{ $current_advisory->students->count() }}</span>
+                                <div
+                                    class="w-12 aspect-square border border-accent rounded-full inline-flex justify-center items-center text-xl text-accent">
+                                    <i class="fa-solid fa-user-graduate"></i>
+                                </div>
                             </div>
-                        </div>
-                    </x-card>
+                            <div class="flex flex-col">
+                                <h2 class="font-semibold uppercase text-sm text-gray-500">Students</h2>
 
-                    <x-card class="py-3 px-4 flex flex-row gap-x-4">
-                        <div>
-                            <div
-                                class="w-12 aspect-square border border-red-700 rounded-full inline-flex justify-center items-center text-xl text-red-700">
-                                <i class="fa-solid fa-book-open"></i>
+                                <div>
+                                    <span
+                                        class="text-2xl truncate font-semibold">{{ $current_advisory->students->count() }}</span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="flex flex-col">
-                            <h2 class="font-semibold uppercase text-sm text-gray-500">Subjects</h2>
+                        </x-card>
 
+                        <x-card class="py-3 px-4 flex flex-row gap-x-4">
                             <div>
-                                <span
-                                    class="text-2xl truncate font-semibold">{{ $current_advisory->subjects->count() }}</span>
+                                <div
+                                    class="w-12 aspect-square border border-red-700 rounded-full inline-flex justify-center items-center text-xl text-red-700">
+                                    <i class="fa-solid fa-book-open"></i>
+                                </div>
                             </div>
-                        </div>
-                    </x-card>
+                            <div class="flex flex-col">
+                                <h2 class="font-semibold uppercase text-sm text-gray-500">Subjects</h2>
+
+                                <div>
+                                    <span
+                                        class="text-2xl truncate font-semibold">{{ $current_advisory->subjects->count() }}</span>
+                                </div>
+                            </div>
+                        </x-card>
+                    </div>
                 </div>
-            </div>
-        </x-card>
+            </x-card>
+        @endif
 
         <div class="flex flex-col gap-y-2">
             <h2 class="font-bold text-lg">Previous Advisories</h2>
