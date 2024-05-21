@@ -35,6 +35,32 @@ Alpine.data('quillEditor', () => ({
     }
 }));
 
+Alpine.data('reportGenerator', () => ({
+    print() {
+        const content = this.$refs.content;
+        const pageHeader = this.$refs.pageHeader;
+        const reportCanvas = this.$refs.reportCanvas;
+
+        content.classList.toggle('w-3/5');
+        pageHeader.classList.toggle('hidden');
+        this.toggleClasses('bg-white', 'py-4', 'px-5');
+
+        window.print();
+
+        content.classList.toggle('w-3/5');
+        pageHeader.classList.toggle('hidden');
+        this.toggleClasses('bg-white', 'py-4', 'px-5');
+    },
+
+    toggleClasses(...classes) {
+        const reportCanvas = this.$refs.reportCanvas;
+
+        for (const cName of classes) {
+            reportCanvas.classList.toggle(cName);
+        }
+    }
+}));
+
 Alpine.data('studentRegForm', () => ({
     step: 1,
     data: {

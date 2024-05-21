@@ -1,16 +1,17 @@
 <?php
 
+use App\Mail\AppointmentNotice;
 use App\Models\Student; // Testing
 use App\Models\Guardian; // testing
-use App\Models\Appointment; // Testing
-use App\Mail\AppointmentNotice;
 use App\Mail\UserVerificationFailed;
 use App\Mail\DocumentSent; // Testing
 use App\Mail\UserVerificationSuccess;
 use Illuminate\Support\Facades\Route;
+use App\Models\Appointment; // Testing
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\StrandController;
 use App\Http\Controllers\Admin\FacultyController;
 use App\Http\Controllers\Admin\SectionController;
@@ -26,7 +27,6 @@ use App\Http\Controllers\StudentRegistrationController;
 use App\Http\Controllers\Admin\UnverifiedUserController;
 use App\Http\Controllers\DocumentFormController; // Remove
 use App\Http\Controllers\Admin\StudentController as ADStudentController;
-use App\Http\Controllers\Admin\DocumentGuideController as ADDocumentGuideController;
 use App\Http\Controllers\Faculty\StudentController as FAStudentController;
 use App\Http\Controllers\Admin\DashboardController as ADDashboardController;
 use App\Http\Controllers\Faculty\ComplaintController as FAComplaintController;
@@ -37,6 +37,7 @@ use App\Http\Controllers\Counselor\ComplaintController as COComplaintController;
 use App\Http\Controllers\Counselor\DashboardController as CODashboardController;
 use App\Http\Controllers\Admin\UserFeedbackController as ADUserFeedbackController;
 use App\Http\Controllers\Student\AppointmentController as STAppointmentController;
+use App\Http\Controllers\Admin\DocumentGuideController as ADDocumentGuideController;
 use App\Http\Controllers\Counselor\AppointmentController as COAppointmentController;
 use App\Http\Controllers\Student\UserFeedbackController as STUserFeedbackController;
 
@@ -93,6 +94,11 @@ Route::middleware('auth')->group(function () {
             Route::put('/{id}/students', [SectionController::class, 'updateStudents'])->name('students');
             Route::put('/{id}/subjects', [SectionController::class, 'updateSubjects'])->name('subjects');
         });
+        Route::prefix('reports')->as('reports.')->group(function () {
+            Route::get('/', [ReportController::class, 'index'])->name('index');
+            Route::get('/generate', [ReportController::class, 'create'])->name('create');
+        });
+        // Route::resource('reports', ReportController::class)->except(['create', 'store', 'edit', 'update', 'destroy']);
         Route::resource('students', ADStudentController::class);
         Route::prefix('students')->as('students.')->group(function () {
             Route::post('/{id}/enroll', [ADStudentController::class, 'enrollToCurrentYear'])->name('enroll');
@@ -175,7 +181,7 @@ Route::middleware('auth')->group(function () {
 
         // $document = App\Models\DocumentLink::find(1);
 
-        // return (new Documentsent($user, $document))->render();
+        // return (new DocumentSent($user, $document))->render();
     });
 
     // Route::get('/email-test', function () {

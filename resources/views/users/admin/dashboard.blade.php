@@ -1,6 +1,11 @@
 <x-app.admin.main-container>
     <main class="w-full flex-grow">
-        <x-app.page-header :show_title="true" :title="__('Dashboard')" />
+        <x-app.page-header :show_title="true" :title="__('Dashboard')">
+            <x-slot name="controls">
+                <a href="{{ route('admin.reports.create') . '?report=dashboard' }}" class="btn btn-sm btn-accent"><i
+                        class="fa-solid fa-file-lines"></i>Generate Report</a>
+            </x-slot>
+        </x-app.page-header>
 
         <div class="flex flex-col gap-y-4">
             <div class="flex flex-col gap-y-2">
@@ -17,7 +22,7 @@
                             <h2 class="font-semibold uppercase text-sm text-gray-500">Total Students</h2>
 
                             <div>
-                                <span class="text-2xl truncate font-semibold">200000</span>
+                                <span class="text-2xl truncate font-semibold">{{ $students_count }}</span>
                             </div>
                         </div>
                     </x-card>
@@ -32,7 +37,7 @@
                             <h2 class="font-semibold uppercase text-sm text-gray-500">Total Faculties</h2>
 
                             <div>
-                                <span class="text-2xl truncate font-semibold">200000</span>
+                                <span class="text-2xl truncate font-semibold">{{ $faculties_count }}</span>
                             </div>
                         </div>
                     </x-card>
@@ -47,7 +52,7 @@
                             <h2 class="font-semibold uppercase text-sm text-gray-500">Total Subjects</h2>
 
                             <div>
-                                <span class="text-2xl truncate font-semibold">200000</span>
+                                <span class="text-2xl truncate font-semibold">{{ $subjects_count }}</span>
                             </div>
                         </div>
                     </x-card>
@@ -62,7 +67,7 @@
                             <h2 class="font-semibold uppercase text-sm text-gray-500">Total Users</h2>
 
                             <div>
-                                <span class="text-2xl truncate font-semibold">200000</span>
+                                <span class="text-2xl truncate font-semibold">{{ $users_count }}</span>
                             </div>
                         </div>
                     </x-card>
@@ -84,7 +89,7 @@
                             <h2 class="font-semibold uppercase text-sm text-gray-500">Enrolled Students</h2>
 
                             <div>
-                                <span class="text-2xl truncate font-semibold">200000</span>
+                                <span class="text-2xl truncate font-semibold">{{ $enrolled_students_count }}</span>
                             </div>
                         </div>
                     </x-card>
@@ -99,7 +104,7 @@
                             <h2 class="font-semibold uppercase text-sm text-gray-500">Total Sections</h2>
 
                             <div>
-                                <span class="text-2xl truncate font-semibold">200000</span>
+                                <span class="text-2xl truncate font-semibold">{{ $sections_count }}</span>
                             </div>
                         </div>
                     </x-card>
@@ -124,37 +129,95 @@
                 return {
                     options: {
                         series: [{
-                            name: "No. of acquisitions",
-                            data: [10, 41, 35, 51]
-                        }],
+                            name: "Total Matches",
+                            data: @json($acquisitions)
+                        }, ],
                         chart: {
                             height: 350,
                             type: 'line',
+                            dropShadow: {
+                                enabled: true,
+                                color: '#000',
+                                top: 18,
+                                left: 7,
+                                blur: 10,
+                                opacity: 0.2
+                            },
                             zoom: {
                                 enabled: false
+                            },
+                            toolbar: {
+                                show: false
                             }
                         },
+                        colors: ['#23a7c4'],
                         dataLabels: {
-                            enabled: false
+                            enabled: true,
                         },
                         stroke: {
-                            curve: 'straight'
-                        },
-                        title: {
-                            text: 'Document Acquisitions Data',
-                            align: 'left'
+                            curve: 'smooth'
                         },
                         grid: {
+                            borderColor: '#e7e7e7',
                             row: {
                                 colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
                                 opacity: 0.5
                             },
                         },
+                        markers: {
+                            size: 1
+                        },
                         xaxis: {
-                            categories: ['Jan', 'Feb', 'Mar', 'Apr', ],
+                            categories: @json($month_names),
+                            title: {
+                                text: 'Month'
+                            }
+                        },
+                        yaxis: {
+                            title: {
+                                text: 'Total'
+                            },
+                        },
+                        legend: {
+                            position: 'top',
+                            horizontalAlign: 'right',
+                            floating: true,
+                            offsetY: -25,
+                            offsetX: -5
                         }
                     },
-
+                    // options: {
+                    //     series: [{
+                    //         name: "Document Acquisitions",
+                    //         data: {{ json_encode($acquisitions) }}
+                    //     }],
+                    //     chart: {
+                    //         height: 350,
+                    //         type: 'line',
+                    //         zoom: {
+                    //             enabled: false
+                    //         }
+                    //     },
+                    //     dataLabels: {
+                    //         enabled: false
+                    //     },
+                    //     stroke: {
+                    //         curve: 'straight'
+                    //     },
+                    //     title: {
+                    //         text: 'Document Acquisitions Data',
+                    //         align: 'left',
+                    //     },
+                    //     grid: {
+                    //         row: {
+                    //             colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+                    //             opacity: 0.5
+                    //         },
+                    //     },
+                    //     xaxis: {
+                    //         categories: @php echo json_encode($month_names) @endphp,
+                    //     }
+                    // },
                     render() {
                         return new ApexCharts(document.getElementById('acquisitionsChartCanvas'), this.options)
                             .render();
