@@ -44,9 +44,13 @@
                 <x-slot name="dropdownItems" :pageIsOnMenu="Request::routeIs([
                     'admin.users.verified.*',
                     'admin.users.unverified.*',
+                    'admin.registration-links.*',
                     'admin.feedback.index',
                     'document-guide.index',
                 ])">
+                    <x-sidebar.link href="{{ route('admin.registration-links.index') }}"
+                        class="{{ Request::routeIs('admin.registration-links.*') ? 'bg-[#2a447a]' : '' }}">Registration
+                        Links</x-sidebar.link>
                     <x-sidebar.link href="{{ route('admin.users.verified.index') }}"
                         class="{{ Request::routeIs('admin.users.verified.*') ? 'bg-[#2a447a]' : '' }}">Verified
                         Users</x-sidebar.link>

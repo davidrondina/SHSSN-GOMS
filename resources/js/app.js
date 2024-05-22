@@ -5,6 +5,18 @@ import anchor from '@alpinejs/anchor';
 import axios from "axios";
 import * as Validator from 'validatorjs';
 
+Alpine.data('copyTextBtn', (text) => ({
+    copyText: text,
+    copyNotification: false,
+    copyToClipboard() {
+        navigator.clipboard.writeText(this.copyText);
+        this.copyNotification = true;
+        setTimeout(() => {
+            this.copyNotification = false;
+        }, 3000);
+    }
+}));
+
 Alpine.data('quillEditor', () => ({
     content: null,
 
