@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FacultyRegistrationController;
 use App\Mail\AppointmentNotice;
 use App\Models\Student; // Testing
 use App\Models\Guardian; // testing
@@ -25,6 +26,7 @@ use App\Http\Controllers\Admin\AcademicYearController;
 use App\Http\Controllers\Admin\VerifiedUserController;
 use App\Http\Controllers\StudentRegistrationController;
 use App\Http\Controllers\Admin\UnverifiedUserController;
+use App\Http\Controllers\Admin\RegistrationLinkController;
 use App\Http\Controllers\DocumentFormController; // Remove
 use App\Http\Controllers\Admin\StudentController as ADStudentController;
 use App\Http\Controllers\Faculty\StudentController as FAStudentController;
@@ -56,12 +58,17 @@ Route::get('/', function () {
     return view('index');
 });
 
-Route::middleware(['guest'])->prefix('register')->as('student-register.')->group(function () {
-    Route::post('/submit', [StudentRegistrationController::class, 'store'])->name('store');
-    Route::post('/verify-account', [StudentRegistrationController::class, 'verifyAccount'])->name('verify-account');
-    Route::post('/verify-student', [StudentRegistrationController::class, 'verifyStudentInfo'])->name('verify-student');
-    Route::post('/verify-guardian', [StudentRegistrationController::class, 'verifyGuardianInfo'])->name('verify-guardian');
-    Route::get('/success', [StudentRegistrationController::class, 'success'])->name('success');
+Route::middleware(['guest'])->prefix('register')->group(function () {
+    Route::prefix('student')->as('student-register.')->group(function () {
+        Route::post('/submit', [StudentRegistrationController::class, 'store'])->name('store');
+        Route::post('/verify-account', [StudentRegistrationController::class, 'verifyAccount'])->name('verify-account');
+        Route::post('/verify-student', [StudentRegistrationController::class, 'verifyStudentInfo'])->name('verify-student');
+        Route::post('/verify-guardian', [StudentRegistrationController::class, 'verifyGuardianInfo'])->name('verify-guardian');
+        Route::get('/success', [StudentRegistrationController::class, 'success'])->name('success');
+    });
+    Route::prefix('faculty')->as('faculty-register.')->group(function () {
+        Route::get('/register', [FacultyRegistrationController::class, 'create'])->middleware(['register_link_is_valid'])->name('create');
+    });
 });
 
 Route::get('/file/download', [DocumentController::class, 'index'])->middleware(['document_link_is_valid'])->name('download-file');
@@ -94,6 +101,7 @@ Route::middleware('auth')->group(function () {
             Route::put('/{id}/students', [SectionController::class, 'updateStudents'])->name('students');
             Route::put('/{id}/subjects', [SectionController::class, 'updateSubjects'])->name('subjects');
         });
+        Route::resource('registration-links', RegistrationLinkController::class)->except(['create', 'edit', 'update']);
         Route::prefix('reports')->as('reports.')->group(function () {
             Route::get('/', [ReportController::class, 'index'])->name('index');
             Route::get('/generate', [ReportController::class, 'create'])->name('create');

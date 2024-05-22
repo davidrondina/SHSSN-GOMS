@@ -68,5 +68,6 @@ class Kernel extends HttpKernel
         'document_link_is_valid' => \App\Http\Middleware\CheckDocumentLinkValidity::class,
         'good-moral.eligible' => \App\Http\Middleware\CheckStudentGMEligibility::class,
         'good-moral.acquire' => \App\Http\Middleware\CheckStudentGMAcquisitions::class,
+        'register_link_is_valid' => \App\Http\Middleware\CheckRegistrationLinkValidity::class,
     ];
 }
