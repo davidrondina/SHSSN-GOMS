@@ -2,5 +2,20 @@
     "bookman old style": {
         "normal": "C:\\Users\\gmdar\\OneDrive\\Desktop\\Projects\\SHSSN-GOMS\\storage\\\/fonts\/bookman_old_style_normal_dc8acb0d026dfb89d466e948b404d136",
         "bold": "bookman_old_style_bold_ea4784877ba0efe9b0fc89f82ea3a801"
+    },
+    "calibri": {
+        "normal": "C:\\Users\\gmdar\\OneDrive\\Desktop\\Projects\\SHSSN-GOMS\\storage\\\/fonts\/calibri_normal_25a0f8bd419da1d83b5189d4229e0bf5",
+        "bold": "calibri_bold_df400736d8238aa4475f4df178d5474e"
+    },
+    "old english text mt": {
+        "normal": "C:\\Users\\gmdar\\OneDrive\\Desktop\\Projects\\SHSSN-GOMS\\storage\\\/fonts\/old_english_text_mt_normal_0a6ccf0408c02848147040b226ab1a22",
+        "bold": "old_english_text_mt_bold_0a6ccf0408c02848147040b226ab1a22"
+    },
+    "cambria": {
+        "normal": "cambria_normal_02a2738e81dbdc8ac20a173fc0b077b1"
+    },
+    "cambria font": {
+        "normal": "C:\\Users\\gmdar\\OneDrive\\Desktop\\Projects\\SHSSN-GOMS\\storage\\\/fonts\/cambria_font_normal_02a2738e81dbdc8ac20a173fc0b077b1",
+        "bold": "cambria_font_bold_c465c0f2e1f09ffbaa7b9fc16967f471"
     }
 }
