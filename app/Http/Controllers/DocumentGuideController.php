@@ -25,7 +25,7 @@ class DocumentGuideController extends Controller
                 break;
             case UserRole::FA->value;
                 // dd('faculty view');
-                // return to_route('faculty.dashboard');
+                return view('users.faculty.document-guides.index', compact(['guide', 'type']));
                 break;
             case UserRole::ST->value: // User role is student
                 // dd('student view');

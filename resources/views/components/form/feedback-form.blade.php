@@ -1,4 +1,4 @@
-@props(['fields' => []])
+@props(['action', 'fields' => [],])
 
 <div x-data="feedbackForm">
     <div x-cloak x-show="open" class="fixed z-50 inset-0 overflow-y-auto text-neutral">
@@ -32,7 +32,7 @@
                         <!-- BODY -->
                         <div class="mt-2">
 
-                            <form action="{{ route('student.feedback.store') }}" method="post"
+                            <form action="{{ $action }}" method="post"
                                 class="flex flex-col gap-y-4">
                                 @csrf
 

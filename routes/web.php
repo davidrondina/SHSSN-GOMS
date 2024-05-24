@@ -34,6 +34,7 @@ use App\Http\Controllers\Admin\DashboardController as ADDashboardController;
 use App\Http\Controllers\Faculty\ComplaintController as FAComplaintController;
 use App\Http\Controllers\Faculty\ServiceController as FAServiceController;
 use App\Http\Controllers\Faculty\DashboardController as FADashboardController;
+use App\Http\Controllers\Faculty\UserFeedbackController as FAUserFeedbackController;
 use App\Http\Controllers\Student\ComplaintController as STComplaintController;
 use App\Http\Controllers\Student\DashboardController as STDashboardController;
 use App\Http\Controllers\Counselor\ComplaintController as COComplaintController;
@@ -152,6 +153,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('services', FAServiceController::class)->except(['edit', 'update', 'destroy']);
         Route::resource('complaints', FAComplaintController::class);
         Route::resource('classes', ClassController::class)->except(['create', 'store', 'edit', 'update', 'destroy']);
+        Route::post('/feedback', [FAUserFeedbackController::class, 'store'])->name('feedback.store');
     });
 
     Route::middleware(['role:student'])->prefix('student')->as('student.')->group(function () {

@@ -22,9 +22,9 @@ class DocumentController extends Controller
 
         // dd($document, $user);
 
-        // $acquisition = $createAcquisitionRecord->handle($request, $document->type, $document->user_id);
+        $acquisition = $createAcquisitionRecord->handle($request, $document->type, $document->user_id);
 
-        // $document->update(['is_used' => true]);
+        $document->update(['is_used' => true]);
 
         switch ($document->type) {
             case DocumentType::GM->value:

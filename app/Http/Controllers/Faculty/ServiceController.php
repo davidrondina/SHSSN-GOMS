@@ -78,7 +78,7 @@ class ServiceController extends Controller
 
         Mail::to($user_recipient->email)->send(new DocumentSent($user_recipient, $document_link));
 
-        return to_route('faculty.services.index')->with('success_message', 'Document has been generated');
+        return to_route('document-guide.index', ['type' => $type])->with('success_message', 'Document request successful');
     }
 
     /**
