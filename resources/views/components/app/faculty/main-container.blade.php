@@ -5,6 +5,8 @@
                 class="{{ Request::routeIs('faculty.dashboard') ? 'bg-[#2a447a]' : '' }}">Dashboard</x-sidebar.link>
             <x-sidebar.link href="{{ route('faculty.advisory.index') }}"
                 class="{{ Request::routeIs('faculty.advisory.*') ? 'bg-[#2a447a]' : '' }}">Advisory</x-sidebar.link>
+                <x-sidebar.link href="{{ route('faculty.services.index') }}"
+                class="{{ Request::routeIs('faculty.services.*') ? 'bg-[#2a447a]' : '' }}">Services</x-sidebar.link>
             <x-sidebar.link href="{{ route('faculty.classes.index') }}"
                 class="{{ Request::routeIs('faculty.classes.*') ? 'bg-[#2a447a]' : '' }}">My
                 Classes</x-sidebar.link>

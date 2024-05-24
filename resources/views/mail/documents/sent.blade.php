@@ -11,6 +11,8 @@ Please refer to the instructions shown in the website after downloading the file
     Click here to download the file
 </x-mail::button>
 
+You must <strong>download</strong> the file document before the link <strong>expires in 48 hours</strong> after this email was sent.
+
 Thanks,<br>
 {{ config('app.name') }}
 </x-mail::message>

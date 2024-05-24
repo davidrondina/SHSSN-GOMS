@@ -19,7 +19,7 @@ use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\Admin\SubjectController;
 use App\Http\Controllers\DocumentGuideController;
 use App\Http\Controllers\Faculty\ClassController;
-use App\Http\Controllers\Student\ServiceController;
+use App\Http\Controllers\Student\ServiceController as STServiceController;
 use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Faculty\AdvisoryController;
 use App\Http\Controllers\Admin\AcademicYearController;
@@ -32,6 +32,7 @@ use App\Http\Controllers\Admin\StudentController as ADStudentController;
 use App\Http\Controllers\Faculty\StudentController as FAStudentController;
 use App\Http\Controllers\Admin\DashboardController as ADDashboardController;
 use App\Http\Controllers\Faculty\ComplaintController as FAComplaintController;
+use App\Http\Controllers\Faculty\ServiceController as FAServiceController;
 use App\Http\Controllers\Faculty\DashboardController as FADashboardController;
 use App\Http\Controllers\Student\ComplaintController as STComplaintController;
 use App\Http\Controllers\Student\DashboardController as STDashboardController;
@@ -148,6 +149,7 @@ Route::middleware('auth')->group(function () {
         });
         Route::resource('advisory', AdvisoryController::class)->except(['create', 'store', 'edit', 'update', 'destroy']);
         Route::resource('students', FAStudentController::class)->except(['create', 'store', 'edit', 'update', 'destroy']);
+        Route::resource('services', FAServiceController::class)->except(['edit', 'update', 'destroy']);
         Route::resource('complaints', FAComplaintController::class);
         Route::resource('classes', ClassController::class)->except(['create', 'store', 'edit', 'update', 'destroy']);
     });
@@ -156,7 +158,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/dashboard', [STDashboardController::class, 'index'])->name('dashboard');
         Route::resource('appointments', STAppointmentController::class)->except(['create', 'store', 'edit', 'update', 'destroy']);
         Route::resource('offenses', STComplaintController::class)->except(['create', 'store', 'edit', 'update', 'destroy']);
-        Route::resource('services', ServiceController::class)->except(['edit', 'update', 'destroy']);
+        Route::resource('services', STServiceController::class)->except(['edit', 'update', 'destroy']);
         Route::post('/feedback', [STUserFeedbackController::class, 'store'])->name('feedback.store');
     });
 
@@ -169,6 +171,7 @@ Route::middleware('auth')->group(function () {
     // });
 
     Route::get('/gm', [DocumentFormController::class, 'goodMoral']);
+    Route::get('/pn', [DocumentFormController::class, 'promissoryForm']);
 
     Route::get('/mail', function () {
         $appointment = Appointment::findOrFail(1);

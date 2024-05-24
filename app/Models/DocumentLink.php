@@ -17,4 +17,14 @@ class DocumentLink extends Model
         'is_used',
         'expires_at',
     ];
+
+    public function goodMoralForm()
+    {
+        return $this->hasOne(GoodMoralForm::class);
+    }
+
+    public function promissoryForm()
+    {
+        return $this->hasOne(PromissoryForm::class);
+    }
 }

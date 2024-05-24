@@ -52,6 +52,16 @@ class Student extends Model
         return $currentEnrolment->grade_level;
     }
 
+    public function getCurrentSection()
+    {
+        $year = AcademicYear::where('is_current', true)->first();
+        $student_id = $this->id;
+
+        return SectionStudent::where('student_id', $this->id)->whereHas('section', function ($query) use ($year) {
+            $query->where('academic_year_id', $year->id);
+        })->first();
+    }
+
     public function guardian()
     {
         return $this->belongsTo(Guardian::class);

@@ -30,7 +30,6 @@ class Section extends Model
     public function subjects()
     {
         return $this->hasMany(SectionSubject::class);
-        ;
     }
 
     public function strand()
