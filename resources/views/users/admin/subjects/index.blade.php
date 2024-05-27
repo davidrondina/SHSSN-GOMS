@@ -3,7 +3,7 @@
         <x-app.page-header :show_title="true" :title="__('Subjects')">
             <x-slot name="controls">
                 <div class="flex items-center gap-x-4">
-                    <x-form.search-form :form_action="__('#')" :placeholder="__('Search subject name')" />
+                    <x-form.search-form :form_action="route('admin.subjects.index')" :placeholder="__('Search subject name')" />
 
                     {{-- <form action="" method="get" class="flex gap-x-2">
                         <x-form.select.select-input>

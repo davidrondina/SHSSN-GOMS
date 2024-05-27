@@ -22,14 +22,19 @@ class UnverifiedUserController extends Controller
 {
     public function index(Request $request)
     {
-        $users = UnverifiedUser::where('status', RegisterStatus::PE->value)->latest()->get();
+        $users = UnverifiedUser::where('status', RegisterStatus::PE->value)->latest()->paginate(30)->withQueryString();
+
+        if ($request->search) {
+            // dd($request->search);
+            $subjects = UnverifiedUser::where('name', 'like', '%' . $request->search . '%')->paginate(30)->withQueryString();
+        }
 
         return view('users.admin.users.unverified.index', compact(['users']));
     }
 
     public function show(string $id)
     {
-        $user = UnverifiedUser::find($id);
+        $user = UnverifiedUser::findOrFail($id);
         $student_has_user = Student::where('lrn', $user->lrn)->has('user')->first();
         $user_has_lrn = Student::where('lrn', $user->lrn)->doesntHave('user')->first();
 
@@ -38,7 +43,7 @@ class UnverifiedUserController extends Controller
 
     public function approve(Request $request, string $id)
     {
-        $uv_user = UnverifiedUser::find($id);
+        $uv_user = UnverifiedUser::findOrFail($id);
         $uv_guardian = $uv_user->guardian;
 
         // dd($uv_user, $uv_guardian);
@@ -81,7 +86,6 @@ class UnverifiedUserController extends Controller
         return to_route('admin.users.unverified.index')->with('success_message', 'Student & guardian info registered successfully.');
     }
 
-    // TODO: Send email to student's email address
     private function store(string $lrn, array $user, array $profile, array $guardian, $student_has_user = false)
     {
         $registered_user = User::create($user);
@@ -134,7 +138,6 @@ class UnverifiedUserController extends Controller
         return $credentials;
     }
 
-    // TODO: Before rejection, display popup modal stating the reason for rejection
     public function reject(Request $request, string $id)
     {
         // dd($request->all());
@@ -155,11 +158,11 @@ class UnverifiedUserController extends Controller
 
     public function destroy(string $id)
     {
-        dd('Deleted');
-        // $user = UnverifiedUser::find($id);
+        // dd('Deleted');
+        $user = UnverifiedUser::findOrFail($id);
 
-        // $user->delete();
+        $user->delete();
 
-        // return to_route('admin.users.unverified.index')->with('success_message', 'Unverified student deleted successfully.');
+        return to_route('admin.users.unverified.index')->with('success_message', 'Unverified student deleted successfully.');
     }
 }

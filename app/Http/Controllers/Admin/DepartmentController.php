@@ -55,7 +55,7 @@ class DepartmentController extends Controller
      */
     public function edit(string $id)
     {
-        $dept = Department::find($id);
+        $dept = Department::findOrFail($id);
 
         return view('users.admin.departments.edit', compact(['dept']));
     }
@@ -65,7 +65,15 @@ class DepartmentController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'name' => ['required', 'string', 'regex:/^[\s\w-]*$/', 'max:140'],
+        ]);
+
+        $dept = Department::findOrFail($id);
+
+        $dept->update(['name' => $request->name ?? $dept->name]);
+
+        return back()->with('success_message', 'Department info has been updated successfully');
     }
 
     /**
@@ -73,6 +81,10 @@ class DepartmentController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $dept = Department::findOrFail($id);
+
+        $dept->delete();
+
+        return back()->with('success_message', 'Department deleted successfully');
     }
 }

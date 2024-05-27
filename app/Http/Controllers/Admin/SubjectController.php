@@ -11,9 +11,14 @@ class SubjectController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $subjects = Subject::orderBy('name')->get();
+        $subjects = Subject::orderBy('name')->paginate(30)->withQueryString();
+
+        if ($request->search) {
+            // dd($request->search);
+            $subjects = Subject::where('name', 'like', '%' . $request->search . '%')->paginate(30)->withQueryString();
+        }
 
         return view('users.admin.subjects.index', compact(['subjects']));
     }
@@ -55,7 +60,9 @@ class SubjectController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $sub = Subject::findOrFail($id);
+
+        return view('users.admin.subjects.edit', compact(['sub']));
     }
 
     /**
@@ -63,7 +70,11 @@ class SubjectController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $sub = Subject::findOrFail($id);
+
+        $sub->update(['name' => $request->name ?? $sub->name]);
+
+        return back()->with('success_message', 'Subject info has been updated successfully');
     }
 
     /**
@@ -71,6 +82,10 @@ class SubjectController extends Controller
      */
     public function destroy(string $id)
     {
-        dd('deleted');
+        $sub = Subject::findOrFail($id);
+
+        $sub->delete();
+
+        return back()->with('success_message', 'Subject deleted successfully');
     }
 }

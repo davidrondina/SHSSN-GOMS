@@ -11,7 +11,7 @@ class StrandController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $strands = Strand::orderBy('name')->get();
 
@@ -57,7 +57,7 @@ class StrandController extends Controller
      */
     public function edit(string $id)
     {
-        $strand = Strand::find($id);
+        $strand = Strand::findOrFail($id);
 
         return view('users.admin.strands.edit', compact(['strand']));
     }
@@ -67,7 +67,19 @@ class StrandController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'name' => ['required', 'string', 'max:140'],
+            'abbr' => ['required', 'string', 'max:50'],
+        ]);
+
+        $strand = Strand::findOrFail($id);
+
+        $strand->update([
+            'name' => $request->name ?? $strand->name,
+            'abbr' => $request->abbr ?? $strand->abbr
+        ]);
+
+        return back()->with('success_message', 'Strand info has been updated successfully');
     }
 
     /**
@@ -75,6 +87,10 @@ class StrandController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $strand = Strand::findOrFail($id);
+
+        $strand->delete();
+
+        return back()->with('success_message', 'Strand deleted successfully');
     }
 }
