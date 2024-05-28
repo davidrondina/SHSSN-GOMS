@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\FacultyRegistrationController;
 use App\Mail\AppointmentNotice;
 use App\Models\Student; // Testing
 use App\Models\Guardian; // testing
@@ -15,26 +14,27 @@ use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\StrandController;
 use App\Http\Controllers\Admin\FacultyController;
+use App\Http\Controllers\Admin\EnrolledStudentController;
 use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\Admin\SubjectController;
 use App\Http\Controllers\DocumentGuideController;
 use App\Http\Controllers\Faculty\ClassController;
-use App\Http\Controllers\Student\ServiceController as STServiceController;
 use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Faculty\AdvisoryController;
 use App\Http\Controllers\Admin\AcademicYearController;
 use App\Http\Controllers\Admin\VerifiedUserController;
+use App\Http\Controllers\FacultyRegistrationController;
 use App\Http\Controllers\StudentRegistrationController;
 use App\Http\Controllers\Admin\UnverifiedUserController;
 use App\Http\Controllers\Admin\RegistrationLinkController;
 use App\Http\Controllers\DocumentFormController; // Remove
 use App\Http\Controllers\Admin\StudentController as ADStudentController;
+use App\Http\Controllers\Faculty\ServiceController as FAServiceController;
 use App\Http\Controllers\Faculty\StudentController as FAStudentController;
+use App\Http\Controllers\Student\ServiceController as STServiceController;
 use App\Http\Controllers\Admin\DashboardController as ADDashboardController;
 use App\Http\Controllers\Faculty\ComplaintController as FAComplaintController;
-use App\Http\Controllers\Faculty\ServiceController as FAServiceController;
 use App\Http\Controllers\Faculty\DashboardController as FADashboardController;
-use App\Http\Controllers\Faculty\UserFeedbackController as FAUserFeedbackController;
 use App\Http\Controllers\Student\ComplaintController as STComplaintController;
 use App\Http\Controllers\Student\DashboardController as STDashboardController;
 use App\Http\Controllers\Counselor\ComplaintController as COComplaintController;
@@ -43,6 +43,7 @@ use App\Http\Controllers\Admin\UserFeedbackController as ADUserFeedbackControlle
 use App\Http\Controllers\Student\AppointmentController as STAppointmentController;
 use App\Http\Controllers\Admin\DocumentGuideController as ADDocumentGuideController;
 use App\Http\Controllers\Counselor\AppointmentController as COAppointmentController;
+use App\Http\Controllers\Faculty\UserFeedbackController as FAUserFeedbackController;
 use App\Http\Controllers\Student\UserFeedbackController as STUserFeedbackController;
 
 /*
@@ -92,6 +93,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('academic-years', AcademicYearController::class);
         Route::resource('strands', StrandController::class)->except(['show']);
         Route::resource('departments', DepartmentController::class);
+        Route::resource('enrolled-students', EnrolledStudentController::class)->except(['index', 'show', 'edit', 'update', 'destroy']);
         Route::resource('faculties', FacultyController::class);
         Route::prefix('faculties')->as('faculties.')->group(function () {
             Route::put('/{id}/subjects', [FacultyController::class, 'updateSubjects'])->name('subjects');

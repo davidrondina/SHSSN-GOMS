@@ -188,20 +188,20 @@ Alpine.data('studentRegForm', () => ({
             };
 
             if (this.step === 1) {
-                response = await axios.post('/register/verify-account', this.data.account, config);
+                response = await axios.post('/register/student/verify-account', this.data.account, config);
             }
 
             switch (this.step) {
                 case 1:
-                    response = await axios.post('/register/verify-account', this.data.account, config);
+                    response = await axios.post('/register/student/verify-account', this.data.account, config);
                     break;
                 case 2:
                     // console.table(this.data.student);
-                    response = await axios.post('/register/verify-student', this.data.student, config);
+                    response = await axios.post('/register/student/verify-student', this.data.student, config);
                     break;
                 case 3:
                     // console.table(this.data.guardian);
-                    response = await axios.post('/register/verify-guardian', this.data.guardian, config);
+                    response = await axios.post('/register/student/verify-guardian', this.data.guardian, config);
                     break;
                 default:
                     break;
