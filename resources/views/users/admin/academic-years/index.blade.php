@@ -5,6 +5,10 @@
                 <div class="flex items-center gap-x-4">
                     <x-form.search-form :form_action="__('#')" :placeholder="__('Search a record')" />
 
+                    <a href="{{ route('admin.enrolled-students.create') }}" class="btn btn-sm btn-success"><i
+                            class="ri-checkbox-circle-line"></i> Enroll
+                        Student(s)</a>
+
                     <a href="{{ route('admin.academic-years.create') }}"
                         class="btn btn-primary btn-sm inline-flex items-center font-semibold">
                         <i class="fa-solid fa-plus"></i>New Academic Year

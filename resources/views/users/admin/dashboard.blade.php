@@ -74,42 +74,49 @@
                 </div>
             </div>
 
-            <div class="flex flex-col gap-y-2">
-                <h2 class="font-bold text-lg">A.Y. {{ $year->getFullYear() }}</h2>
+            @if ($year)
+                <div class="flex flex-col gap-y-2">
+                    <div class="flex justify-between items-center">
+                        <h2 class="font-bold text-lg">A.Y. {{ $year->getFullYear() }}</h2>
+                        <div><a href="{{ route('admin.enrolled-students.create') }}" class="btn btn-sm btn-success"><i
+                                    class="ri-checkbox-circle-line"></i> Enroll
+                                Student(s)</a></div>
+                    </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 font-fs">
-                    <x-card class="py-3 px-4 flex flex-row gap-x-4">
-                        <div>
-                            <div
-                                class="w-12 aspect-square border border-accent rounded-full inline-flex justify-center items-center text-xl text-accent">
-                                <i class="fa-solid fa-user-graduate"></i>
-                            </div>
-                        </div>
-                        <div class="flex flex-col">
-                            <h2 class="font-semibold uppercase text-sm text-gray-500">Enrolled Students</h2>
-
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 font-fs">
+                        <x-card class="py-3 px-4 flex flex-row gap-x-4">
                             <div>
-                                <span class="text-2xl truncate font-semibold">{{ $enrolled_students_count }}</span>
+                                <div
+                                    class="w-12 aspect-square border border-accent rounded-full inline-flex justify-center items-center text-xl text-accent">
+                                    <i class="fa-solid fa-user-graduate"></i>
+                                </div>
                             </div>
-                        </div>
-                    </x-card>
-                    <x-card class="py-3 px-4 flex flex-row gap-x-4">
-                        <div>
-                            <div
-                                class="w-12 aspect-square border border-orange-700 rounded-full inline-flex justify-center items-center text-xl text-orange-700">
-                                <i class="fa-solid fa-users"></i>
-                            </div>
-                        </div>
-                        <div class="flex flex-col">
-                            <h2 class="font-semibold uppercase text-sm text-gray-500">Total Sections</h2>
+                            <div class="flex flex-col">
+                                <h2 class="font-semibold uppercase text-sm text-gray-500">Enrolled Students</h2>
 
-                            <div>
-                                <span class="text-2xl truncate font-semibold">{{ $sections_count }}</span>
+                                <div>
+                                    <span class="text-2xl truncate font-semibold">{{ $enrolled_students_count }}</span>
+                                </div>
                             </div>
-                        </div>
-                    </x-card>
+                        </x-card>
+                        <x-card class="py-3 px-4 flex flex-row gap-x-4">
+                            <div>
+                                <div
+                                    class="w-12 aspect-square border border-orange-700 rounded-full inline-flex justify-center items-center text-xl text-orange-700">
+                                    <i class="fa-solid fa-users"></i>
+                                </div>
+                            </div>
+                            <div class="flex flex-col">
+                                <h2 class="font-semibold uppercase text-sm text-gray-500">Total Sections</h2>
+
+                                <div>
+                                    <span class="text-2xl truncate font-semibold">{{ $sections_count }}</span>
+                                </div>
+                            </div>
+                        </x-card>
+                    </div>
                 </div>
-            </div>
+            @endif
 
             <div class="px-4 py-8 bg-neutral-50 max-w-[100%] w-[1000px]">
                 <div x-data="acquisitionsChart()" x-init="render()" x-cloak
