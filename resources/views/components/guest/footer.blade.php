@@ -3,28 +3,29 @@
         <div class="md:flex md:justify-between">
             <div class="w-1/2 mb-6 md:mb-0 flex flex-col gap-y-2">
                 <div class="flex gap-x-4">
-                    <a href="https://flowbite.com/" class="flex items-center">
-                        <img src="{{ asset('images/shssn-logo.png') }}" class="w-16 aspect-square" alt="FlowBite Logo" />
+                    <a href="/" class="flex items-center">
+                        <img src="{{ asset('images/shssn-logo.png') }}" class="w-16 aspect-square" alt="SHSSN3 Logo" />
                     </a>
-                    <a href="#">
+                    <a href="https://www.deped.gov.ph/">
                         <img src="{{ asset('images/deped-logo.png') }}" alt="DepEd logo" class="w-16 aspect-square">
                     </a>
                 </div>
-                <span class="font-fs font-semibold uppercase">Senior High School in San Nicolas III,<br>City
-                    of Bacoor, Cavite</span>
+                <span class="font-fs font-semibold uppercase">Senior High School in San Nicholas III,<br>Bacoor
+                    City</span>
             </div>
             <div class="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
                 <div>
                     <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase">Govt. Links</h2>
                     <ul class="text-gray-500 font-medium flex flex-col gap-y-4">
                         <li>
-                            <a href="https://flowbite.com/" class="hover:underline">DepEd</a>
+                            <a href="https://www.deped.gov.ph/" class="hover:underline">DepEd</a>
                         </li>
                         <li>
-                            <a href="https://tailwindcss.com/" class="hover:underline">Cavite Govt.</a>
+                            <a href="https://cavite.gov.ph/home/?tribe_venue=kawit" class="hover:underline">Cavite
+                                Govt.</a>
                         </li>
                         <li>
-                            <a href="https://tailwindcss.com/" class="hover:underline">Bacoor Govt.</a>
+                            <a href="https://bacoor.gov.ph/" class="hover:underline">Bacoor Govt.</a>
                         </li>
                     </ul>
                 </div>
@@ -32,13 +33,15 @@
                     <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase">Follow Us</h2>
                     <ul class="text-gray-500 font-medium flex flex-col gap-y-4">
                         <li>
-                            <a href="https://github.com/themesberg/flowbite" class="hover:underline ">Facebook</a>
+                            <a href="https://www.facebook.com/DepEdTayoSHSSN342600/"
+                                class="hover:underline ">Facebook</a>
                         </li>
                         <li>
-                            <a href="https://discord.gg/4eeurUVvTy" class="hover:underline">YouTube</a>
+                            <a href="https://www.youtube.com/@shsinsannicholasiii580"
+                                class="hover:underline">YouTube</a>
                         </li>
                         <li>
-                            <a href="https://discord.gg/4eeurUVvTy" class="hover:underline">Official Website</a>
+                            <a href="https://shsinsannicholas3.weebly.com/" class="hover:underline">Official Website</a>
                         </li>
                     </ul>
                 </div>
@@ -46,8 +49,8 @@
                     <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase">Contact Info</h2>
                     <ul class="text-gray-500 font-medium">
                         <li class="mb-4">
-                            <a href="#" class="hover:underline">Garnet St., San Nicolas
-                                III, Bacoor City, Cavite</a>
+                            <a href="#" class="hover:underline">Garnet St., San Nicholas
+                                III, Bacoor City</a>
                         </li>
                         <li>
                             <a href="#" class="hover:underline">(046) 849 2825</a>
@@ -58,7 +61,7 @@
         </div>
         <hr class="my-6 border-gray-200 sm:mx-aut lg:my-8" />
         <div class="sm:flex sm:items-center">
-            <span class="text-sm text-gray-500 sm:text-center">© 2023 All Rights Reserved.
+            <span class="text-sm text-gray-500 sm:text-center">© {{ date('Y') }} All Rights Reserved.
             </span>
             {{-- <div class="flex mt-4 sm:justify-center sm:mt-0">
                 <a href="#" class="text-gray-500 hover:text-gray-900">
