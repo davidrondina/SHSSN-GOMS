@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Student;
 
+use App\Enums\UserRole;
 use App\Mail\DocumentSent;
+use App\Enums\DocumentType;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\GoodMoralForm;
@@ -11,7 +13,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Actions\GenerateDocumentLink;
 use App\Providers\RouteServiceProvider;
-use App\Enums\DocumentType;
 
 class ServiceController extends Controller
 {
@@ -26,8 +27,10 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        return view('users.student.services.index');
-
+        if (Auth::user()->hasRole(UserRole::ST->value)) {
+            return view('users.student.services.index');
+        }
+        return redirect()->intended(RouteServiceProvider::HOME);
     }
 
     /**

@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Actions\GenerateDocumentLink;
 use App\Providers\RouteServiceProvider;
+use App\Enums\UserRole;
 
 class ServiceController extends Controller
 {
@@ -20,7 +21,10 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        return view('users.faculty.services.index');
+        if (Auth::user()->hasRole(UserRole::FA->value)) {
+            return view('users.faculty.services.index');
+        }
+        return redirect()->intended(RouteServiceProvider::HOME);
     }
 
     /**

@@ -4,16 +4,30 @@
             <img src="{{ asset('images/shssn-logo.png') }}" alt=""
                 class="w-12 aspect-square object-cover rounded-full border border-white">
         </a>
-        <nav class="md:ml-auto flex flex-wrap items-center gap-x-6 mr-6 font-semibold text-base justify-center">
-            <a href="{{ route('guest.services') }}" class="hover:text-neutral">Services</a>
-            <a href="{{ route('login') }}" class="hover:text-neutral">Login</a>
-        </nav>
-        <a href="{{ route('register') }}" class="btn btn-accent btn-sm">Register
-            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                class="w-4 h-4 ml-1" viewBox="0 0 24 24">
-                <path d="M5 12h14M12 5l7 7-7 7"></path>
-            </svg>
-        </a>
+
+        @guest
+            <nav class="md:ml-auto flex flex-wrap items-center gap-x-6 mr-6 font-semibold text-base justify-center">
+                <a href="{{ route('guest.services') }}" class="hover:text-neutral">Services</a>
+                <a href="{{ route('login') }}" class="hover:text-neutral">Login</a>
+            </nav>
+            <a href="{{ route('register') }}" class="btn btn-accent btn-sm">Register
+                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    class="w-4 h-4 ml-1" viewBox="0 0 24 24">
+                    <path d="M5 12h14M12 5l7 7-7 7"></path>
+                </svg>
+            </a>
+        @endguest
+
+        @auth
+            <nav class="md:ml-auto flex flex-wrap items-center gap-x-6 mr-6 font-semibold text-base justify-center">
+                <a href="{{ route('home') }}" class="btn btn-accent btn-sm">Go to home
+                    <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                        stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
+                        <path d="M5 12h14M12 5l7 7-7 7"></path>
+                    </svg>
+                </a>
+            </nav>
+        @endauth
     </x-container>
 </header>
 
