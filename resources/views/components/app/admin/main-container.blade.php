@@ -40,13 +40,24 @@
             <x-sidebar.link href="{{ route('admin.students.index') }}"
                 class="{{ Request::routeIs('admin.students.*') ? 'bg-[#2a447a]' : '' }}">Students</x-sidebar.link>
             <x-sidebar.dropdown.container>
+                Documents
+                <x-slot name="dropdownItems" :pageIsOnMenu="Request::routeIs(['admin.acquisitions.index', 'document-guide.index'])">
+                    <x-sidebar.link href="{{ route('admin.acquisitions.index') }}"
+                        class="{{ Request::routeIs('admin.acquisitions.*') ? 'bg-[#2a447a]' : '' }}">Acquisitions</x-sidebar.link>
+                    <x-sidebar.link href="{{ route('document-guide.index') }}"
+                        class="{{ Request::routeIs('document-guide.index') ? 'bg-[#2a447a]' : '' }}">Document
+                        Guides</x-sidebar.link>
+                    <x-sidebar.link href="{{ route('admin.signatory.index') }}"
+                        class="{{ Request::routeIs('admin.signatory.*') ? 'bg-[#2a447a]' : '' }}">Signatories</x-sidebar.link>
+                </x-slot>
+            </x-sidebar.dropdown.container>
+            <x-sidebar.dropdown.container>
                 Misc
                 <x-slot name="dropdownItems" :pageIsOnMenu="Request::routeIs([
                     'admin.users.verified.*',
                     'admin.users.unverified.*',
                     'admin.registration-links.*',
                     'admin.feedback.index',
-                    'document-guide.index',
                 ])">
                     <x-sidebar.link href="{{ route('admin.registration-links.index') }}"
                         class="{{ Request::routeIs('admin.registration-links.*') ? 'bg-[#2a447a]' : '' }}">Registration
@@ -57,9 +68,6 @@
                     <x-sidebar.link href="{{ route('admin.users.unverified.index') }}"
                         class="{{ Request::routeIs('admin.users.unverified.*') ? 'bg-[#2a447a]' : '' }}">Unverified
                         Users</x-sidebar.link>
-                    <x-sidebar.link href="{{ route('document-guide.index') }}"
-                        class="{{ Request::routeIs('document-guide.index') ? 'bg-[#2a447a]' : '' }}">Document
-                        Guides</x-sidebar.link>
                     <x-sidebar.link href="{{ route('admin.feedback.index') }}"
                         class="{{ Request::routeIs('admin.feedback.*') ? 'bg-[#2a447a]' : '' }}">Feedback</x-sidebar.link>
                     <x-sidebar.link href="{{ route('admin.reports.index') }}"

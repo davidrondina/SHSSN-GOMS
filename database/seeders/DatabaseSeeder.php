@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\DocumentSignatory;
 use App\Models\User;
 use App\Models\Strand;
 use App\Enums\UserRole;
@@ -14,6 +15,7 @@ use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 use Database\Seeders\FacultySeeder;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class DatabaseSeeder extends Seeder
 {
@@ -83,9 +85,10 @@ class DatabaseSeeder extends Seeder
         $this->call([FacultySeeder::class]);
 
         // Enroll students to current AY
-        $enrolled_students = Student::factory(20)->create();
+        Student::factory(50)->create();
+        $students = Student::take(20)->get();
 
-        collect($enrolled_students)->map(function ($stu) use ($gas_strand) {
+        collect($students)->map(function ($stu) use ($gas_strand) {
             $year = AcademicYear::where('is_current', true)->first();
 
             EnrolledStudent::create([

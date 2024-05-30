@@ -73,6 +73,25 @@ Alpine.data('reportGenerator', () => ({
     }
 }));
 
+Alpine.data('imagePreview', () => ({
+    image: null,
+    previewUpload(e) {
+        const { files } = e.target;
+
+        const reader = new FileReader();
+
+        reader.onload = function () {
+            this.image = reader.result;
+        }.bind(this);
+
+        reader.readAsDataURL(files[0]);
+    },
+
+    clearUpload() {
+        this.image = null;
+    },
+}));
+
 Alpine.data('studentRegForm', () => ({
     step: 1,
     data: {
